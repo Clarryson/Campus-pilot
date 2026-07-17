@@ -20,7 +20,7 @@ export async function parseAcademicPDF(filePath: string, originalName: string, s
   try {
     if (fs.existsSync(filePath)) {
       const dataBuffer = fs.readFileSync(filePath);
-      const parser = new PDFParse(new Uint8Array(dataBuffer));
+      const parser = new PDFParse({ data: new Uint8Array(dataBuffer) });
       const parsedData = await parser.getText();
       extractedText = parsedData.text || "";
     } else {
@@ -41,7 +41,13 @@ export async function parseAcademicPDF(filePath: string, originalName: string, s
 
   // Get student profile for context-aware filtering
   const state = Database.get();
-  const profile = state.studentProfile;
+  const profile = state.studentProfile || {
+    university: "State University of Technology",
+    course: "Computer Science",
+    department: "Computer Science & Engineering",
+    year: 2,
+    semester: 1
+  };
 
   // Ask Gemma 4 26B to classify and structure the extracted document text
   const parserSystemPrompt = `
@@ -128,16 +134,17 @@ Return your response strictly in JSON format as specified in responseSchema.
 
 // Handler to update the Database dynamically depending on document type
 async function handleExtractedData(data: ExtractedAcademicData, name: string, fullText: string, savedFilePath?: string) {
+  if (!data || typeof data !== 'object') return;
   const state = Database.get();
   
   // Create document record
   const newDocId = "doc-" + Math.random().toString(36).substr(2, 9);
-  const sizeKb = Math.round(fullText.length / 1024) + " KB";
+  const sizeKb = Math.round((fullText || "").length / 1024) + " KB";
   
   const newDoc: DocumentRecord = {
     id: newDocId,
     name,
-    type: data.documentType,
+    type: data.documentType || 'unknown',
     uploadedAt: new Date().toISOString(),
     size: sizeKb,
     filePath: savedFilePath,       // Stored permanently in uploads/ folder
@@ -167,11 +174,15 @@ async function handleExtractedData(data: ExtractedAcademicData, name: string, fu
         `Gemma detected multiple timetable records. Executing native version comparison: compareTimetables(oldId: ${previousTimetable.id}, newName: "${name}").`
       );
       
-      // Call compareTimetables tool directly
-      await executeTool("compareTimetables", {
-        oldTimetableId: previousTimetable.id,
-        newTimetableContent: fullText
-      });
+      try {
+        // Call compareTimetables tool directly
+        await executeTool("compareTimetables", {
+          oldTimetableId: previousTimetable.id,
+          newTimetableContent: fullText
+        });
+      } catch (compareErr) {
+        console.error("Error running compareTimetables during upload:", compareErr);
+      }
     } else {
       // First timetable uploaded, populate the database with these courses
       Database.update((s) => {

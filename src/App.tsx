@@ -316,6 +316,15 @@ export default function App() {
 
   // PDF File Upload Handler
   const handleFileUpload = async (file: File) => {
+    if (file.size > 3.8 * 1024 * 1024) {
+      setLastUploadResult({
+        fileName: file.name,
+        summary: `Upload failed: File size (${(file.size / (1024 * 1024)).toFixed(1)} MB) exceeds Vercel serverless function payload limit (~3.5 MB). Please compress your PDF or upload a smaller document.`,
+        type: 'error',
+        itemCount: 0
+      });
+      return;
+    }
     setUploadingFile(true);
     setUploadingFileName(file.name);
     setLastUploadResult(null);

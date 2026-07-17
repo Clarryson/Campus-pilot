@@ -35,11 +35,11 @@ Database.init();
 
   // 2. Chat Q&A via Gemma Agent reasoning loop
   app.post("/api/chat", async (req, res) => {
-    const { prompt, history } = req.body;
-    if (!prompt) {
-      return res.status(400).json({ error: "Prompt is required." });
-    }
     try {
+      const { prompt, history } = req.body || {};
+      if (!prompt) {
+        return res.status(400).json({ error: "Prompt is required." });
+      }
       const result = await runAgentReasoning(prompt, history || []);
       res.json(result);
     } catch (e: any) {
@@ -49,11 +49,11 @@ Database.init();
 
   // 3. Document upload — saves PDF permanently to uploads/ folder
   app.post("/api/documents/upload", async (req, res) => {
-    const { name, base64 } = req.body;
-    if (!name || !base64) {
-      return res.status(400).json({ error: "Document name and base64 string are required." });
-    }
     try {
+      const { name, base64 } = req.body || {};
+      if (!name || !base64) {
+        return res.status(400).json({ error: "Document name and base64 string are required." });
+      }
       // Save file in uploads/ (or in /tmp/uploads when running serverless on Vercel)
       const IS_SERVERLESS = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
       const uploadsDir = IS_SERVERLESS ? path.join("/tmp", "uploads") : path.join(process.cwd(), "uploads");
@@ -174,8 +174,8 @@ Database.init();
 
   // 5. Generate a new study plan
   app.post("/api/study-plans/generate", async (req, res) => {
-    const { intensity } = req.body;
     try {
+      const { intensity } = req.body || {};
       await executeTool("generateStudyPlan", { intensity: intensity || "medium" });
       res.json({ success: true, state: Database.get() });
     } catch (e: any) {
@@ -185,8 +185,8 @@ Database.init();
 
   // 6. Create custom reminder
   app.post("/api/reminders/create", async (req, res) => {
-    const { title, dateTime, priority } = req.body;
     try {
+      const { title, dateTime, priority } = req.body || {};
       await executeTool("createReminder", { title, dateTime, priority });
       res.json({ success: true, state: Database.get() });
     } catch (e: any) {
@@ -196,8 +196,8 @@ Database.init();
 
   // 7. Toggle reminder completed
   app.post("/api/reminders/toggle", (req, res) => {
-    const { id } = req.body;
     try {
+      const { id } = req.body || {};
       Database.update((s) => {
         const rem = s.reminders.find(r => r.id === id);
         if (rem) {
@@ -224,11 +224,11 @@ Database.init();
 
   // 10. Update student profile and trigger re-parsing of uploaded documents
   app.post("/api/profile/update", async (req, res) => {
-    const { profile } = req.body;
-    if (!profile) {
-      return res.status(400).json({ error: "Profile data is required." });
-    }
     try {
+      const { profile } = req.body || {};
+      if (!profile) {
+        return res.status(400).json({ error: "Profile data is required." });
+      }
       // 1. Update profile in database
       Database.update((s) => {
         s.studentProfile = {
@@ -299,6 +299,9 @@ if (!process.env.VERCEL) {
       const distPath = path.join(process.cwd(), "dist");
       app.use(express.static(distPath));
       app.get("*", (req, res) => {
+        if (req.path.startsWith("/api/") || req.path.startsWith("/assets/")) {
+          return res.status(404).json({ error: "Resource not found" });
+        }
         res.sendFile(path.join(distPath, "index.html"));
       });
     }
@@ -316,8 +319,8 @@ import fs from "fs";
 function fsExistsSync(p: string): boolean {
   return fs.existsSync(p);
 }
-function fsMkdirSync(p: string): void {
-  fs.mkdirSync(p);
+function fsMkdirSync(p: string, options?: fs.MakeDirectoryOptions): void {
+  fs.mkdirSync(p, options);
 }
 function fsWriteFileSync(p: string, b: Buffer): void {
   fs.writeFileSync(p, b);
