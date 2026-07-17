@@ -1,14 +1,14 @@
 import { GoogleGenAI, Type, FunctionDeclaration } from "@google/genai";
 import { Database, DBState, DocumentRecord, TimetableClass, ExamEvent, AssignmentRecord, ProjectRecord, StudyPlanItem, ReminderItem, NotificationItem, GemmaActivityLog, CalendarEventItem } from "./db.js";
 
-// Initialize Google Gen AI Client
+// Initialize Google Gen AI Client pointing at Google AI Studio (Gemma 4 26B)
 const apiKey = process.env.GEMINI_API_KEY;
 if (!apiKey) {
-  console.warn("Warning: GEMINI_API_KEY environment variable is not set. Gemma 4 features will fall back or error out if called.");
+  console.warn("Warning: GEMINI_API_KEY environment variable is not set. Gemma 4 26B features will fall back to offline simulator.");
 }
 
 export const ai = new GoogleGenAI({
-  apiKey: apiKey || "MOCK_KEY",
+  apiKey: apiKey || "",
   httpOptions: {
     headers: {
       "User-Agent": "aistudio-build",
@@ -16,8 +16,8 @@ export const ai = new GoogleGenAI({
   },
 });
 
-// Use gemini-3.5-flash as the default model configured to run the Gemma 4 autonomous agent reasoning loop
-const AGENT_MODEL = "gemini-3.5-flash";
+// Gemma 4 26B Instruction-Tuned model — served via Google AI Studio API
+const AGENT_MODEL = "gemma-4-27b-it";
 
 // Helper to log Gemma autonomous reasoning in the DB
 export function logGemmaActivity(category: string, message: string, reasoning: string) {
@@ -746,7 +746,7 @@ Never list JSON structures inside the final output. Present them in clean, highl
       };
     }
 
-    // Call the Gemma 4 reasoning engine (using gemini-3.5-flash under the hood) via the official Google Gen AI SDK
+    // Call Gemma 4 26B (gemma-4-27b-it) via the Google AI Studio API
     const response = await ai.models.generateContent({
       model: AGENT_MODEL,
       contents: [
@@ -757,13 +757,12 @@ Never list JSON structures inside the final output. Present them in clean, highl
         { role: "user", parts: [{ text: userPrompt }] }
       ],
       config: {
-        systemInstruction: contextSystemPrompt + "\n6. REAL-TIME WEB OPPORTUNITIES & WELLNESS: You have live access to Google Search grounding. When the user asks for opportunities, scholarships, bursaries, mentorships, or hackathons, or healthy exercises and study hobbies, execute a live Google Search (crawling LinkedIn, X/Twitter, NGOs, Kenyan student bursary funds). Recommend real, active opportunities with deadlines, and suggest healthy physical activities or academic hobbies to maintain optimal studying focus.",
+        systemInstruction: contextSystemPrompt + "\n6. REAL-TIME WEB OPPORTUNITIES & WELLNESS: When the user asks for opportunities, scholarships, bursaries, mentorships, hackathons, or healthy exercises and study hobbies, search your knowledge and recommend real, active opportunities with deadlines and suggest healthy physical activities or academic hobbies to maintain optimal studying focus.",
         tools: [
-          { googleSearch: {} },
           { functionDeclarations: gemmeTools }
         ],
         toolConfig: { includeServerSideToolInvocations: true },
-        temperature: 0.2
+        temperature: 1.0
       }
     });
 
@@ -808,8 +807,8 @@ Autonomously interpret these results. Write your final answer to the student exp
         ],
         config: {
           systemInstruction: contextSystemPrompt,
-          tools: [{ googleSearch: {} }], // Keep Google Search available in interpretation turn too
-          temperature: 0.2
+          tools: [{ functionDeclarations: gemmeTools }],
+          temperature: 1.0
         }
       });
 
