@@ -71,6 +71,13 @@ export default function App() {
     return (saved as 'normal' | 'large' | 'xlarge') || 'large';
   });
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    // Force reset existing stored dark themes to light mode once to apply the new white theme
+    const hasReset = localStorage.getItem('theme_reset_to_white_v2');
+    if (!hasReset) {
+      localStorage.setItem('theme', 'light');
+      localStorage.setItem('theme_reset_to_white_v2', 'true');
+      return 'light';
+    }
     const saved = localStorage.getItem('theme');
     return (saved as 'light' | 'dark') || 'light';
   });
