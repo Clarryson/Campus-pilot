@@ -160,13 +160,13 @@ const DB_FILE = path.join(process.cwd(), "database.json");
 
 const INITIAL_STATE: DBState = {
   studentProfile: {
-    name: "Clarryson",
-    university: "University of Embu",
+    name: "Alex Rivera",
+    university: "State University of Technology",
     course: "Bachelor of Science in Computer Science",
-    department: "Computer Science",
+    department: "Computer Science & Engineering",
     year: 2,
     semester: 1,
-    registrationNumber: "ENG/CS/2024/001"
+    registrationNumber: "CS/2026/0142"
   },
   documents: [
     {
@@ -175,7 +175,7 @@ const INITIAL_STATE: DBState = {
       type: "timetable",
       uploadedAt: "2026-07-16T08:00:00.000Z",
       size: "142 KB",
-      gemmaExtraction: "Extracted 5 regular courses and timings for University of Embu (CS Yr 2 Sem 1)."
+      gemmaExtraction: "Extracted 5 regular courses and timings for State University of Technology."
     },
     {
       id: "doc-2",
@@ -392,7 +392,7 @@ const INITIAL_STATE: DBState = {
       timestamp: "2026-07-16T08:00:00.000Z",
       category: "Timetable",
       message: "Class Timetable PDF analyzed and structured.",
-      reasoning: "I analyzed the file 'Class_Timetable_v1.pdf'. Determined that the curriculum matches 'Computer Science Year 2 Semester 1' of the University of Embu. Extracted 5 distinct lecture schedules: CSC 211, CSC 212, CSC 213, CSC 214, SMA 201. Assigned correct classrooms in Tech Block and Science Complex. Established Lecture Hall B as the primary lecture location."
+      reasoning: "I analyzed the file 'Class_Timetable_v1.pdf'. Determined that the curriculum matches 'Computer Science Year 2 Semester 1' of the university schedule. Extracted 5 distinct lecture schedules: CSC 211, CSC 212, CSC 213, CSC 214, SMA 201. Assigned correct classrooms in Tech Block and Science Complex. Established Lecture Hall B as the primary lecture location."
     },
     {
       id: "act-2",
@@ -459,53 +459,53 @@ const INITIAL_STATE: DBState = {
     },
     {
       id: "scho-2",
-      title: "DeepMind Scholarship for African Students",
+      title: "DeepMind Scholarship for Undergraduate Students",
       amount: "$12,000 + Mentorship",
       deadline: "2027-01-10",
-      eligibility: "Undergraduate STEM major students in selected African Universities, including University of Embu. Passionate about AI research.",
+      eligibility: "Undergraduate STEM major students enrolled in accredited tech universities. Passionate about AI research.",
       provider: "Google DeepMind"
     },
     {
       id: "scho-3",
-      title: "Equity Bank Wings to Fly: Senior Stem Award",
-      amount: "KES 150,000",
+      title: "Wings to Fly: Senior STEM Excellence Award",
+      amount: "$1,500 / Semester",
       deadline: "2026-10-30",
-      eligibility: "Computer Science majors at University of Embu with GPA > 3.7",
-      provider: "Equity Group Foundation"
+      eligibility: "Computer Science and Engineering undergraduates with GPA > 3.7",
+      provider: "Tech Foundation Group"
     },
     {
       id: "scho-4",
-      title: "HELB Undergraduate National Bursary Scheme",
-      amount: "KES 60,000 / Year",
+      title: "Higher Education Undergraduate Bursary Scheme",
+      amount: "$2,000 / Year",
       deadline: "2026-11-15",
-      eligibility: "Kenyan undergraduate students from needy backgrounds enrolled in public universities including University of Embu.",
-      provider: "Higher Education Loans Board (HELB)"
+      eligibility: "Undergraduate students demonstrating academic excellence enrolled in accredited public universities.",
+      provider: "Higher Education Funding Board"
     },
     {
       id: "scho-5",
       title: "ALX Software Engineering Mentorship & Cohort",
       amount: "Fully Funded (100% Scholarship)",
       deadline: "2026-11-01",
-      eligibility: "African tech enthusiasts eager to master front-end and full-stack engineering alongside industry veterans.",
-      provider: "ALX / Mastercard Foundation"
+      eligibility: "Tech enthusiasts eager to master front-end and full-stack engineering alongside industry veterans.",
+      provider: "ALX / Tech Foundation"
     },
     {
       id: "scho-6",
-      title: "Safaricom Women in Tech Mentorship Program",
+      title: "Women in Tech Mentorship & Cloud Fellowship",
       amount: "Industry Mentorship & Staged Internships",
       deadline: "2026-10-18",
-      eligibility: "Female STEM undergraduates in Embu/Eastern region wanting training in Network Engineering and Cloud Computing.",
-      provider: "Safaricom PLC"
+      eligibility: "Female STEM undergraduates wanting training in Network Engineering and Cloud Computing.",
+      provider: "Global Tech Foundation"
     }
   ],
   campusEvents: [
     {
       id: "ce-1",
-      title: "Embu Tech Hackathon 2026",
+      title: "Campus Tech Hackathon 2026",
       date: "2026-11-12",
       time: "08:00 AM - 06:00 PM",
       location: "Computer Lab 2, Tech Block",
-      description: "Annual hackathon for local developers and University students. Track topics: AI in Agriculture, Mobile Web, FinTech. Organized by GDSC Embu."
+      description: "Annual hackathon for local developers and university students. Track topics: AI in Agriculture, Mobile Web, FinTech. Organized by GDSC Campus."
     },
     {
       id: "ce-2",

@@ -6,7 +6,7 @@
       "type": "timetable",
       "uploadedAt": "2026-07-17T12:59:40.743Z",
       "size": "1 KB",
-      "parsedText": "UNIVERSITY OF EMBU\nFACULTY OF COMPUTER SCIENCE\nSEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)\n\nMon 08:00 AM - 11:00 AM | CSC 211 (Data Structures) | Lecture Hall B | Science Complex | Dr. John Kamau\nTue 02:00 PM - 05:00 PM | CSC 212 (OOP II) | Computer Lab 2 | Tech Block | Prof. Mary Wambui\nWed 11:00 AM - 02:00 PM | CSC 213 (DBMS) | Lecture Hall A | Science Complex | Dr. Agnes Mutua\nThu 08:00 AM - 11:00 AM | CSC 214 (Discrete Structures) | Pavilion Room 1 | Graduation Pavilion | Mr. James Mwangi\nFri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Complex | Dr. David Njoroge\n",
+      "parsedText": "STATE UNIVERSITY OF TECHNOLOGY\nFACULTY OF COMPUTER SCIENCE\nSEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)\n\nMon 08:00 AM - 11:00 AM | CSC 211 (Data Structures) | Lecture Hall B | Science Complex | Dr. John Kamau\nTue 02:00 PM - 05:00 PM | CSC 212 (OOP II) | Computer Lab 2 | Tech Block | Prof. Mary Wambui\nWed 11:00 AM - 02:00 PM | CSC 213 (DBMS) | Lecture Hall A | Science Complex | Dr. Agnes Mutua\nThu 08:00 AM - 11:00 AM | CSC 214 (Discrete Structures) | Pavilion Room 1 | Graduation Pavilion | Mr. James Mwangi\nFri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Complex | Dr. David Njoroge\n",
       "gemmaExtraction": "Analyzed standard class timetable schedule from 'Class_Timetable_v1.pdf'. Extracted 5 weekly courses matching standard CS Yr 2 modules."
     },
     {
@@ -15,7 +15,7 @@
       "type": "timetable",
       "uploadedAt": "2026-07-17T12:55:55.977Z",
       "size": "1 KB",
-      "parsedText": "UNIVERSITY OF EMBU\nFACULTY OF COMPUTER SCIENCE\nSEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)\n\nMon 08:00 AM - 11:00 AM | CSC 211 (Data Structures) | Lecture Hall B | Science Complex | Dr. John Kamau\nTue 02:00 PM - 05:00 PM | CSC 212 (OOP II) | Computer Lab 2 | Tech Block | Prof. Mary Wambui\nWed 11:00 AM - 02:00 PM | CSC 213 (DBMS) | Lecture Hall A | Science Complex | Dr. Agnes Mutua\nThu 08:00 AM - 11:00 AM | CSC 214 (Discrete Structures) | Pavilion Room 1 | Graduation Pavilion | Mr. James Mwangi\nFri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Complex | Dr. David Njoroge\n",
+      "parsedText": "STATE UNIVERSITY OF TECHNOLOGY\nFACULTY OF COMPUTER SCIENCE\nSEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)\n\nMon 08:00 AM - 11:00 AM | CSC 211 (Data Structures) | Lecture Hall B | Science Complex | Dr. John Kamau\nTue 02:00 PM - 05:00 PM | CSC 212 (OOP II) | Computer Lab 2 | Tech Block | Prof. Mary Wambui\nWed 11:00 AM - 02:00 PM | CSC 213 (DBMS) | Lecture Hall A | Science Complex | Dr. Agnes Mutua\nThu 08:00 AM - 11:00 AM | CSC 214 (Discrete Structures) | Pavilion Room 1 | Graduation Pavilion | Mr. James Mwangi\nFri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Complex | Dr. David Njoroge\n",
       "gemmaExtraction": "Analyzed standard class timetable schedule from 'Class_Timetable_v1.pdf'. Extracted 5 weekly courses matching standard CS Yr 2 modules."
     },
     {
@@ -24,7 +24,7 @@
       "type": "timetable",
       "uploadedAt": "2026-07-17T12:53:47.294Z",
       "size": "1 KB",
-      "parsedText": "UNIVERSITY OF EMBU\nFACULTY OF COMPUTER SCIENCE\nSEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)\n\nMon 08:00 AM - 11:00 AM | CSC 211 (Data Structures) | Lecture Hall B | Science Complex | Dr. John Kamau\nTue 02:00 PM - 05:00 PM | CSC 212 (OOP II) | Computer Lab 2 | Tech Block | Prof. Mary Wambui\nWed 11:00 AM - 02:00 PM | CSC 213 (DBMS) | Lecture Hall A | Science Complex | Dr. Agnes Mutua\nThu 08:00 AM - 11:00 AM | CSC 214 (Discrete Structures) | Pavilion Room 1 | Graduation Pavilion | Mr. James Mwangi\nFri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Complex | Dr. David Njoroge\n",
+      "parsedText": "STATE UNIVERSITY OF TECHNOLOGY\nFACULTY OF COMPUTER SCIENCE\nSEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)\n\nMon 08:00 AM - 11:00 AM | CSC 211 (Data Structures) | Lecture Hall B | Science Complex | Dr. John Kamau\nTue 02:00 PM - 05:00 PM | CSC 212 (OOP II) | Computer Lab 2 | Tech Block | Prof. Mary Wambui\nWed 11:00 AM - 02:00 PM | CSC 213 (DBMS) | Lecture Hall A | Science Complex | Dr. Agnes Mutua\nThu 08:00 AM - 11:00 AM | CSC 214 (Discrete Structures) | Pavilion Room 1 | Graduation Pavilion | Mr. James Mwangi\nFri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Complex | Dr. David Njoroge\n",
       "gemmaExtraction": "Analyzed standard class timetable schedule from 'Class_Timetable_v1.pdf'. Extracted 5 weekly courses matching standard CS Yr 2 modules."
     },
     {
@@ -33,7 +33,7 @@
       "type": "timetable",
       "uploadedAt": "2026-07-17T12:26:31.401Z",
       "size": "1 KB",
-      "parsedText": "UNIVERSITY OF EMBU\nFACULTY OF COMPUTER SCIENCE\nSEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)\n\nMon 08:00 AM - 11:00 AM | CSC 211 (Data Structures) | Lecture Hall B | Science Complex | Dr. John Kamau\nTue 02:00 PM - 05:00 PM | CSC 212 (OOP II) | Computer Lab 2 | Tech Block | Prof. Mary Wambui\nWed 11:00 AM - 02:00 PM | CSC 213 (DBMS) | Lecture Hall A | Science Complex | Dr. Agnes Mutua\nThu 08:00 AM - 11:00 AM | CSC 214 (Discrete Structures) | Pavilion Room 1 | Graduation Pavilion | Mr. James Mwangi\nFri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Complex | Dr. David Njoroge\n",
+      "parsedText": "STATE UNIVERSITY OF TECHNOLOGY\nFACULTY OF COMPUTER SCIENCE\nSEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)\n\nMon 08:00 AM - 11:00 AM | CSC 211 (Data Structures) | Lecture Hall B | Science Complex | Dr. John Kamau\nTue 02:00 PM - 05:00 PM | CSC 212 (OOP II) | Computer Lab 2 | Tech Block | Prof. Mary Wambui\nWed 11:00 AM - 02:00 PM | CSC 213 (DBMS) | Lecture Hall A | Science Complex | Dr. Agnes Mutua\nThu 08:00 AM - 11:00 AM | CSC 214 (Discrete Structures) | Pavilion Room 1 | Graduation Pavilion | Mr. James Mwangi\nFri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Complex | Dr. David Njoroge\n",
       "gemmaExtraction": "Analyzed standard class timetable schedule from 'Class_Timetable_v1.pdf'. Extracted 5 weekly courses matching standard CS Yr 2 modules."
     },
     {
@@ -42,7 +42,7 @@
       "type": "timetable",
       "uploadedAt": "2026-07-17T12:25:27.394Z",
       "size": "1 KB",
-      "parsedText": "UNIVERSITY OF EMBU\nFACULTY OF COMPUTER SCIENCE\nSEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)\n\nMon 08:00 AM - 11:00 AM | CSC 211 (Data Structures) | Lecture Hall B | Science Complex | Dr. John Kamau\nTue 02:00 PM - 05:00 PM | CSC 212 (OOP II) | Computer Lab 2 | Tech Block | Prof. Mary Wambui\nWed 11:00 AM - 02:00 PM | CSC 213 (DBMS) | Lecture Hall A | Science Complex | Dr. Agnes Mutua\nThu 08:00 AM - 11:00 AM | CSC 214 (Discrete Structures) | Pavilion Room 1 | Graduation Pavilion | Mr. James Mwangi\nFri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Complex | Dr. David Njoroge\n",
+      "parsedText": "STATE UNIVERSITY OF TECHNOLOGY\nFACULTY OF COMPUTER SCIENCE\nSEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)\n\nMon 08:00 AM - 11:00 AM | CSC 211 (Data Structures) | Lecture Hall B | Science Complex | Dr. John Kamau\nTue 02:00 PM - 05:00 PM | CSC 212 (OOP II) | Computer Lab 2 | Tech Block | Prof. Mary Wambui\nWed 11:00 AM - 02:00 PM | CSC 213 (DBMS) | Lecture Hall A | Science Complex | Dr. Agnes Mutua\nThu 08:00 AM - 11:00 AM | CSC 214 (Discrete Structures) | Pavilion Room 1 | Graduation Pavilion | Mr. James Mwangi\nFri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Complex | Dr. David Njoroge\n",
       "gemmaExtraction": "Analyzed standard class timetable schedule from 'Class_Timetable_v1.pdf'. Extracted 5 weekly courses matching standard CS Yr 2 modules."
     },
     {
@@ -51,7 +51,7 @@
       "type": "timetable",
       "uploadedAt": "2026-07-17T12:24:18.679Z",
       "size": "1 KB",
-      "parsedText": "UNIVERSITY OF EMBU\nFACULTY OF COMPUTER SCIENCE\nSEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)\n\nMon 08:00 AM - 11:00 AM | CSC 211 (Data Structures) | Lecture Hall B | Science Complex | Dr. John Kamau\nTue 02:00 PM - 05:00 PM | CSC 212 (OOP II) | Computer Lab 2 | Tech Block | Prof. Mary Wambui\nWed 11:00 AM - 02:00 PM | CSC 213 (DBMS) | Lecture Hall A | Science Complex | Dr. Agnes Mutua\nThu 08:00 AM - 11:00 AM | CSC 214 (Discrete Structures) | Pavilion Room 1 | Graduation Pavilion | Mr. James Mwangi\nFri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Complex | Dr. David Njoroge\n",
+      "parsedText": "STATE UNIVERSITY OF TECHNOLOGY\nFACULTY OF COMPUTER SCIENCE\nSEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)\n\nMon 08:00 AM - 11:00 AM | CSC 211 (Data Structures) | Lecture Hall B | Science Complex | Dr. John Kamau\nTue 02:00 PM - 05:00 PM | CSC 212 (OOP II) | Computer Lab 2 | Tech Block | Prof. Mary Wambui\nWed 11:00 AM - 02:00 PM | CSC 213 (DBMS) | Lecture Hall A | Science Complex | Dr. Agnes Mutua\nThu 08:00 AM - 11:00 AM | CSC 214 (Discrete Structures) | Pavilion Room 1 | Graduation Pavilion | Mr. James Mwangi\nFri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Complex | Dr. David Njoroge\n",
       "gemmaExtraction": "Analyzed standard class timetable schedule from 'Class_Timetable_v1.pdf'. Extracted 5 weekly courses matching standard CS Yr 2 modules."
     },
     {
@@ -60,7 +60,7 @@
       "type": "timetable",
       "uploadedAt": "2026-07-17T12:23:45.182Z",
       "size": "0 KB",
-      "parsedText": "University of Embu student briefing material. CSC Coursework details.",
+      "parsedText": "University student briefing material. CSC Coursework details.",
       "gemmaExtraction": "Analyzed standard class timetable schedule from 'Class_Timetable_v1.pdf'. Extracted 5 weekly courses matching standard CS Yr 2 modules."
     },
     {
@@ -69,7 +69,7 @@
       "type": "timetable",
       "uploadedAt": "2026-07-17T12:21:48.495Z",
       "size": "0 KB",
-      "parsedText": "University of Embu student briefing material. CSC Coursework details.",
+      "parsedText": "University student briefing material. CSC Coursework details.",
       "gemmaExtraction": "Analyzed standard class timetable schedule from 'Class_Timetable_v1.pdf'. Extracted 5 weekly courses matching standard CS Yr 2 modules."
     },
     {
@@ -78,7 +78,7 @@
       "type": "timetable",
       "uploadedAt": "2026-07-17T12:20:43.173Z",
       "size": "1 KB",
-      "parsedText": "UNIVERSITY OF EMBU\nFACULTY OF COMPUTER SCIENCE\nSEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)\n\nMon 08:00 AM - 11:00 AM | CSC 211 (Data Structures) | Lecture Hall B | Science Complex | Dr. John Kamau\nTue 02:00 PM - 05:00 PM | CSC 212 (OOP II) | Computer Lab 2 | Tech Block | Prof. Mary Wambui\nWed 11:00 AM - 02:00 PM | CSC 213 (DBMS) | Lecture Hall A | Science Complex | Dr. Agnes Mutua\nThu 08:00 AM - 11:00 AM | CSC 214 (Discrete Structures) | Pavilion Room 1 | Graduation Pavilion | Mr. James Mwangi\nFri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Complex | Dr. David Njoroge\n",
+      "parsedText": "STATE UNIVERSITY OF TECHNOLOGY\nFACULTY OF COMPUTER SCIENCE\nSEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)\n\nMon 08:00 AM - 11:00 AM | CSC 211 (Data Structures) | Lecture Hall B | Science Complex | Dr. John Kamau\nTue 02:00 PM - 05:00 PM | CSC 212 (OOP II) | Computer Lab 2 | Tech Block | Prof. Mary Wambui\nWed 11:00 AM - 02:00 PM | CSC 213 (DBMS) | Lecture Hall A | Science Complex | Dr. Agnes Mutua\nThu 08:00 AM - 11:00 AM | CSC 214 (Discrete Structures) | Pavilion Room 1 | Graduation Pavilion | Mr. James Mwangi\nFri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Complex | Dr. David Njoroge\n",
       "gemmaExtraction": "Analyzed standard class timetable schedule from 'Class_Timetable_v1.pdf'. Extracted 5 weekly courses matching standard CS Yr 2 modules."
     },
     {
@@ -87,7 +87,7 @@
       "type": "timetable",
       "uploadedAt": "2026-07-17T12:12:18.829Z",
       "size": "1 KB",
-      "parsedText": "UNIVERSITY OF EMBU\nFACULTY OF COMPUTER SCIENCE\nSEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)\n\nMon 08:00 AM - 11:00 AM | CSC 211 (Data Structures) | Lecture Hall B | Science Complex | Dr. John Kamau\nTue 02:00 PM - 05:00 PM | CSC 212 (OOP II) | Computer Lab 2 | Tech Block | Prof. Mary Wambui\nWed 11:00 AM - 02:00 PM | CSC 213 (DBMS) | Lecture Hall A | Science Complex | Dr. Agnes Mutua\nThu 08:00 AM - 11:00 AM | CSC 214 (Discrete Structures) | Pavilion Room 1 | Graduation Pavilion | Mr. James Mwangi\nFri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Complex | Dr. David Njoroge\n",
+      "parsedText": "STATE UNIVERSITY OF TECHNOLOGY\nFACULTY OF COMPUTER SCIENCE\nSEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)\n\nMon 08:00 AM - 11:00 AM | CSC 211 (Data Structures) | Lecture Hall B | Science Complex | Dr. John Kamau\nTue 02:00 PM - 05:00 PM | CSC 212 (OOP II) | Computer Lab 2 | Tech Block | Prof. Mary Wambui\nWed 11:00 AM - 02:00 PM | CSC 213 (DBMS) | Lecture Hall A | Science Complex | Dr. Agnes Mutua\nThu 08:00 AM - 11:00 AM | CSC 214 (Discrete Structures) | Pavilion Room 1 | Graduation Pavilion | Mr. James Mwangi\nFri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Complex | Dr. David Njoroge\n",
       "gemmaExtraction": "Analyzed standard class timetable schedule from 'Class_Timetable_v1.pdf'. Extracted 5 weekly courses matching standard CS Yr 2 modules."
     },
     {
@@ -96,7 +96,7 @@
       "type": "timetable",
       "uploadedAt": "2026-07-16T08:00:00.000Z",
       "size": "142 KB",
-      "gemmaExtraction": "Extracted 5 regular courses and timings for University of Embu (CS Yr 2 Sem 1)."
+      "gemmaExtraction": "Extracted 5 regular courses and timings for State University of Technology (CS Yr 2 Sem 1)."
     },
     {
       "id": "doc-2",
@@ -397,7 +397,7 @@
       "timestamp": "2026-07-17T12:59:40.746Z",
       "category": "System",
       "message": "Auto-classified and stored document: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\"",
-      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"University of Embu\". Stored as record: doc-lxntzjh7r."
+      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"State University of Technology\". Stored as record: doc-lxntzjh7r."
     },
     {
       "id": "act-cmp-ltstaoe8o",
@@ -418,7 +418,7 @@
       "timestamp": "2026-07-17T12:55:55.979Z",
       "category": "System",
       "message": "Auto-classified and stored document: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\"",
-      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"University of Embu\". Stored as record: doc-nnjxy5t6g."
+      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"State University of Technology\". Stored as record: doc-nnjxy5t6g."
     },
     {
       "id": "act-cmp-ahagmll96",
@@ -439,7 +439,7 @@
       "timestamp": "2026-07-17T12:53:47.298Z",
       "category": "System",
       "message": "Auto-classified and stored document: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\"",
-      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"University of Embu\". Stored as record: doc-z63af2b3j."
+      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"State University of Technology\". Stored as record: doc-z63af2b3j."
     },
     {
       "id": "act-cmp-vyj8tvygl",
@@ -460,7 +460,7 @@
       "timestamp": "2026-07-17T12:26:31.408Z",
       "category": "System",
       "message": "Auto-classified and stored document: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\"",
-      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"University of Embu\". Stored as record: doc-35r5z4b94."
+      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"State University of Technology\". Stored as record: doc-35r5z4b94."
     },
     {
       "id": "act-cmp-ba0ewp3sy",
@@ -481,7 +481,7 @@
       "timestamp": "2026-07-17T12:25:27.400Z",
       "category": "System",
       "message": "Auto-classified and stored document: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\"",
-      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"University of Embu\". Stored as record: doc-nfy4if2ir."
+      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"State University of Technology\". Stored as record: doc-nfy4if2ir."
     },
     {
       "id": "act-cmp-ebp96ujrx",
@@ -502,7 +502,7 @@
       "timestamp": "2026-07-17T12:24:18.700Z",
       "category": "System",
       "message": "Auto-classified and stored document: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\"",
-      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"University of Embu\". Stored as record: doc-2qmzvfmyb."
+      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"State University of Technology\". Stored as record: doc-2qmzvfmyb."
     },
     {
       "id": "act-cmp-edyyt2cij",
@@ -523,7 +523,7 @@
       "timestamp": "2026-07-17T12:23:45.184Z",
       "category": "System",
       "message": "Auto-classified and stored document: \"check.pdf\"",
-      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"University of Embu\". Stored as record: doc-va7ogmo17."
+      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"State University of Technology\". Stored as record: doc-va7ogmo17."
     },
     {
       "id": "act-cmp-r2ejpwl3n",
@@ -544,7 +544,7 @@
       "timestamp": "2026-07-17T12:21:48.498Z",
       "category": "System",
       "message": "Auto-classified and stored document: \"test.pdf\"",
-      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"University of Embu\". Stored as record: doc-co0341zct."
+      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"State University of Technology\". Stored as record: doc-co0341zct."
     },
     {
       "id": "act-cmp-o89vkq637",
@@ -565,7 +565,7 @@
       "timestamp": "2026-07-17T12:20:43.291Z",
       "category": "System",
       "message": "Auto-classified and stored document: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\"",
-      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"University of Embu\". Stored as record: doc-3ygx3qkyh."
+      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"State University of Technology\". Stored as record: doc-3ygx3qkyh."
     },
     {
       "id": "act-cmp-ph1x4u0bs",
@@ -586,14 +586,14 @@
       "timestamp": "2026-07-17T12:12:18.852Z",
       "category": "System",
       "message": "Auto-classified and stored document: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\"",
-      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"University of Embu\". Stored as record: doc-klkuqg28g."
+      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"State University of Technology\". Stored as record: doc-klkuqg28g."
     },
     {
       "id": "act-1",
       "timestamp": "2026-07-16T08:00:00.000Z",
       "category": "Timetable",
       "message": "Class Timetable PDF analyzed and structured.",
-      "reasoning": "I analyzed the file 'Class_Timetable_v1.pdf'. Determined that the curriculum matches 'Computer Science Year 2 Semester 1' of the University of Embu. Extracted 5 distinct lecture schedules: CSC 211, CSC 212, CSC 213, CSC 214, SMA 201. Assigned correct classrooms in Tech Block and Science Complex. Established Lecture Hall B as the primary lecture location."
+      "reasoning": "I analyzed the file 'Class_Timetable_v1.pdf'. Determined that the curriculum matches 'Computer Science Year 2 Semester 1' of State University of Technology. Extracted 5 distinct lecture schedules: CSC 211, CSC 212, CSC 213, CSC 214, SMA 201. Assigned correct classrooms in Tech Block and Science Complex. Established Lecture Hall B as the primary lecture location."
     },
     {
       "id": "act-2",
@@ -660,53 +660,53 @@
     },
     {
       "id": "scho-2",
-      "title": "DeepMind Scholarship for African Students",
+      "title": "DeepMind Scholarship for Undergraduate Students",
       "amount": "$12,000 + Mentorship",
       "deadline": "2027-01-10",
-      "eligibility": "Undergraduate STEM major students in selected African Universities, including University of Embu. Passionate about AI research.",
+      "eligibility": "Undergraduate STEM major students in selected universities, including State University of Technology. Passionate about AI research.",
       "provider": "Google DeepMind"
     },
     {
       "id": "scho-3",
-      "title": "Equity Bank Wings to Fly: Senior Stem Award",
-      "amount": "KES 150,000",
+      "title": "National STEM Excellence Grant",
+      "amount": "$2,000 / Year",
       "deadline": "2026-10-30",
-      "eligibility": "Computer Science majors at University of Embu with GPA > 3.7",
-      "provider": "Equity Group Foundation"
+      "eligibility": "Computer Science majors at State University of Technology with GPA > 3.7",
+      "provider": "Education Merit Board"
     },
     {
       "id": "scho-4",
-      "title": "HELB Undergraduate National Bursary Scheme",
-      "amount": "KES 60,000 / Year",
+      "title": "Higher Education Loans Board Merit Scheme",
+      "amount": "$1,000 / Year",
       "deadline": "2026-11-15",
-      "eligibility": "Kenyan undergraduate students from needy backgrounds enrolled in public universities including University of Embu.",
-      "provider": "Higher Education Loans Board (HELB)"
+      "eligibility": "Undergraduate students from needy backgrounds enrolled in accredited universities including State University of Technology.",
+      "provider": "Higher Education Loans Board"
     },
     {
       "id": "scho-5",
       "title": "ALX Software Engineering Mentorship & Cohort",
       "amount": "Fully Funded (100% Scholarship)",
       "deadline": "2026-11-01",
-      "eligibility": "African tech enthusiasts eager to master front-end and full-stack engineering alongside industry veterans.",
+      "eligibility": "Tech enthusiasts eager to master front-end and full-stack engineering alongside industry veterans.",
       "provider": "ALX / Mastercard Foundation"
     },
     {
       "id": "scho-6",
-      "title": "Safaricom Women in Tech Mentorship Program",
+      "title": "Women in Tech Mentorship Program",
       "amount": "Industry Mentorship & Staged Internships",
       "deadline": "2026-10-18",
-      "eligibility": "Female STEM undergraduates in Embu/Eastern region wanting training in Network Engineering and Cloud Computing.",
-      "provider": "Safaricom PLC"
+      "eligibility": "Female STEM undergraduates in regional universities wanting training in Network Engineering and Cloud Computing.",
+      "provider": "Tech Foundation PLC"
     }
   ],
   "campusEvents": [
     {
       "id": "ce-1",
-      "title": "Embu Tech Hackathon 2026",
+      "title": "University Tech Hackathon 2026",
       "date": "2026-11-12",
       "time": "08:00 AM - 06:00 PM",
       "location": "Computer Lab 2, Tech Block",
-      "description": "Annual hackathon for local developers and University students. Track topics: AI in Agriculture, Mobile Web, FinTech. Organized by GDSC Embu."
+      "description": "Annual hackathon for local developers and university students. Track topics: AI in Agriculture, Mobile Web, FinTech. Organized by GDSC."
     },
     {
       "id": "ce-2",

@@ -330,7 +330,7 @@ export default function DashboardView({
             </div>
 
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black font-sans tracking-tight text-white leading-tight">
-              Good Morning, Clarryson <span className="inline-block animate-wiggle">👋</span>
+              Good Morning, {googleUser?.displayName ? googleUser.displayName.split(' ')[0] : "Student"} <span className="inline-block animate-wiggle">👋</span>
             </h1>
 
             <div className="bg-white/10 dark:bg-slate-900/60 backdrop-blur-md border border-white/15 rounded-2xl p-4 md:p-5 space-y-3">
@@ -659,7 +659,7 @@ export default function DashboardView({
                   <span className="text-xs font-mono text-cyan-500 font-bold">Today • Student Union</span>
                 </div>
                 <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                  Join Google Developer Groups (GDG) and University of Embu innovation teams for the live demonstration of AI autonomous agents. Pizza and Google Cloud credits provided.
+                  Join Google Developer Groups (GDG) and Campus innovation teams for the live demonstration of AI autonomous agents. Pizza and Google Cloud credits provided.
                 </p>
                 <button onClick={() => onNavigate("events")} className="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-xl shadow-sm cursor-pointer">
                   Register & View Events

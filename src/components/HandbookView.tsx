@@ -44,7 +44,7 @@ export default function HandbookView() {
       if (query.toLowerCase().includes("retake") || query.toLowerCase().includes("fail")) {
         setSearchResult({
           question: query,
-          answer: "### 📝 Policy: Retaking Examinations & Supps\n\nUnder **Section 4.12 of the University of Embu Academic Code**, a student who fails to satisfy the examiner in any course (grade below 40%) may be permitted to sit for a **Supplementary Examination** during the academic recess.\n\n- **Supplementary Thresholds**: Maximum supplementary marks capped at 40% (Pass).\n- **Academic Probation**: Failing more than 3 supplementary examinations in a single academic year triggers automatic probation and modules must be re-registered in full during the next session.\n- **Special Exams**: If an exam is missed due to certified medical or bereavement reasons, you must file a Special Examination Request Form with the Dean's Office within **48 hours** of the missed exam slot.",
+          answer: "### 📝 Policy: Retaking Examinations & Supps\n\nUnder **Section 4.12 of the University Academic Code**, a student who fails to satisfy the examiner in any course (grade below 40%) may be permitted to sit for a **Supplementary Examination** during the academic recess.\n\n- **Supplementary Thresholds**: Maximum supplementary marks capped at 40% (Pass).\n- **Academic Probation**: Failing more than 3 supplementary examinations in a single academic year triggers automatic probation and modules must be re-registered in full during the next session.\n- **Special Exams**: If an exam is missed due to certified medical or bereavement reasons, you must file a Special Examination Request Form with the Dean's Office within **48 hours** of the missed exam slot.",
           referencedPages: ["Section 4.12: Supplemental & Special Rules", "Schedule B: Grading Standards, pg 42"],
           confidence: "99% Policy Match"
         });
@@ -85,7 +85,7 @@ export default function HandbookView() {
             Student Handbook AI
           </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-xl">
-            Query the official University of Embu Academic Standards, grading rules, and administrative procedures in real-time.
+            Query official University Academic Standards, grading rules, and administrative procedures in real-time.
           </p>
         </div>
       </div>

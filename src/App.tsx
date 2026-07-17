@@ -43,6 +43,7 @@ export default function App() {
   const [currentSection, setCurrentSection] = useState<string>(() => {
     return localStorage.getItem('currentSection') || 'dashboard';
   });
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('viewMode', viewMode);
@@ -456,6 +457,7 @@ export default function App() {
   const navigateToSection = (section: string) => {
     setCurrentSection(section);
     localStorage.setItem('currentSection', section);
+    setIsSidebarOpen(false);
   };
 
   return (
@@ -471,7 +473,7 @@ export default function App() {
           onGoogleSignIn={handleGoogleSignIn} 
         />
       ) : (
-        /* HORIZONTAL AI OPERATING SYSTEM WORKSPACE */
+        /* AI OPERATING SYSTEM WORKSPACE WITH LEFT PANEL NAVIGATION */
         <div className="flex flex-col min-h-screen overflow-hidden bg-[#FFFFFF] dark:bg-[#0F172A]">
           
           {/* Top App Bar across ALL views */}
@@ -482,6 +484,7 @@ export default function App() {
             onNavigate={navigateToSection}
             theme={theme}
             onToggleTheme={() => setTheme(prev => prev === 'light' ? 'dark' : 'light')}
+            onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
           />
 
           {/* Left Sidebar Navigation and Main Content Layout */}
@@ -489,7 +492,9 @@ export default function App() {
             {/* Left Sidebar Navigation across ALL views */}
             <Navigation 
               currentSection={currentSection} 
-              onSelectSection={navigateToSection} 
+              onSelectSection={navigateToSection}
+              isOpen={isSidebarOpen}
+              onClose={() => setIsSidebarOpen(false)}
             />
 
             {/* Main Content Area */}

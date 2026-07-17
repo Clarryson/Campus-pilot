@@ -173,7 +173,7 @@ const searchProjectsDecl: FunctionDeclaration = {
 
 const searchScholarshipsDecl: FunctionDeclaration = {
   name: "searchScholarships",
-  description: "Search scholarships recommended for University of Embu Computer Science students.",
+  description: "Search scholarships recommended for university students based on major and academic profile.",
   parameters: {
     type: Type.OBJECT,
     properties: {
@@ -597,8 +597,8 @@ export async function executeTool(name: string, args: any): Promise<any> {
         "A student must attain a minimum of 120 credit hours to graduate with a Bachelor of Science in Computer Science.",
         "Year 2 Semester 1 requires registrations of core CSC modules including: CSC 211, CSC 212, CSC 213, CSC 214 and SMA 201.",
         "Graduation honors GPA brackets: First Class Honors (>3.7), Second Class Upper (3.0 - 3.69), Second Class Lower (2.5 - 2.99), Pass (2.0 - 2.49).",
-        "A class attendance of at least 75% is strictly mandatory before sitting for final semester examinations at the University of Embu.",
-        "In case of timetable conflicts, students should raise query tickets directly with the Dean of the School of Pure and Applied Sciences (SPAS) within 14 days of publication."
+        "A class attendance of at least 75% is strictly mandatory before sitting for final semester examinations.",
+        "In case of timetable conflicts, students should raise query tickets directly with the Academic Dean's Office within 14 days of publication."
       ];
 
       const q = (args.query || "").toLowerCase();
@@ -619,7 +619,7 @@ export async function executeTool(name: string, args: any): Promise<any> {
         title: args.eventTitle,
         startTime: args.startTime,
         endTime: args.endTime,
-        location: args.location || "University of Embu Campus",
+        location: args.location || "University Campus",
         description: args.description || "Synced autonomously by Gemma Agent",
         source: "timetable",
         gemmaSynced: true
@@ -680,13 +680,13 @@ export async function runAgentReasoning(
   
   // Format the comprehensive context payload to feed Gemma's reasoning engine
   const profile = state.studentProfile || {
-    name: "Clarryson",
-    university: "University of Embu",
-    course: "Bachelor of Science in Computer Science",
-    department: "Computer Science",
+    name: "Student",
+    university: "University",
+    course: "Computer Science",
+    department: "Computer Science & Engineering",
     year: 2,
     semester: 1,
-    registrationNumber: "ENG/CS/2024/001"
+    registrationNumber: "CS/2026/001"
   };
 
   const contextSystemPrompt = `
@@ -865,7 +865,7 @@ async function runOfflineSimulation(prompt: string, state: DBState): Promise<{ t
     );
 
     return {
-      text: `### 🗓️ Your Weekly Academic Briefing (University of Embu - CS Year 2)
+      text: `### 🗓️ Your Weekly Academic Briefing (${profile.university} - ${profile.course})
 
 As your autonomous academic agent, I have compiled your complete weekly syllabus extracted from **Class_Timetable_v1.pdf**:
 
@@ -935,7 +935,7 @@ ${exams}
     return {
       text: `### 🎓 Matching Scholarships Found (Autonomous Match)
 
-Based on your student profile as a **Computer Science Year 2** student at **University of Embu**, I crawled matching opportunities:
+Based on your student profile at **${profile.university}**, I crawled matching opportunities:
 
 ${schols}`
     };
@@ -975,7 +975,7 @@ ${plans}
   return {
     text: `### Hello! I am Gemma 4, your Autonomous Academic Assistant.
 
-I am actively tracking your semester at the **University of Embu (Computer Science, Yr 2 Sem 1)**.
+I am actively tracking your semester at **${profile.university} (${profile.course})**.
 
 #### 🚀 What I am monitoring right now:
 1. **Timetables**: Classes are mapped from \`Class_Timetable_v1.pdf\`.

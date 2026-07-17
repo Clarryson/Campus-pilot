@@ -84,7 +84,7 @@ Return your response strictly in JSON format as specified in responseSchema.
           type: Type.OBJECT,
           properties: {
             documentType: { type: Type.STRING, enum: ["timetable", "exam", "handbook", "assignment", "project", "unknown"] },
-            university: { type: Type.STRING, description: "University name (e.g. University of Embu)" },
+            university: { type: Type.STRING, description: "University name (e.g. State University of Technology)" },
             semester: { type: Type.STRING, description: "Target semester (e.g. Year 2 Semester 1)" },
             extractedItems: {
               type: Type.ARRAY,
@@ -153,7 +153,7 @@ async function handleExtractedData(data: ExtractedAcademicData, name: string, fu
   logGemmaActivity(
     "System",
     `Auto-classified and stored document: "${name}"`,
-    `Gemma evaluated raw text. Classified as documentType: "${data.documentType}" from university: "${data.university || "University of Embu"}". Stored as record: ${newDocId}.`
+    `Gemma evaluated raw text. Classified as documentType: "${data.documentType}" from university: "${data.university || "University Campus"}". Stored as record: ${newDocId}.`
   );
 
   // Process data depending on Type
@@ -314,13 +314,13 @@ function getISOWeekdayString(dayName: string, timeStr: string): string {
 // Fallback helper to provide raw mock text to the PDF-Parser if file is empty or missing
 function getMockPDFText(name: string): string {
   if (name.toLowerCase().includes("v2")) {
-    return `UNIVERSITY OF EMBU
+    return `STATE UNIVERSITY OF TECHNOLOGY
 FACULTY OF COMPUTER SCIENCE
 REVISED SEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V2)
 
 UPDATED CHANGES:
 1. Object Oriented Programming II (CSC 212) previously in Computer Lab 2 has relocated to the IT Complex Room 104 due to machine upgrades.
-2. Wed Database Management Systems (CSC 213) by Dr. Agnes Mutua shifts from 11:00 AM to 01:00 PM - 04:00 PM due to departmental adjustments.
+2. Wed Database Management Systems (CSC 213) shifts from 11:00 AM to 01:00 PM - 04:00 PM due to departmental adjustments.
 
 FULL WEEK:
 Mon 08:00 - 11:00 | CSC 211 (Data Structures) | Lecture Hall B | Dr. Kamau
@@ -332,7 +332,7 @@ Fri 14:00 - 17:00 | SMA 201 (Calculus III) | Lecture Hall B | Dr. David Njoroge
   }
 
   if (name.toLowerCase().includes("timetable")) {
-    return `UNIVERSITY OF EMBU
+    return `STATE UNIVERSITY OF TECHNOLOGY
 FACULTY OF COMPUTER SCIENCE
 SEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)
 
@@ -345,7 +345,7 @@ Fri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Comp
   }
 
   if (name.toLowerCase().includes("exam")) {
-    return `UNIVERSITY OF EMBU
+    return `STATE UNIVERSITY OF TECHNOLOGY
 OFFICE OF THE REGISTRAR (ACADEMIC AFFAIRS)
 FINAL EXAMINATION TIMETABLE - DEC 2026
 
@@ -355,7 +355,7 @@ SMA 201 (Calculus III) | 2026-12-12 | 09:00 AM | 3 Hours | Graduation Pavilion
 `;
   }
 
-  return `University of Embu student briefing material. CSC Coursework details.`;
+  return `University student briefing material. Coursework details.`;
 }
 
 // Fallback helper to simulate Gemma's structured JSON output
@@ -363,7 +363,7 @@ function getSimulatedExtractionResult(name: string): ExtractedAcademicData {
   if (name.toLowerCase().includes("v2")) {
     return {
       documentType: "timetable",
-      university: "University of Embu",
+      university: "State University of Technology",
       semester: "Year 2 Semester 1",
       extractedItems: [
         { courseCode: "CSC 211", courseName: "Data Structures and Algorithms", day: "Monday", startTime: "08:00 AM", endTime: "11:00 AM", venue: "Lecture Hall B", building: "Science Complex", lecturer: "Dr. John Kamau" },
@@ -372,27 +372,27 @@ function getSimulatedExtractionResult(name: string): ExtractedAcademicData {
         { courseCode: "CSC 214", courseName: "Discrete Structures", day: "Thursday", startTime: "08:00 AM", endTime: "11:00 AM", venue: "Pavilion Room 1", building: "Graduation Pavilion", lecturer: "Mr. James Mwangi" },
         { courseCode: "SMA 201", courseName: "Calculus III", day: "Friday", startTime: "02:00 PM", endTime: "05:00 PM", venue: "Lecture Hall B", building: "Science Complex", lecturer: "Dr. David Njoroge" }
       ],
-      gemmaSummary: "Identified revised version 'Class_Timetable_v2.pdf' from the University of Embu. Isolated 2 key scheduling shifts (CSC 212 venue changed to IT Complex Room 104, and CSC 213 Wednesday slot shifted 2 hours forward)."
+      gemmaSummary: "Identified revised version 'Class_Timetable_v2.pdf' from State University of Technology. Isolated 2 key scheduling shifts (CSC 212 venue changed to IT Complex Room 104, and CSC 213 Wednesday slot shifted 2 hours forward)."
     };
   }
 
   if (name.toLowerCase().includes("exam")) {
     return {
       documentType: "exam",
-      university: "University of Embu",
+      university: "State University of Technology",
       semester: "Year 2 Semester 1",
       extractedItems: [
         { courseCode: "CSC 211", courseName: "Data Structures and Algorithms Exam", date: "2026-12-08", time: "09:00 AM", duration: "3 Hours", venue: "Graduation Pavilion" },
         { courseCode: "CSC 213", courseName: "Database Management Systems Exam", date: "2026-12-10", time: "02:00 PM", duration: "3 Hours", venue: "Science Lab 1" },
         { courseCode: "SMA 201", courseName: "Calculus III Exam", date: "2026-12-12", time: "09:00 AM", duration: "3 Hours", venue: "Graduation Pavilion" }
       ],
-      gemmaSummary: "Analyzed 'Exam_Timetable_v1.pdf' for University of Embu. Extracted 3 critical exam schedules commencing December 8, December 10, and December 12."
+      gemmaSummary: "Analyzed 'Exam_Timetable_v1.pdf' for State University of Technology. Extracted 3 critical exam schedules commencing December 8, December 10, and December 12."
     };
   }
 
   return {
     documentType: "timetable",
-    university: "University of Embu",
+    university: "State University of Technology",
     semester: "Year 2 Semester 1",
     extractedItems: [
       { courseCode: "CSC 211", courseName: "Data Structures and Algorithms", day: "Monday", startTime: "08:00 AM", endTime: "11:00 AM", venue: "Lecture Hall B", building: "Science Complex", lecturer: "Dr. John Kamau" },

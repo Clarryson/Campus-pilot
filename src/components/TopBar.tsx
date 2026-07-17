@@ -8,7 +8,8 @@ import {
   Moon, 
   Sun, 
   Cpu, 
-  UserCircle 
+  UserCircle,
+  Menu
 } from "lucide-react";
 
 interface TopBarProps {
@@ -19,6 +20,7 @@ interface TopBarProps {
   onNavigate?: (section: string) => void;
   theme: 'light' | 'dark';
   onToggleTheme: () => void;
+  onToggleSidebar?: () => void;
 }
 
 export default function TopBar({ 
@@ -28,7 +30,8 @@ export default function TopBar({
   onSearch,
   onNavigate,
   theme,
-  onToggleTheme
+  onToggleTheme,
+  onToggleSidebar
 }: TopBarProps) {
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -55,14 +58,24 @@ export default function TopBar({
   }, []);
 
   return (
-    <header className="border-b border-[#E5E7EB] dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-6 py-3.5 flex flex-col md:flex-row md:items-center justify-between gap-4 shrink-0 z-40 transition-all duration-300">
+    <header className="border-b border-[#E5E7EB] dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-4 md:px-6 py-3.5 flex flex-col md:flex-row md:items-center justify-between gap-4 shrink-0 z-40 transition-all duration-300">
       
-      {/* Left: Brand Logo & Title */}
+      {/* Left: Hamburger & Brand Logo & Title */}
       <div className="flex items-center justify-between">
-        <div 
-          onClick={() => onNavigate?.("dashboard")}
-          className="flex items-center gap-3 cursor-pointer select-none group"
-        >
+        <div className="flex items-center gap-3">
+          {/* Mobile Sidebar Toggle Button */}
+          <button
+            onClick={onToggleSidebar}
+            aria-label="Open Left Panel Navigation"
+            className="md:hidden p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all cursor-pointer"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+
+          <div 
+            onClick={() => onNavigate?.("dashboard")}
+            className="flex items-center gap-3 cursor-pointer select-none group"
+          >
           <div className="relative">
             <img 
               src="/assets/logo.jpg" 
@@ -84,6 +97,7 @@ export default function TopBar({
               Your Autonomous Academic Agent
             </p>
           </div>
+        </div>
         </div>
       </div>
 
@@ -189,15 +203,15 @@ export default function TopBar({
             />
           ) : (
             <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-[#4285F4] to-[#7C4DFF] flex items-center justify-center text-white text-xs font-black font-mono shadow-xs">
-              CC
+              {googleUser && googleUser.displayName ? googleUser.displayName.slice(0, 2).toUpperCase() : "ST"}
             </div>
           )}
           <div className="text-left hidden lg:block">
             <span className="text-xs font-black text-slate-900 dark:text-white block leading-none">
-              {googleUser ? googleUser.displayName : "Clarryson"}
+              {googleUser && googleUser.displayName ? googleUser.displayName : "Student"}
             </span>
             <span className="text-[10px] font-mono text-[#34A853] block mt-0.5">
-              Online • CS Year 2
+              Online • Academic Workspace
             </span>
           </div>
         </div>

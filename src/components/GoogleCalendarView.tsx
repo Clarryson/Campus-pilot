@@ -180,7 +180,7 @@ export default function GoogleCalendarView({
                 </div>
                 <div className="text-xs text-slate-500 dark:text-slate-400 font-mono">No staged syllabus events found</div>
                 <p className="text-[11px] text-slate-400 max-w-xs mx-auto">
-                  Upload your University of Embu timetable in the Documents view to automatically generate staged events.
+                  Upload your class timetable in the Documents view to automatically generate staged events.
                 </p>
               </div>
             ) : (

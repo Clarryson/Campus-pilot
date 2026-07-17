@@ -229,7 +229,7 @@ export default function LandingPage({ onLaunchApp, googleUser, onGoogleSignIn }:
             <div className="text-xl font-bold font-serif text-slate-600 tracking-tight">Stanford University</div>
             <div className="text-xl font-bold font-sans text-slate-600 tracking-tight">MIT</div>
             <div className="text-xl font-bold font-mono text-slate-600 tracking-widest">OXFORD</div>
-            <div className="text-xl font-bold font-serif text-slate-600 tracking-wide">University of Embu</div>
+            <div className="text-xl font-bold font-serif text-slate-600 tracking-wide">State University</div>
             <div className="text-xl font-bold font-sans text-slate-600 tracking-wider">Cordillera School</div>
           </div>
         </div>
@@ -539,7 +539,7 @@ export default function LandingPage({ onLaunchApp, googleUser, onGoogleSignIn }:
               <div className="text-right">
                 <span className="text-[8px] text-slate-500 block mb-0.5">Alex (Student)</span>
                 <span className="inline-block bg-[#009BF5] text-white px-3 py-1.5 rounded-xl rounded-tr-none text-[10px] text-left">
-                  Find me CS scholarships in Embu...
+                  Find me CS scholarships near campus...
                 </span>
               </div>
               <div className="text-left">
@@ -549,7 +549,7 @@ export default function LandingPage({ onLaunchApp, googleUser, onGoogleSignIn }:
                     <span className="h-1 w-3 bg-[#009BF5] rounded animate-bounce" />
                     <span>LIVE SEARCHING...</span>
                   </div>
-                  <p className="text-[9px] text-slate-400">Crawling Embu community databases and international tech funding channels...</p>
+                  <p className="text-[9px] text-slate-400">Crawling regional university databases and international tech funding channels...</p>
                 </div>
               </div>
             </div>

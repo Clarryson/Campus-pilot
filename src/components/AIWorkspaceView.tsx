@@ -147,7 +147,7 @@ export default function AIWorkspaceView({
               Gemma Daily Briefing
             </span>
             <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-150 dark:border-slate-850/60 text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-sans">
-              "Clarryson, today is optimized. I mapped three lecture cycles for your Computer Science syllabus. You have <strong>CSC 211 Quantum Mechanics</strong> at 9:00 AM, followed by <strong>CSC 212 Physics code diagnostics</strong>. Google Calendar is fully up to date."
+              "Welcome! Today is optimized. I mapped your active lecture cycles according to your uploaded syllabus and academic schedule. All reminders and Google Calendar sync loops are fully up to date."
             </div>
           </div>
 
@@ -176,7 +176,7 @@ export default function AIWorkspaceView({
                 <div className="flex items-center gap-1.5 mb-1.5 px-1 text-[10px] font-mono text-slate-400 dark:text-slate-500">
                   {msg.sender === 'student' ? (
                     <>
-                      <span>Clarryson (You)</span>
+                      <span>You</span>
                       <User className="h-3 w-3 text-indigo-500" />
                     </>
                   ) : (

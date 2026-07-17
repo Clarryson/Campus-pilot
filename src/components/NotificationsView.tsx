@@ -45,7 +45,7 @@ export default function NotificationsView({ notifications, onMarkRead }: Notific
     },
     {
       id: "not-2",
-      message: "New Scholarship Recommended: University of Embu Computer Science Research Grant matching 98%. Deadline in 14 days.",
+      message: "New Scholarship Recommended: STEM Research Fellowship Grant matching 98%. Deadline in 14 days.",
       type: "info",
       timestamp: new Date(Date.now() - 3600000).toISOString(),
       read: false
