@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+/* Scale absolute font sizes used in the app when large or xlarge classes are applied */
+.app-font-large [class*="text-[10px]"],
+.app-font-large [class*="text-[9px]"],
+.app-font-large [class*="text-[11px]"],
+.app-font-large [class*="text-[12px]"] {
+  font-size: 13px !important;
+}
+
+.app-font-large [class*="text-xs"] {
+  font-size: 14px !important;
+}
+
+.app-font-large [class*="text-sm"] {
+  font-size: 16px !important;
+}
+
+.app-font-large .markdown-body p,
+.app-font-large .markdown-body li {
+  font-size: 15px !important;
+  line-height: 1.625 !important;
+}
+
+.app-font-xlarge [class*="text-[10px]"],
+.app-font-xlarge [class*="text-[9px]"],
+.app-font-xlarge [class*="text-[11px]"],
+.app-font-xlarge [class*="text-[12px]"] {
+  font-size: 15px !important;
+}
+
+.app-font-xlarge [class*="text-xs"] {
+  font-size: 16px !important;
+}
+
+.app-font-xlarge [class*="text-sm"] {
+  font-size: 18px !important;
+}
+
+.app-font-xlarge .markdown-body p,
+.app-font-xlarge .markdown-body li {
+  font-size: 17px !important;
+  line-height: 1.625 !important;
+}

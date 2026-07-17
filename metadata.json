@@ -1,0 +1,6 @@
+{
+  "name": "CampusPilot AI",
+  "description": "Your Autonomous Academic Agent Powered by Gemma 4. Seamlessly parses class and exam schedules, projects, and handbook documents to autonomously synchronize calendars, plan study times, and recommend academic resources.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
