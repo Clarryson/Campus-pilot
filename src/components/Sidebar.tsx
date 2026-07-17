@@ -56,7 +56,7 @@ export default function Sidebar({
   ];
 
   return (
-    <aside className={`fixed inset-y-0 left-0 z-40 w-64 bg-white dark:bg-[#0B0F19] border-r border-slate-200/60 dark:border-slate-800/80 flex flex-col justify-between h-full py-6 px-4 shrink-0 shadow-[0_8px_30px_rgb(0,0,0,0.01)] dark:shadow-none select-none transition-all duration-300 transform md:relative md:translate-x-0 ${
+    <aside className={`fixed inset-y-0 left-0 z-40 w-64 bg-white dark:bg-slate-900 border-r border-slate-200/60 dark:border-slate-800/80 flex flex-col justify-between h-full py-6 px-4 shrink-0 shadow-[0_8px_30px_rgb(0,0,0,0.01)] dark:shadow-none select-none transition-all duration-300 transform md:relative md:translate-x-0 ${
       isOpen ? "translate-x-0" : "-translate-x-full"
     }`}>
       

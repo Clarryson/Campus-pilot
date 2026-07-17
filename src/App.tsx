@@ -442,7 +442,7 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-[#0F172A] text-slate-100' : 'bg-slate-50 text-slate-800'} font-sans selection:bg-indigo-500 selection:text-white flex flex-col ${
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900 text-slate-100' : 'bg-white text-slate-800'} font-sans selection:bg-indigo-500 selection:text-white flex flex-col ${
       fontSize === 'normal' ? 'text-base' : fontSize === 'xlarge' ? 'text-xl app-font-xlarge' : 'text-lg app-font-large'
     }`}>
       
@@ -484,7 +484,7 @@ export default function App() {
           )}
 
           {/* Main workspace container right */}
-          <div className="flex-1 flex flex-col min-w-0 bg-white dark:bg-[#0F172A] overflow-hidden">
+          <div className="flex-1 flex flex-col min-w-0 bg-white dark:bg-slate-900 overflow-hidden">
             
             {/* Header top bar */}
             {currentSection !== 'dashboard' && (

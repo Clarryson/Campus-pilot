@@ -28,7 +28,7 @@ export default function TopBar({
   };
 
   return (
-    <header className="border-b border-slate-150 dark:border-slate-850 bg-white/80 dark:bg-[#0F172A]/80 backdrop-blur-md px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4 shrink-0 transition-all duration-300 z-20">
+    <header className="border-b border-slate-150 dark:border-slate-850 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4 shrink-0 transition-all duration-300 z-20">
       
       {/* Left: Dynamic Greetings matching user specifications */}
       <div className="flex items-center gap-3">
@@ -103,7 +103,7 @@ export default function TopBar({
         >
           <Bell className="h-4.5 w-4.5" />
           {notificationsCount > 0 && (
-            <span className="absolute top-1 right-1 bg-red-500 text-white text-[9px] font-bold h-4 w-4 rounded-full flex items-center justify-center border border-white dark:border-[#0F172A] animate-bounce">
+            <span className="absolute top-1 right-1 bg-red-500 text-white text-[9px] font-bold h-4 w-4 rounded-full flex items-center justify-center border border-white dark:border-slate-900 animate-bounce">
               {notificationsCount}
             </span>
           )}
