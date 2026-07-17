@@ -156,7 +156,8 @@ export interface DBState {
   campusEvents: CampusEventItem[];
 }
 
-const DB_FILE = path.join(process.cwd(), "database.json");
+const IS_SERVERLESS = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+const DB_FILE = IS_SERVERLESS ? path.join("/tmp", "database.json") : path.join(process.cwd(), "database.json");
 
 const INITIAL_STATE: DBState = {
   studentProfile: {

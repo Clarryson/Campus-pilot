@@ -54,8 +54,9 @@ Database.init();
       return res.status(400).json({ error: "Document name and base64 string are required." });
     }
     try {
-      // Save file permanently in uploads/ (gitignored, survives server restarts)
-      const uploadsDir = path.join(process.cwd(), "uploads");
+      // Save file in uploads/ (or in /tmp/uploads when running serverless on Vercel)
+      const IS_SERVERLESS = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+      const uploadsDir = IS_SERVERLESS ? path.join("/tmp", "uploads") : path.join(process.cwd(), "uploads");
       if (!fsExistsSync(uploadsDir)) {
         fsMkdirSync(uploadsDir, { recursive: true });
       }

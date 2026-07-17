@@ -348,19 +348,30 @@ export default function App() {
             timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           }]);
         } else {
-          const err = await response.json();
+          let errMsg = `Server returned status ${response.status}`;
+          if (response.status === 413) {
+            errMsg = "File exceeds Vercel serverless platform upload limit (~3.5 MB). Please compress or choose a smaller PDF.";
+          } else {
+            try {
+              const err = await response.json();
+              errMsg = err.error || errMsg;
+            } catch {
+              const text = await response.text();
+              errMsg = text.substring(0, 120) || errMsg;
+            }
+          }
           setLastUploadResult({
             fileName: file.name,
-            summary: `Upload failed: ${err.error || 'Unknown error'}`,
+            summary: `Upload failed: ${errMsg}`,
             type: 'error',
             itemCount: 0
           });
         }
-      } catch (error) {
+      } catch (error: any) {
         console.error("Upload failed:", error);
         setLastUploadResult({
           fileName: file.name,
-          summary: 'Network error — could not reach the server.',
+          summary: error?.message || 'Network error — could not reach the server.',
           type: 'error',
           itemCount: 0
         });
