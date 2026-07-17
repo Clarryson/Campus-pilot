@@ -36,9 +36,13 @@ import NotificationsView from "./components/NotificationsView";
 import HandbookView from "./components/HandbookView";
 
 export default function App() {
-  // Navigation State
-  const [viewMode, setViewMode] = useState<'landing' | 'app'>('landing');
-  const [currentSection, setCurrentSection] = useState<string>('dashboard');
+  // Navigation State — persisted so upload/re-renders don't reset to landing page
+  const [viewMode, setViewMode] = useState<'landing' | 'app'>(() => {
+    return (localStorage.getItem('viewMode') as 'landing' | 'app') || 'landing';
+  });
+  const [currentSection, setCurrentSection] = useState<string>(
+    localStorage.getItem('currentSection') || 'dashboard'
+  );
 
   // Application DB State
   const [documents, setDocuments] = useState<DocumentRecord[]>([]);
@@ -184,6 +188,11 @@ export default function App() {
       await logout();
       setGoogleUser(null);
       setGoogleToken(null);
+      // Clear persisted navigation so user returns to landing page on logout
+      localStorage.removeItem('viewMode');
+      localStorage.removeItem('currentSection');
+      setViewMode('landing');
+      setCurrentSection('dashboard');
     } catch (e) {
       console.error("Sign-out error", e);
     }
@@ -404,14 +413,16 @@ export default function App() {
   const unreadCount = notifications.filter(n => !n.read).length;
 
   const launchApp = (initialSection?: string) => {
-    if (initialSection) {
-      setCurrentSection(initialSection);
-    }
+    const section = initialSection || 'dashboard';
+    setCurrentSection(section);
+    localStorage.setItem('currentSection', section);
     setViewMode('app');
+    localStorage.setItem('viewMode', 'app');
   };
 
   const navigateToSection = (section: string) => {
     setCurrentSection(section);
+    localStorage.setItem('currentSection', section);
   };
 
   return (
