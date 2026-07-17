@@ -45,6 +45,7 @@ export default function App() {
   );
 
   // Application DB State
+  const [studentProfile, setStudentProfile] = useState<any>(null);
   const [documents, setDocuments] = useState<DocumentRecord[]>([]);
   const [timetable, setTimetable] = useState<TimetableClass[]>([]);
   const [exams, setExams] = useState<ExamEvent[]>([]);
@@ -59,13 +60,28 @@ export default function App() {
 
   // UI Interactive States
   const [chatInput, setChatInput] = useState("");
-  const [chatMessages, setChatMessages] = useState<Array<{ sender: 'student' | 'gemma'; text: string; timestamp: string }>>([
-    {
-      sender: 'gemma',
-      text: "### Welcome to CampusPilot AI!\n\nI am Gemma 4, your **Autonomous Academic Agent**. I have already extracted your class lecture dates and early examination milestones from your current uploaded PDFs.\n\nAsk me questions like:\n- *'What classes do I have tomorrow?'*\n- *'Are there any calendar conflicts?'*\n- *'Generate a highly intensive weekly study plan'*\n- *'Show my active exams and check density constraints.'*",
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  const [chatMessages, setChatMessages] = useState<Array<{ sender: 'student' | 'gemma'; text: string; timestamp: string }>>(() => {
+    const saved = localStorage.getItem("chatMessages");
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error("Failed to parse chat messages", e);
+      }
     }
-  ]);
+    return [
+      {
+        sender: 'gemma',
+        text: "### Welcome to CampusPilot AI!\n\nI am Gemma 4, your **Autonomous Academic Agent**. I have already extracted your class lecture dates and early examination milestones from your current uploaded PDFs.\n\nAsk me questions like:\n- *'What classes do I have tomorrow?'*\n- *'Are there any calendar conflicts?'*\n- *'Generate a highly intensive weekly study plan'*\n- *'Show my active exams and check density constraints.'*",
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      }
+    ];
+  });
+
+  // Automatically save chat messages to localStorage when updated
+  useEffect(() => {
+    localStorage.setItem("chatMessages", JSON.stringify(chatMessages));
+  }, [chatMessages]);
   const [isGemmaThinking, setIsGemmaThinking] = useState(false);
   const [uploadingFile, setUploadingFile] = useState(false);
   const [uploadingFileName, setUploadingFileName] = useState<string>("");
@@ -128,6 +144,9 @@ export default function App() {
 
   // Sync state helper
   const syncWithState = (state: any) => {
+    if (state.studentProfile) {
+      setStudentProfile(state.studentProfile);
+    }
     setDocuments(state.documents || []);
     setTimetable(state.timetable || []);
     setExams(state.exams || []);
@@ -145,6 +164,9 @@ export default function App() {
       const response = await fetch("/api/state");
       if (response.ok) {
         const data = await response.json();
+        if (data.studentProfile) {
+          setStudentProfile(data.studentProfile);
+        }
         setDocuments(data.documents || []);
         setTimetable(data.timetable || []);
         setExams(data.exams || []);
@@ -159,6 +181,24 @@ export default function App() {
       }
     } catch (error) {
       console.error("Failed to load initial state:", error);
+    }
+  };
+
+  const handleUpdateProfile = async (newProfile: any) => {
+    try {
+      const response = await fetch("/api/profile/update", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ profile: newProfile })
+      });
+      if (response.ok) {
+        const data = await response.json();
+        if (data.state) {
+          syncWithState(data.state);
+        }
+      }
+    } catch (e) {
+      console.error("Failed to update profile", e);
     }
   };
 
@@ -193,8 +233,16 @@ export default function App() {
       // Clear persisted navigation so user returns to landing page on logout
       localStorage.removeItem('viewMode');
       localStorage.removeItem('currentSection');
+      localStorage.removeItem('chatMessages');
       setViewMode('landing');
       setCurrentSection('dashboard');
+      setChatMessages([
+        {
+          sender: 'gemma',
+          text: "### Welcome to CampusPilot AI!\n\nI am Gemma 4, your **Autonomous Academic Agent**. I have already extracted your class lecture dates and early examination milestones from your current uploaded PDFs.\n\nAsk me questions like:\n- *'What classes do I have tomorrow?'*\n- *'Are there any calendar conflicts?'*\n- *'Generate a highly intensive weekly study plan'*\n- *'Show my active exams and check density constraints.'*",
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        }
+      ]);
     } catch (e) {
       console.error("Sign-out error", e);
     }
@@ -491,6 +539,9 @@ export default function App() {
                 timetable={timetable} 
                 exams={exams} 
                 reminders={reminders} 
+                scholarships={scholarships}
+                campusEvents={campusEvents}
+                studentProfile={studentProfile}
                 onNavigate={navigateToSection}
                 onAddQuickReminder={handleAddQuickReminder}
                 googleUser={googleUser}
@@ -586,6 +637,8 @@ export default function App() {
                 onGoogleSignIn={handleGoogleSignIn} 
                 onGoogleLogout={handleGoogleLogout} 
                 onResetApp={handleResetApp} 
+                studentProfile={studentProfile}
+                onUpdateProfile={handleUpdateProfile}
               />
             )}
 
