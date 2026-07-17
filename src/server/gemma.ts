@@ -679,16 +679,28 @@ export async function runAgentReasoning(
   const state = Database.get();
   
   // Format the comprehensive context payload to feed Gemma's reasoning engine
+  const profile = state.studentProfile || {
+    name: "Clarryson",
+    university: "University of Embu",
+    course: "Bachelor of Science in Computer Science",
+    department: "Computer Science",
+    year: 2,
+    semester: 1,
+    registrationNumber: "ENG/CS/2024/001"
+  };
+
   const contextSystemPrompt = `
-You are the central reasoning brain of CampusPilot AI, built for University of Embu, Computer Science Yr 2 student.
+You are the central reasoning brain of CampusPilot AI, built for ${profile.university} ${profile.course} student.
 Your name is Gemma 4. You are NOT a generic chatbot; you are an autonomous academic agent.
 
 --- STUDENT PROFILE ---
-University: University of Embu
-Course: Bachelor of Science in Computer Science
-Year: 2
-Semester: 1
-Student Name: Demo Student Profile
+Name: ${profile.name}
+University: ${profile.university}
+Course: ${profile.course}
+Department: ${profile.department}
+Year: ${profile.year}
+Semester: ${profile.semester}
+Registration Number: ${profile.registrationNumber}
 
 --- SYSTEM MANDATES & DESIGN CONSTRAINTS ---
 1. ABSOLUTE REASONING FIRST: You must think through every decision and state your rationales before deciding.
@@ -696,6 +708,9 @@ Student Name: Demo Student Profile
 3. PREFER EXECUTING TOOLS: You must always call the relevant function declarations (tools) to search schedules, exams, comparisons, plan studies, check scholarships, or sync calendars when requested.
 4. If a file of Class Timetable is uploaded, invoke compareTimetables or searchTimetable to evaluate classes.
 5. If the user clicks Sync Calendar, invoke addToGoogleCalendar, updateCalendarEvent, or deleteCalendarEvent.
+
+--- UPLOADED DOCUMENTS (${state.documents.length} files) ---
+${state.documents.map(d => `• ${d.name} (${d.type}) — uploaded ${new Date(d.uploadedAt).toLocaleDateString()}${d.filePath ? ` — stored at ${d.filePath}` : ''}`).join('\n') || 'No documents uploaded yet.'}
 
 --- ACTIVE DATABASE STATE ---
 CLASSES: ${JSON.stringify(state.timetable)}

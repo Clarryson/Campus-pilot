@@ -6,3 +6,7 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Uploaded student documents (excluded from commits)
+uploads/*
+!uploads/.gitkeep

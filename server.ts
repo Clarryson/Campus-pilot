@@ -48,36 +48,32 @@ async function startServer() {
     }
   });
 
-  // 3. Document upload (PDF to base64) pipeline
+  // 3. Document upload — saves PDF permanently to uploads/ folder
   app.post("/api/documents/upload", async (req, res) => {
     const { name, base64 } = req.body;
     if (!name || !base64) {
       return res.status(400).json({ error: "Document name and base64 string are required." });
     }
     try {
-      // Decode base64 to temp file path or parse text
-      const tempDir = path.join(process.cwd(), "tmp");
-      if (!fsExistsSync(tempDir)) {
-        fsMkdirSync(tempDir);
+      // Save file permanently in uploads/ (gitignored, survives server restarts)
+      const uploadsDir = path.join(process.cwd(), "uploads");
+      if (!fsExistsSync(uploadsDir)) {
+        fsMkdirSync(uploadsDir, { recursive: true });
       }
-      const tempFilePath = path.join(tempDir, `uploaded-${Date.now()}-${name}`);
+      const safeName = name.replace(/[^a-zA-Z0-9._-]/g, "_");
+      const savedFilePath = path.join(uploadsDir, `${Date.now()}-${safeName}`);
       const buffer = Buffer.from(base64, "base64");
-      fsWriteFileSync(tempFilePath, buffer);
+      fsWriteFileSync(savedFilePath, buffer);
+      console.log(`[Upload] Saved ${name} → ${savedFilePath}`);
 
-      // Parse and structure PDF
-      const extractionResult = await parseAcademicPDF(tempFilePath, name);
-
-      // Clean up temp file safely
-      try {
-        fsUnlinkSync(tempFilePath);
-      } catch (err) {
-        console.warn(`Could not delete temp file ${tempFilePath}:`, err);
-      }
+      // Parse and structure PDF, passing permanent path and relative path for storage
+      const extractionResult = await parseAcademicPDF(savedFilePath, name, savedFilePath);
 
       const updatedState = Database.get();
       res.json({
         success: true,
         summary: extractionResult.gemmaSummary,
+        savedPath: savedFilePath,
         state: updatedState
       });
     } catch (e: any) {

@@ -15,7 +15,7 @@ interface ExtractedAcademicData {
   gemmaSummary: string;
 }
 
-export async function parseAcademicPDF(filePath: string, originalName: string): Promise<ExtractedAcademicData> {
+export async function parseAcademicPDF(filePath: string, originalName: string, savedFilePath?: string): Promise<ExtractedAcademicData> {
   console.log(`Starting parsing pipeline for ${originalName} from path: ${filePath}`);
   
   let extractedText = "";
@@ -40,15 +40,28 @@ export async function parseAcademicPDF(filePath: string, originalName: string): 
   // Trim text to avoid token limits (keep first 8000 characters which is plenty for syllabus tables)
   const textSample = extractedText.substring(0, 8000);
 
-  // Ask Gemma to classify and structure the extracted document text
+  // Get student profile for context-aware filtering
+  const state = Database.get();
+  const profile = state.studentProfile;
+
+  // Ask Gemma 4 26B to classify and structure the extracted document text
   const parserSystemPrompt = `
-You are the CampusPilot PDF structuring engine. Your job is to parse raw extracted text from a student document at University of Embu and structure it into a precise, typed JSON response.
+You are the CampusPilot PDF structuring engine powered by Gemma 4. Your job is to parse raw extracted text from a student academic document and structure it into a precise, typed JSON response.
+
+--- STUDENT PROFILE (filter for this student ONLY) ---
+University: ${profile.university}
+Course: ${profile.course}
+Department: ${profile.department}
+Year: Year ${profile.year}
+Semester: Semester ${profile.semester}
 
 Based on the document text, determine the documentType:
-- 'timetable': Class lectures list with day, start_time, end_time, venue, building, lecturer.
-- 'exam': Final exam schedule with course_code, course_name, date, time, duration, venue.
+- 'timetable': Class lectures with day, start_time, end_time, venue, building, lecturer — filter ONLY for ${profile.course} Year ${profile.year}
+- 'exam': Final exam schedule with course_code, course_name, date, time, duration, venue — filter ONLY for ${profile.course} Year ${profile.year}
 - 'assignment' or 'project': Brief with course_code, title, deadline, details, priority.
 - 'handbook': Student guidelines or credit requirements.
+
+IMPORTANT: Only extract entries relevant to the student's course and year. Skip entries for other departments.
 
 --- PARSED DOCUMENT RAW TEXT ---
 ${textSample}
@@ -62,7 +75,7 @@ Return your response strictly in JSON format as specified in responseSchema.
     }
 
     const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
+      model: "gemma-4-27b-it",
       contents: "Structure this academic document and explain your classification.",
       config: {
         systemInstruction: parserSystemPrompt,
@@ -103,20 +116,19 @@ Return your response strictly in JSON format as specified in responseSchema.
     });
 
     const parsedJson: ExtractedAcademicData = JSON.parse(response.text || "{}");
-    await handleExtractedData(parsedJson, originalName, extractedText);
+    await handleExtractedData(parsedJson, originalName, extractedText, savedFilePath);
     return parsedJson;
 
   } catch (error) {
     console.error("Gemma parser error or key missing, running fallback structuring:", error);
-    // Simulation fallback to guarantee 100% stable execution
     const simulatedData = getSimulatedExtractionResult(originalName);
-    await handleExtractedData(simulatedData, originalName, extractedText);
+    await handleExtractedData(simulatedData, originalName, extractedText, savedFilePath);
     return simulatedData;
   }
 }
 
 // Handler to update the Database dynamically depending on document type
-async function handleExtractedData(data: ExtractedAcademicData, name: string, fullText: string) {
+async function handleExtractedData(data: ExtractedAcademicData, name: string, fullText: string, savedFilePath?: string) {
   const state = Database.get();
   
   // Create document record
@@ -129,6 +141,7 @@ async function handleExtractedData(data: ExtractedAcademicData, name: string, fu
     type: data.documentType,
     uploadedAt: new Date().toISOString(),
     size: sizeKb,
+    filePath: savedFilePath,       // Stored permanently in uploads/ folder
     parsedText: fullText,
     gemmaExtraction: data.gemmaSummary
   };

@@ -7,6 +7,7 @@ export interface DocumentRecord {
   type: string; // 'timetable' | 'exam' | 'handbook' | 'assignment' | 'project' | 'unknown'
   uploadedAt: string;
   size: string;
+  filePath?: string;    // Absolute path to saved file in uploads/ folder
   parsedText?: string;
   gemmaExtraction?: string;
 }
@@ -129,7 +130,18 @@ export interface DailyBriefing {
   gemmaAssessment: string;
 }
 
+export interface StudentProfile {
+  name: string;
+  university: string;
+  course: string;
+  department: string;
+  year: number;
+  semester: number;
+  registrationNumber: string;
+}
+
 export interface DBState {
+  studentProfile: StudentProfile;
   documents: DocumentRecord[];
   timetable: TimetableClass[];
   exams: ExamEvent[];
@@ -147,6 +159,15 @@ export interface DBState {
 const DB_FILE = path.join(process.cwd(), "database.json");
 
 const INITIAL_STATE: DBState = {
+  studentProfile: {
+    name: "Clarryson",
+    university: "University of Embu",
+    course: "Bachelor of Science in Computer Science",
+    department: "Computer Science",
+    year: 2,
+    semester: 1,
+    registrationNumber: "ENG/CS/2024/001"
+  },
   documents: [
     {
       id: "doc-1",
