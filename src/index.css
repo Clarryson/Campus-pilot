@@ -7,6 +7,24 @@
 
 @import "tailwindcss";
 
+/* ── Responsive page-content wrapper ───────────────────────────────────────
+   Applied to the scrollable <main> areas inside every view component.
+   Mobile: 16px · Tablet: 24px · Desktop: 32px horizontal padding.
+   Also caps width at 1440px and centres content on ultra-wide displays.
+────────────────────────────────────────────────────────────────────────── */
+.page-content {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding: 1.25rem 1rem;          /* mobile: 20px 16px */
+}
+@media (min-width: 640px) {
+  .page-content { padding: 1.5rem 1.5rem; }  /* tablet: 24px */
+}
+@media (min-width: 1024px) {
+  .page-content { padding: 2rem 2rem; }       /* desktop: 32px */
+}
+
 @variant dark (.never-match-dark &);
 
 /* ──────────────────────────────────────────────────────────────────────────

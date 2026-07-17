@@ -118,7 +118,7 @@ export default function DocumentsView({ documents, uploadingFile, uploadingFileN
   const storageUsed = Math.min(100, Math.round((documents.length / 10) * 100));
 
   return (
-    <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-8 text-left bg-slate-50">
+    <div className="page-content space-y-8 text-left bg-slate-50">
 
       {/* Header */}
       <div className="flex flex-col gap-1 pb-6 border-b border-slate-200">

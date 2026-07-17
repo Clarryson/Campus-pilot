@@ -106,7 +106,7 @@ export default function AIWorkspaceView({
   const recentActivities = gemmaActivities.slice(0, 20);
 
   return (
-    <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-8 text-left bg-slate-50">
+    <div className="page-content space-y-8 text-left bg-slate-50">
 
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200">

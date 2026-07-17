@@ -247,7 +247,7 @@ export default function DashboardView({
   });
 
   return (
-    <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-8 text-left bg-[#FFFFFF] dark:bg-[#0F172A] text-slate-900 dark:text-slate-100 transition-colors duration-300">
+    <div className="page-content space-y-8 text-left bg-[#FFFFFF] dark:bg-[#0F172A] text-slate-900 dark:text-slate-100 transition-colors duration-300">
       
       {/* ==============================================
           1. MAIN HERO SECTION (AI Operating System Centerpiece)

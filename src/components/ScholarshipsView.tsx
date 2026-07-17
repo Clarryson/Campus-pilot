@@ -8,7 +8,7 @@ interface ScholarshipsViewProps {
 
 export default function ScholarshipsView({ scholarships }: ScholarshipsViewProps) {
   return (
-    <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-8 text-left transition-colors duration-300">
+    <div className="page-content space-y-8 text-left transition-colors duration-300">
       
       {/* Title */}
       <div className="flex flex-col gap-1 border-b border-slate-150/10 dark:border-gray-800/40 pb-6">

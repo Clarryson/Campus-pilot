@@ -545,7 +545,7 @@ export default function App() {
         />
       ) : (
         /* AI OPERATING SYSTEM WORKSPACE WITH LEFT PANEL NAVIGATION */
-        <div className="flex flex-col min-h-screen overflow-hidden bg-[#FFFFFF] dark:bg-[#0F172A]">
+        <div className="flex flex-col h-screen w-full overflow-hidden bg-[#FFFFFF] dark:bg-[#0F172A]">
           
           {/* Top App Bar across ALL views */}
           <TopBar 
@@ -559,7 +559,7 @@ export default function App() {
           />
 
           {/* Left Sidebar Navigation and Main Content Layout */}
-          <div className="flex flex-1 overflow-hidden">
+          <div className="flex flex-1 min-h-0 overflow-hidden">
             {/* Left Sidebar Navigation across ALL views */}
             <Navigation 
               currentSection={currentSection} 
@@ -568,8 +568,8 @@ export default function App() {
               onClose={() => setIsSidebarOpen(false)}
             />
 
-            {/* Main Content Area */}
-            <main className="flex-1 overflow-y-auto bg-[#FFFFFF] dark:bg-[#0F172A] transition-colors duration-300">
+            {/* Main Content Area — fills all remaining width, scrolls independently */}
+            <main className="flex-1 min-w-0 overflow-y-auto overflow-x-hidden bg-[#FFFFFF] dark:bg-[#0F172A] transition-colors duration-300">
               
               {currentSection === 'dashboard' && (
                 <DashboardView 
@@ -695,8 +695,7 @@ export default function App() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
-            className="fixed bottom-4 right-4 max-w-sm bg-[#111A2E] border border-blue-500/30 rounded-2xl p-4 shadow-2xl shadow-black/80 z-50 flex flex-col gap-3"
-          >
+            className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:max-w-sm bg-[#111A2E] border border-blue-500/30 rounded-2xl p-4 shadow-2xl shadow-black/80 z-50 flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <span className="flex items-center gap-1.5 text-xs text-blue-400 font-mono font-bold uppercase tracking-wider">
                 <Bell className="h-4 w-4 animate-bounce text-[#4285F4]" />
