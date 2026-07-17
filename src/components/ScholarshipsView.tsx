@@ -50,7 +50,7 @@ export default function ScholarshipsView({ scholarships }: ScholarshipsViewProps
                   <span className="text-sm font-black text-emerald-600 dark:text-emerald-400 font-mono">{schol.amount}</span>
                 </div>
 
-                <h4 className="text-sm font-extrabold text-slate-900 dark:text-white mt-4 leading-snug group-hover:text-[#4285F4] dark:group-hover:text-cyan-400 transition-colors">
+                <h4 className="text-sm font-extrabold text-slate-900 dark:text-white mt-4 leading-snug group-hover:text-[#009BF5] dark:group-hover:text-cyan-400 transition-colors">
                   {schol.title}
                 </h4>
 
@@ -64,7 +64,7 @@ export default function ScholarshipsView({ scholarships }: ScholarshipsViewProps
                 <span className="font-medium">Deadline: {schol.deadline}</span>
                 <a 
                   href="#apply" 
-                  className="text-cyan-600 dark:text-cyan-400 hover:text-[#4285F4] dark:hover:text-cyan-300 font-black flex items-center gap-1 cursor-pointer transition-colors"
+                  className="text-cyan-600 dark:text-cyan-400 hover:text-[#009BF5] dark:hover:text-cyan-300 font-black flex items-center gap-1 cursor-pointer transition-colors"
                 >
                   <span>Apply</span>
                   <ExternalLink className="h-3 w-3" />
