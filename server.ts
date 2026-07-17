@@ -9,16 +9,15 @@ import { parseAcademicPDF } from "./src/server/pdfProcessor.js";
 // Load environment variables
 dotenv.config();
 
-async function startServer() {
-  const app = express();
-  const PORT = 3000;
+export const app = express();
+const PORT = Number(process.env.PORT || 3000);
 
-  // Use JSON and URL-encoded body parsers
-  app.use(express.json({ limit: "50mb" }));
-  app.use(express.urlencoded({ limit: "50mb", extended: true }));
+// Use JSON and URL-encoded body parsers
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
-  // Initialize DB State
-  Database.init();
+// Initialize DB State
+Database.init();
 
   // ------------------------------------------------------------------------
   // API Endpoints
@@ -284,26 +283,31 @@ async function startServer() {
     }
   });
 
-  // ------------------------------------------------------------------------
-  // Vite Integration & Asset Serving
-  // ------------------------------------------------------------------------
-  if (process.env.NODE_ENV !== "production") {
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: "spa",
-    });
-    app.use(vite.middlewares);
-  } else {
-    const distPath = path.join(process.cwd(), "dist");
-    app.use(express.static(distPath));
-    app.get("*", (req, res) => {
-      res.sendFile(path.join(distPath, "index.html"));
+// ------------------------------------------------------------------------
+// Vite Integration & Asset Serving (Standalone execution outside Vercel)
+// ------------------------------------------------------------------------
+if (!process.env.VERCEL) {
+  async function startStandaloneServer() {
+    if (process.env.NODE_ENV !== "production") {
+      const vite = await createViteServer({
+        server: { middlewareMode: true },
+        appType: "spa",
+      });
+      app.use(vite.middlewares);
+    } else {
+      const distPath = path.join(process.cwd(), "dist");
+      app.use(express.static(distPath));
+      app.get("*", (req, res) => {
+        res.sendFile(path.join(distPath, "index.html"));
+      });
+    }
+
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`CampusPilot AI server running on http://0.0.0.0:${PORT} in ${process.env.NODE_ENV || "development"} mode.`);
     });
   }
 
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`CampusPilot AI server running on http://0.0.0.0:${PORT} in ${process.env.NODE_ENV || "development"} mode.`);
-  });
+  startStandaloneServer();
 }
 
 // Inline filesystem helpers to avoid ES modules import constraints
@@ -321,4 +325,4 @@ function fsUnlinkSync(p: string): void {
   fs.unlinkSync(p);
 }
 
-startServer();
+export default app;
