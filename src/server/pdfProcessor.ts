@@ -1,7 +1,5 @@
 import fs from "fs";
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-const pdf = require("pdf-parse");
+import { PDFParse } from "pdf-parse";
 import { ai } from "./gemma.js";
 import { Database, DocumentRecord } from "./db.js";
 import { Type } from "@google/genai";
@@ -22,7 +20,8 @@ export async function parseAcademicPDF(filePath: string, originalName: string, s
   try {
     if (fs.existsSync(filePath)) {
       const dataBuffer = fs.readFileSync(filePath);
-      const parsedData = await pdf(dataBuffer);
+      const parser = new PDFParse(new Uint8Array(dataBuffer));
+      const parsedData = await parser.getText();
       extractedText = parsedData.text || "";
     } else {
       throw new Error(`File not found on disk at: ${filePath}`);
@@ -75,7 +74,7 @@ Return your response strictly in JSON format as specified in responseSchema.
     }
 
     const response = await ai.models.generateContent({
-      model: "gemma-4-27b-it",
+      model: "gemma-4-26b-a4b-it",
       contents: "Structure this academic document and explain your classification.",
       config: {
         systemInstruction: parserSystemPrompt,
