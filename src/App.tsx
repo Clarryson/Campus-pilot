@@ -70,17 +70,9 @@ export default function App() {
     const saved = localStorage.getItem('fontSize');
     return (saved as 'normal' | 'large' | 'xlarge') || 'large';
   });
-  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    // Force reset existing stored dark themes to light mode once to apply the new white theme
-    const hasReset = localStorage.getItem('theme_reset_to_white_v2');
-    if (!hasReset) {
-      localStorage.setItem('theme', 'light');
-      localStorage.setItem('theme_reset_to_white_v2', 'true');
-      return 'light';
-    }
-    const saved = localStorage.getItem('theme');
-    return (saved as 'light' | 'dark') || 'light';
-  });
+  // Lock theme strictly to light mode (white theme) as requested
+  const theme = 'light';
+  const setTheme = () => {};
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Google Calendar Auth States
@@ -491,7 +483,7 @@ export default function App() {
           )}
 
           {/* Main workspace container right */}
-          <div className="flex-1 flex flex-col min-w-0 bg-white dark:bg-slate-900 overflow-hidden">
+          <div className="flex-1 flex flex-col min-w-0 bg-slate-50 dark:bg-slate-900 overflow-hidden">
             
             {/* Header top bar */}
             {currentSection !== 'dashboard' && (

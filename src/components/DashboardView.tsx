@@ -252,7 +252,7 @@ export default function DashboardView({
     : feedItems.filter(item => item.category === newsFilter);
 
   return (
-    <div className="flex-1 overflow-y-auto bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 p-4 md:p-6 lg:p-8 space-y-6 md:space-y-8 text-left transition-colors duration-300">
+    <div className="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 p-4 md:p-6 lg:p-8 space-y-6 md:space-y-8 text-left transition-colors duration-300">
       
       {/* Search and User Header Row */}
       <div className="flex items-center justify-between gap-4">

@@ -78,15 +78,6 @@ export default function Sidebar({
           </div>
 
           <div className="flex items-center gap-1.5">
-            {/* Minimalist Theme toggle */}
-            <button 
-              onClick={onToggleTheme}
-              className="p-1.5 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400 hover:text-blue-500 cursor-pointer transition-colors"
-              title={theme === 'light' ? "Dark Mode" : "Light Mode"}
-            >
-              {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
-            </button>
-
             {/* Mobile close button */}
             <button 
               onClick={onClose}
