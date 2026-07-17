@@ -15,8 +15,8 @@ import {
   GemmaActivityLog, 
   CalendarEventItem, 
   ScholarshipItem, 
-  CampusEventItem 
 } from "./types";
+import { INITIAL_STATE } from "./lib/initialState";
 
 // Import modular components
 import LandingPage from "./components/LandingPage";
@@ -53,19 +53,19 @@ export default function App() {
     localStorage.setItem('currentSection', currentSection);
   }, [currentSection]);
 
-  // Application DB State
-  const [studentProfile, setStudentProfile] = useState<any>(null);
-  const [documents, setDocuments] = useState<DocumentRecord[]>([]);
-  const [timetable, setTimetable] = useState<TimetableClass[]>([]);
-  const [exams, setExams] = useState<ExamEvent[]>([]);
-  const [assignments, setAssignments] = useState<AssignmentRecord[]>([]);
-  const [studyPlans, setStudyPlans] = useState<StudyPlanItem[]>([]);
-  const [reminders, setReminders] = useState<ReminderItem[]>([]);
-  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
-  const [gemmaActivities, setGemmaActivities] = useState<GemmaActivityLog[]>([]);
-  const [calendarEvents, setCalendarEvents] = useState<CalendarEventItem[]>([]);
-  const [scholarships, setScholarships] = useState<ScholarshipItem[]>([]);
-  const [campusEvents, setCampusEvents] = useState<CampusEventItem[]>([]);
+  // Application DB State (prepopulated with default demo data so UI never starts empty)
+  const [studentProfile, setStudentProfile] = useState<any>(INITIAL_STATE.studentProfile);
+  const [documents, setDocuments] = useState<DocumentRecord[]>(INITIAL_STATE.documents);
+  const [timetable, setTimetable] = useState<TimetableClass[]>(INITIAL_STATE.timetable);
+  const [exams, setExams] = useState<ExamEvent[]>(INITIAL_STATE.exams);
+  const [assignments, setAssignments] = useState<AssignmentRecord[]>(INITIAL_STATE.assignments);
+  const [studyPlans, setStudyPlans] = useState<StudyPlanItem[]>(INITIAL_STATE.studyPlans);
+  const [reminders, setReminders] = useState<ReminderItem[]>(INITIAL_STATE.reminders);
+  const [notifications, setNotifications] = useState<NotificationItem[]>(INITIAL_STATE.notifications);
+  const [gemmaActivities, setGemmaActivities] = useState<GemmaActivityLog[]>(INITIAL_STATE.gemmaActivities);
+  const [calendarEvents, setCalendarEvents] = useState<CalendarEventItem[]>(INITIAL_STATE.calendarEvents);
+  const [scholarships, setScholarships] = useState<ScholarshipItem[]>(INITIAL_STATE.scholarships);
+  const [campusEvents, setCampusEvents] = useState<CampusEventItem[]>(INITIAL_STATE.campusEvents);
 
   // UI Interactive States
   const [chatInput, setChatInput] = useState("");
@@ -176,20 +176,23 @@ export default function App() {
         if (data.studentProfile) {
           setStudentProfile(data.studentProfile);
         }
-        setDocuments(data.documents || []);
-        setTimetable(data.timetable || []);
-        setExams(data.exams || []);
-        setAssignments(data.assignments || []);
-        setStudyPlans(data.studyPlans || []);
-        setReminders(data.reminders || []);
-        setNotifications(data.notifications || []);
-        setGemmaActivities(data.gemmaActivities || []);
-        setCalendarEvents(data.calendarEvents || []);
-        setScholarships(data.scholarships || []);
-        setCampusEvents(data.campusEvents || []);
+        setDocuments(data.documents || INITIAL_STATE.documents);
+        setTimetable(data.timetable || INITIAL_STATE.timetable);
+        setExams(data.exams || INITIAL_STATE.exams);
+        setAssignments(data.assignments || INITIAL_STATE.assignments);
+        setStudyPlans(data.studyPlans || INITIAL_STATE.studyPlans);
+        setReminders(data.reminders || INITIAL_STATE.reminders);
+        setNotifications(data.notifications || INITIAL_STATE.notifications);
+        setGemmaActivities(data.gemmaActivities || INITIAL_STATE.gemmaActivities);
+        setCalendarEvents(data.calendarEvents || INITIAL_STATE.calendarEvents);
+        setScholarships(data.scholarships || INITIAL_STATE.scholarships);
+        setCampusEvents(data.campusEvents || INITIAL_STATE.campusEvents);
+      } else {
+        syncWithState(INITIAL_STATE);
       }
     } catch (error) {
-      console.error("Failed to load initial state:", error);
+      console.error("Failed to load initial state from API, using demo initial state:", error);
+      syncWithState(INITIAL_STATE);
     }
   };
 

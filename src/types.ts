@@ -4,6 +4,7 @@ export interface DocumentRecord {
   type: string;
   uploadedAt: string;
   size: string;
+  filePath?: string;
   parsedText?: string;
   gemmaExtraction?: string;
 }
@@ -113,4 +114,41 @@ export interface CampusEventItem {
   time: string;
   location: string;
   description: string;
+}
+
+export interface StudentProfile {
+  name: string;
+  university: string;
+  course: string;
+  department: string;
+  year: number;
+  semester: number;
+  registrationNumber: string;
+}
+
+export interface DailyBriefing {
+  date: string;
+  classes: TimetableClass[];
+  assignments: AssignmentRecord[];
+  exams: ExamEvent[];
+  studyTimeRecommendation: string;
+  motivationQuote: string;
+  weatherPlaceholder: string;
+  gemmaAssessment: string;
+}
+
+export interface DBState {
+  studentProfile: StudentProfile;
+  documents: DocumentRecord[];
+  timetable: TimetableClass[];
+  exams: ExamEvent[];
+  assignments: AssignmentRecord[];
+  projects?: ProjectRecord[];
+  studyPlans: StudyPlanItem[];
+  reminders: ReminderItem[];
+  notifications: NotificationItem[];
+  gemmaActivities: GemmaActivityLog[];
+  calendarEvents: CalendarEventItem[];
+  scholarships: ScholarshipItem[];
+  campusEvents: CampusEventItem[];
 }
