@@ -1,113 +1,237 @@
-@import url('https://fonts.cdnfonts.com/css/google-sans');
-@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,300..800;1,300..800&family=Inter:ital,wght@0,100..900;1,100..900&display=swap');
+/* ──────────────────────────────────────────────────────────────────────────
+   Inter · Professional Typography System
+   Single font source of truth for all CampusPilot surfaces
+────────────────────────────────────────────────────────────────────────── */
+
+/* Inter via Google Fonts — variable font, weights 400–700 only */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+
 @import "tailwindcss";
 
 @variant dark (.never-match-dark &);
 
+/* ──────────────────────────────────────────────────────────────────────────
+   Design Tokens — @theme
+────────────────────────────────────────────────────────────────────────── */
 @theme {
-  --font-sans: "Atkinson Hyperlegible Next", "Inter", sans-serif;
-  --font-heading: "Google Sans", "Inter", sans-serif;
+  /* Single font stack: Inter → system fallbacks */
+  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
   /* Color System Tokens */
-  --color-primary: #4285F4;
+  --color-primary:   #4285F4;
   --color-secondary: #7C4DFF;
-  --color-success: #34A853;
-  --color-warning: #FBBC05;
-  --color-danger: #EA4335;
-  --color-surface: #F8FAFC;
-  --color-border: #E5E7EB;
+  --color-success:   #34A853;
+  --color-warning:   #FBBC05;
+  --color-danger:    #EA4335;
+  --color-surface:   #F8FAFC;
+  --color-border:    #E5E7EB;
 
-  /* Typography Scale */
-  --text-display-hero: 48px;
-  --text-heading-1: 36px;
-  --text-heading-2: 30px;
-  --text-heading-3: 24px;
-  --text-heading-4: 20px;
-  --text-card-title: 18px;
-  --text-body-large: 18px;
-  --text-body-default: 16px;
-  --text-small: 14px;
-  --text-caption: 12px;
+  /* ── Typography Scale ─────────────────────────────────────────────────
+     Desktop (base). Tablet / mobile overrides below via @media.
+     Naming mirrors the spec exactly.
+  ── */
+  --text-h1:           3rem;     /* 48px */
+  --text-h2:           2.25rem;  /* 36px */
+  --text-h3:           1.875rem; /* 30px */
+  --text-h4:           1.5rem;   /* 24px */
+  --text-h5:           1.25rem;  /* 20px */
+  --text-h6:           1.125rem; /* 18px */
+
+  --text-body-lg:      1.125rem; /* 18px */
+  --text-body:         1rem;     /* 16px */
+  --text-body-sm:      0.875rem; /* 14px */
+  --text-caption:      0.75rem;  /* 12px */
+
+  /* Font Weights */
+  --font-weight-regular:  400;
+  --font-weight-medium:   500;
+  --font-weight-semibold: 600;
+  --font-weight-bold:     700;
+
+  /* Line Heights */
+  --leading-heading: 1.25;
+  --leading-body:    1.5;
+  --leading-prose:   1.6;
+  --leading-button:  1.2;
+
+  /* Letter Spacing */
+  --tracking-heading: -0.015em;
+  --tracking-body:     0em;
+  --tracking-caption:  0.01em;
 }
 
-/* Base typography setup for WCAG 2.2 AA accessibility compliance */
-:root, html, body {
-  font-family: "Atkinson Hyperlegible Next", "Inter", sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
-  letter-spacing: 0.015em;
+/* ──────────────────────────────────────────────────────────────────────────
+   Global Base — WCAG AA · 16 px minimum body, Inter everywhere
+────────────────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root,
+html,
+body {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;          /* WCAG AA minimum */
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0em;
   background-color: #FFFFFF;
   color: #1F2937;
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-/* Ensure headings use Google Sans / Atkinson Hyperlegible Next */
+/* ──────────────────────────────────────────────────────────────────────────
+   Heading Scale — Inter, no alternative fonts
+────────────────────────────────────────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6,
 .font-heading {
-  font-family: "Google Sans", "Atkinson Hyperlegible Next", "Inter", sans-serif !important;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
 }
 
-/* Dark mode contrast overrides */
-.dark, .dark body {
+h1 { font-size: 3rem;     font-weight: 700; }
+h2 { font-size: 2.25rem;  font-weight: 700; }
+h3 { font-size: 1.875rem; font-weight: 600; }
+h4 { font-size: 1.5rem;   font-weight: 600; }
+h5 { font-size: 1.25rem;  font-weight: 600; }
+h6 { font-size: 1.125rem; font-weight: 600; }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Body Text
+────────────────────────────────────────────────────────────────────────── */
+p, li, td, th, label, span, div {
+  font-family: inherit;   /* inherits Inter from :root */
+  font-size: inherit;
+}
+
+p          { line-height: 1.6; }
+small, caption, .text-caption {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Buttons
+────────────────────────────────────────────────────────────────────────── */
+button, [role="button"], .btn {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.875rem;   /* 14px */
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0em;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Form Controls
+────────────────────────────────────────────────────────────────────────── */
+input, textarea, select {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 1rem;   /* never below 16 px — prevents iOS auto-zoom */
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Responsive Typography
+   Scales headings down on tablet / mobile; body stays at 16 px.
+────────────────────────────────────────────────────────────────────────── */
+
+/* Tablet  ≤ 1024px */
+@media (max-width: 1024px) {
+  h1 { font-size: 2.5rem;   } /* 40px */
+  h2 { font-size: 2rem;     } /* 32px */
+  h3 { font-size: 1.625rem; } /* 26px */
+  h4 { font-size: 1.375rem; } /* 22px */
+  h5 { font-size: 1.125rem; } /* 18px */
+  h6 { font-size: 1rem;     } /* 16px */
+}
+
+/* Mobile  ≤ 640px */
+@media (max-width: 640px) {
+  h1 { font-size: 2.25rem; }  /* ~36px */
+  h2 { font-size: 1.875rem; } /* ~30px */
+  h3 { font-size: 1.5rem;   } /* 24px  */
+  h4 { font-size: 1.25rem;  } /* 20px  */
+  h5 { font-size: 1.125rem; } /* 18px  */
+  h6 { font-size: 1rem;     } /* 16px  */
+  body { font-size: 16px;   } /* preserve minimum */
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Dark Mode Contrast Overrides
+────────────────────────────────────────────────────────────────────────── */
+.dark,
+.dark body {
   background-color: #0F172A;
   color: #F8FAFC;
 }
-.dark .text-slate-900, .dark .text-gray-900, .dark .text-slate-100, .dark .text-gray-100, .dark .text-slate-200, .dark .text-gray-200, .dark .text-white {
-  color: #F8FAFC !important;
-}
-.dark .text-slate-600, .dark .text-gray-600, .dark .text-slate-300, .dark .text-gray-300, .dark .text-slate-400, .dark .text-gray-400 {
-  color: #E2E8F0 !important;
-}
-.dark .text-slate-500, .dark .text-gray-500 {
-  color: #94A3B8 !important;
-}
 
-/* Accessible focus outline indicator for keyboard navigation */
-button:focus-visible, 
-a:focus-visible, 
-input:focus-visible, 
-select:focus-visible, 
+/* ──────────────────────────────────────────────────────────────────────────
+   Accessible Focus Indicator — WCAG AA
+────────────────────────────────────────────────────────────────────────── */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
 textarea:focus-visible {
   outline: 3px solid #4285F4 !important;
   outline-offset: 2px !important;
 }
 
-/* AI Animations & Shimmers */
+/* ──────────────────────────────────────────────────────────────────────────
+   AI Animations & Shimmers
+────────────────────────────────────────────────────────────────────────── */
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 15px rgba(66, 133, 244, 0.4); transform: scale(1); }
-  50% { box-shadow: 0 0 25px rgba(124, 77, 255, 0.7); transform: scale(1.02); }
+  0%, 100% { box-shadow: 0 0 15px rgba(66, 133, 244, 0.4); transform: scale(1);    }
+  50%       { box-shadow: 0 0 25px rgba(124, 77, 255, 0.7); transform: scale(1.02); }
 }
 
 @keyframes float-subtle {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-5px); }
+  0%, 100% { transform: translateY(0px);  }
+  50%       { transform: translateY(-5px); }
 }
 
 .animate-shimmer {
-  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
   background-size: 200% 100%;
   animation: shimmer 2.5s infinite;
 }
 
-.animate-glow {
-  animation: pulse-glow 3s infinite ease-in-out;
-}
+.animate-glow  { animation: pulse-glow   3s infinite ease-in-out; }
+.animate-float { animation: float-subtle 4s infinite ease-in-out; }
 
-.animate-float {
-  animation: float-subtle 4s infinite ease-in-out;
-}
-
-/* Material Design 3 Card Polish */
+/* ──────────────────────────────────────────────────────────────────────────
+   Card Polish
+────────────────────────────────────────────────────────────────────────── */
 .m3-card {
   border-radius: 24px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .m3-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.08), 0 4px 12px -2px rgba(66, 133, 244, 0.06);
+  box-shadow:
+    0 12px 28px -6px rgba(0, 0, 0, 0.08),
+    0 4px  12px -2px rgba(66, 133, 244, 0.06);
 }
