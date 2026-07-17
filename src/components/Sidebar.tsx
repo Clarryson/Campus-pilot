@@ -13,8 +13,7 @@ import {
   Sun,
   ChevronRight,
   ChevronRightCircle,
-  HelpCircle,
-  Compass
+  HelpCircle
 } from "lucide-react";
 
 interface SidebarProps {
@@ -39,14 +38,14 @@ export default function Sidebar({
 
   // Menu items list mapping the exact labels and icons in the image to our functional application sections
   const menuItems = [
-    { id: "dashboard", label: "Dashboard", icon: Home },
-    { id: "notifications", label: "Notifications", icon: MessageSquare },
-    { id: "schedule", label: "Schedule", icon: Calendar },
-    { id: "planner", label: "Study Planner", icon: Users },
-    { id: "documents", label: "Documents", icon: Folder },
-    { id: "examinations", label: "Examinations", icon: FileText },
-    { id: "scholarships", label: "Scholarships", icon: BookOpen },
-    { id: "ai-workspace", label: "AI Workspace", icon: Sparkles },
+    { id: "dashboard", label: "Home", icon: Home },
+    { id: "notifications", label: "Announcements", icon: MessageSquare },
+    { id: "schedule", label: "Calendar", icon: Calendar },
+    { id: "planner", label: "Students", icon: Users },
+    { id: "documents", label: "My Files", icon: Folder },
+    { id: "examinations", label: "Documents", icon: FileText },
+    { id: "scholarships", label: "Library", icon: BookOpen },
+    { id: "ai-workspace", label: "AI Assistant", icon: Sparkles },
     { id: "settings", label: "Settings", icon: Settings },
   ];
 
@@ -59,15 +58,15 @@ export default function Sidebar({
         {/* Brand Logo matching picture */}
         <div className="flex items-center justify-between px-2">
           <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => onSelectSection("dashboard")}>
-            <div className="h-9 w-9 bg-[#009BF5] rounded-xl flex items-center justify-center text-white font-black text-lg shadow-md shadow-blue-500/10">
-              <Compass className="h-5.5 w-5.5" />
+            <div className="h-9 w-9 bg-[#0092FF] rounded-xl flex items-center justify-center text-white font-black text-lg shadow-md shadow-blue-500/10">
+              N
             </div>
             <div className="text-left">
               <h1 className="text-sm font-black tracking-tight text-slate-900 dark:text-white leading-none">
-                CampusPilot
+                Notasnet
               </h1>
-              <p className="text-[9px] text-[#009BF5] font-black tracking-widest uppercase mt-0.5 font-mono">
-                AI
+              <p className="text-[9px] text-[#0092FF] font-black tracking-widest uppercase mt-0.5 font-mono">
+                CHILE
               </p>
             </div>
           </div>
@@ -94,7 +93,7 @@ export default function Sidebar({
                 onClick={() => onSelectSection(item.id)}
                 className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold tracking-tight transition-all cursor-pointer group ${
                   isActive 
-                    ? "bg-[#009BF5]/10 dark:bg-blue-950/40 text-[#009BF5] dark:text-blue-400 font-extrabold" 
+                    ? "bg-[#E6F4FF] dark:bg-blue-950/40 text-[#0084FF] dark:text-blue-400 font-extrabold" 
                     : "text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900/40 hover:text-slate-900 dark:hover:text-white"
                 }`}
               >
@@ -102,14 +101,14 @@ export default function Sidebar({
                   <Icon 
                     className={`h-4.5 w-4.5 shrink-0 transition-colors ${
                       isActive 
-                        ? "text-[#009BF5] dark:text-blue-400" 
+                        ? "text-[#0084FF] dark:text-blue-400" 
                         : "text-slate-400 dark:text-slate-500 group-hover:text-slate-700 dark:group-hover:text-slate-300"
                     }`} 
                   />
                   <span className="font-sans">{item.label}</span>
                 </div>
                 {isActive && (
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#009BF5]" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#0084FF]" />
                 )}
               </button>
             );
@@ -122,7 +121,7 @@ export default function Sidebar({
       <div className="px-1 text-left">
         
         {/* Blue Promotion Banner Card matching the picture */}
-        <div className="relative bg-gradient-to-br from-[#009BF5] via-[#009BF5] to-[#1A3B8B] text-white p-4.5 rounded-[24px] shadow-lg overflow-hidden select-none flex flex-col justify-between min-h-[140px] group">
+        <div className="relative bg-gradient-to-br from-[#00A1FF] via-[#0084FF] to-[#0066FF] text-white p-4.5 rounded-[24px] shadow-lg overflow-hidden select-none flex flex-col justify-between min-h-[140px] group">
           
           {/* Circular decorations overlay */}
           <div className="absolute right-[-10px] top-[-10px] h-16 w-16 bg-white/10 rounded-full blur-md" />
@@ -131,7 +130,7 @@ export default function Sidebar({
           {/* Logo badge with up-right arrow circle */}
           <div className="flex items-center justify-between relative z-10">
             <div className="h-7 w-7 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center text-white font-black text-xs">
-              CP+
+              N+
             </div>
             <button className="text-white hover:text-white/80 transition-colors">
               <ChevronRightCircle className="h-4.5 w-4.5" />
@@ -140,16 +139,16 @@ export default function Sidebar({
 
           <div className="space-y-1 relative z-10 mt-3">
             <h4 className="text-xs font-black tracking-tight leading-snug">
-              Upgrade your Plan
+              Upgrade Your Plan
             </h4>
             <p className="text-[10px] text-white/80 leading-relaxed font-sans">
-              And access advanced features and benefits tailored for you.
+              And access advanced features and benefits we have for you.
             </p>
           </div>
 
           <button 
             onClick={() => onSelectSection("settings")}
-            className="w-full mt-3 py-2 bg-white hover:bg-slate-50 text-[#009BF5] text-[10px] font-black rounded-xl transition-all shadow-sm flex items-center justify-center gap-1 cursor-pointer"
+            className="w-full mt-3 py-2 bg-white hover:bg-slate-50 text-[#0084FF] text-[10px] font-black rounded-xl transition-all shadow-sm flex items-center justify-center gap-1 cursor-pointer"
           >
             <span>View Plans</span>
             <ChevronRight className="h-3.5 w-3.5 shrink-0" />

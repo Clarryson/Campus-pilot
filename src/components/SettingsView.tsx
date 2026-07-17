@@ -46,7 +46,7 @@ export default function SettingsView({
                 onClick={() => setFontSize('normal')}
                 className={`px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
                   fontSize === 'normal' 
-                    ? 'bg-[#009BF5] text-white font-extrabold shadow-md shadow-blue-500/10' 
+                    ? 'bg-[#4285F4] text-white font-extrabold shadow-md shadow-blue-500/10' 
                     : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900'
                 }`}
               >
@@ -56,7 +56,7 @@ export default function SettingsView({
                 onClick={() => setFontSize('large')}
                 className={`px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
                   fontSize === 'large' 
-                    ? 'bg-[#009BF5] text-white font-extrabold shadow-md shadow-blue-500/10' 
+                    ? 'bg-[#4285F4] text-white font-extrabold shadow-md shadow-blue-500/10' 
                     : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900'
                 }`}
               >
@@ -66,7 +66,7 @@ export default function SettingsView({
                 onClick={() => setFontSize('xlarge')}
                 className={`px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
                   fontSize === 'xlarge' 
-                    ? 'bg-[#009BF5] text-white font-extrabold shadow-md shadow-blue-500/10' 
+                    ? 'bg-[#4285F4] text-white font-extrabold shadow-md shadow-blue-500/10' 
                     : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900'
                 }`}
               >
@@ -127,7 +127,7 @@ export default function SettingsView({
             ) : (
               <button
                 onClick={onGoogleSignIn}
-                className="px-4 py-3 rounded-2xl border border-cyan-500/30 hover:border-cyan-400 hover:bg-cyan-500/5 dark:hover:bg-cyan-950/20 text-cyan-600 dark:text-cyan-400 hover:text-[#009BF5] dark:hover:text-white transition-all text-xs flex items-center gap-2.5 font-mono font-bold cursor-pointer shadow-sm"
+                className="px-4 py-3 rounded-2xl border border-cyan-500/30 hover:border-cyan-400 hover:bg-cyan-500/5 dark:hover:bg-cyan-950/20 text-cyan-600 dark:text-cyan-400 hover:text-[#4285F4] dark:hover:text-white transition-all text-xs flex items-center gap-2.5 font-mono font-bold cursor-pointer shadow-sm"
               >
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className="h-4 w-4 shrink-0">
                   <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>

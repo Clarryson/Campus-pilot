@@ -38,7 +38,7 @@ export default function EventsView({ campusEvents }: EventsViewProps) {
                   <span>{ev.date}</span>
                 </div>
 
-                <h4 className="text-sm font-extrabold text-slate-900 dark:text-white mt-4 leading-snug group-hover:text-[#009BF5] dark:group-hover:text-cyan-400 transition-colors">
+                <h4 className="text-sm font-extrabold text-slate-900 dark:text-white mt-4 leading-snug group-hover:text-[#4285F4] dark:group-hover:text-cyan-400 transition-colors">
                   {ev.title}
                 </h4>
 

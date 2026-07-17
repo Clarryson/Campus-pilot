@@ -134,7 +134,7 @@ export default function GoogleCalendarView({
                 </div>
                 <button 
                   onClick={onGoogleSignIn}
-                  className="w-full py-3 bg-[#009BF5] hover:bg-blue-600 text-white text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-[#4285F4] hover:bg-[#357ae8] text-white text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2"
                 >
                   <Globe className="h-4 w-4" />
                   <span>Connect Google Account</span>

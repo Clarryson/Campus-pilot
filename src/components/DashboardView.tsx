@@ -47,7 +47,7 @@ export default function DashboardView({
   const [selectedDay, setSelectedDay] = useState<string>("Feb 28");
   
   // "Lo nuevo" newsfeed filter state
-  const [newsFilter, setNewsFilter] = useState<string>("Todos");
+  const [newsFilter, setNewsFilter] = useState<string>("All");
 
   // Interaction states for cards
   const [isPaid, setIsPaid] = useState<boolean>(false);
@@ -83,7 +83,7 @@ export default function DashboardView({
         id: "ev-1",
         time: "08:30 - 10:00 AM",
         title: "Religion Class",
-        room: "Grade 12A - Hc",
+        room: "Senior Year A - Hc",
         type: "religion",
         iconColor: "bg-amber-100 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400",
         description: "Study of contemporary ethical currents and the social role of faith."
@@ -92,7 +92,7 @@ export default function DashboardView({
         id: "ev-2",
         time: "10:00 - 12:30 PM",
         title: "Probability & Statistics Class",
-        room: "Grade 12A - Hc",
+        room: "Senior Year A - Hc",
         type: "math",
         iconColor: "bg-slate-100 text-slate-600 dark:bg-slate-900/60 dark:text-slate-300",
         description: "Introduction to continuous random variables and probability density functions."
@@ -112,18 +112,18 @@ export default function DashboardView({
         room: "School Auditorium",
         type: "civic",
         iconColor: "bg-blue-50 text-blue-600 dark:bg-blue-950/30 dark:text-blue-400",
-        description: "Official ceremony marking the start of the academic semester with the faculty."
+        description: "Official ceremony for the start of the academic semester with the faculty."
       }
     ],
     "Feb 29": [
       {
         id: "ev-5",
         time: "08:30 - 10:00 AM",
-        title: "History Class",
+        title: "Chilean History Class",
         room: "Conference Room B",
         type: "history",
         iconColor: "bg-orange-100 text-orange-600 dark:bg-orange-950/30 dark:text-orange-400",
-        description: "Critical analysis of the 19th-century national independence processes."
+        description: "Critical analysis of 19th-century national independence processes."
       },
       {
         id: "ev-6",
@@ -148,16 +148,16 @@ export default function DashboardView({
       {
         id: "ev-8",
         time: "09:00 - 11:00 AM",
-        title: "Mathematics II Exam",
-        room: "Grade 12A - Hc",
+        title: "Mathematics II Evaluation",
+        room: "Senior Year A - Hc",
         type: "exam",
         iconColor: "bg-red-100 text-red-600 dark:bg-red-950/30 dark:text-red-400",
-        description: "First midterm exam focused on definite and indefinite integrals."
+        description: "First partial exam focused on definite and indefinite integrals."
       },
       {
         id: "ev-9",
         time: "11:15 - 12:45 PM",
-        title: "Group Literature Workshop",
+        title: "Group Literary Workshop",
         room: "Central Library",
         type: "lit",
         iconColor: "bg-purple-100 text-purple-600 dark:bg-purple-950/30 dark:text-purple-400",
@@ -167,10 +167,10 @@ export default function DashboardView({
         id: "ev-10",
         time: "01:00 - 02:30 PM",
         title: "Physical Education Class",
-        room: "Indoor Gym",
+        room: "Indoor Gymnasium",
         type: "sport",
         iconColor: "bg-emerald-100 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400",
-        description: "General physical conditioning and volleyball rule practice."
+        description: "General physical conditioning and regulation volleyball practices."
       }
     ],
     "Mar 02": [
@@ -190,7 +190,7 @@ export default function DashboardView({
         room: "Science Lab",
         type: "chemistry",
         iconColor: "bg-pink-100 text-pink-600 dark:bg-pink-950/30 dark:text-pink-400",
-        description: "Lab practices: simple distillation and synthesis of aromatic compounds."
+        description: "Laboratory practice: simple distillation and synthesis of aromatic compounds."
       }
     ]
   };
@@ -201,12 +201,12 @@ export default function DashboardView({
   const feedItems = [
     {
       id: "feed-1",
-      title: "Holiday Schedule",
+      title: "Holiday Calendar",
       category: "Announcement",
       badgeColor: "bg-green-50 text-green-700 dark:bg-green-950/40 dark:text-green-400 border-green-200 dark:border-green-800/40",
       timeLabel: "Today",
       isUnread: true,
-      description: "Dear members of Modelo School, for the new 2024 school year, we attach the holiday schedule for your preventive family planning.",
+      description: "Dear members of the Modelo School, for the new school year 2024, we attach the holiday calendar for your preventive family planning.",
       icon: <CalendarIcon className="h-4.5 w-4.5 text-green-600 dark:text-green-400" />
     },
     {
@@ -215,28 +215,28 @@ export default function DashboardView({
       category: "Service",
       badgeColor: "bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-400 border-blue-200 dark:border-blue-800/40",
       timeLabel: "Yesterday",
-      description: "Reserve your student enrollment in advance to secure preferential classroom assignment for the 2026 cycle.",
+      description: "Reserve your student enrollment in advance to secure preferential classroom assignment for the 2026 school cycle.",
       actionType: "matricula",
       icon: <Users className="h-4.5 w-4.5 text-blue-600 dark:text-blue-400" />
     },
     {
       id: "feed-3",
-      title: "Next Payment",
+      title: "Upcoming Payment",
       category: "Wallet",
       badgeColor: "bg-indigo-50 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800/40",
       timeLabel: "4d ago",
       description: "March tuition is available for immediate payment. Pay before the 5th to avoid administrative surcharges.",
-      amount: "$204.00",
+      amount: "$204,000",
       actionType: "pago",
       icon: <Wallet className="h-4.5 w-4.5 text-indigo-600 dark:text-indigo-400" />
     },
     {
       id: "feed-4",
-      title: "Grade for Maelys Leiva",
+      title: "Maelys Leiva Grade",
       category: "Grade",
       badgeColor: "bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 border-amber-200 dark:border-amber-800/40",
       timeLabel: "Feb 28",
-      description: "The student Maelys Leiva obtained a 7.0 (maximum grade) in the semester course of Religion and Ethical Education.",
+      description: "Student Maelys Leiva obtained a 7.0 (maximum grade) in the semester subject of Religion and Ethical Formation.",
       icon: <GraduationCap className="h-4.5 w-4.5 text-amber-600 dark:text-amber-400" />
     }
   ];
@@ -256,7 +256,7 @@ export default function DashboardView({
             Academic Dashboard
           </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-            School cycle management, enrollments, and academic activities.
+            Management of school cycle, enrollment, and school activities.
           </p>
         </div>
 
@@ -295,7 +295,7 @@ export default function DashboardView({
               <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl z-50 py-2 text-xs">
                 <div className="px-3.5 py-2 border-b border-slate-100 dark:border-slate-850">
                   <p className="font-bold text-slate-900 dark:text-white">Maelys Leiva</p>
-                  <p className="text-[10px] text-slate-400 mt-0.5">Guardian: Kinder A</p>
+                  <p className="text-[10px] text-slate-400 mt-0.5">Parent: Kinder A</p>
                 </div>
                 <button 
                   onClick={() => { onNavigate("settings"); setShowProfileMenu(false); }}
@@ -323,7 +323,7 @@ export default function DashboardView({
             ============================================== */}
         <div className="lg:col-span-4 space-y-6">
           
-          {/* Cordillera School Premium Banner Card */}
+          {/* Colegio Cordillera Premium Banner Card */}
           <div className="relative bg-gradient-to-br from-indigo-900 via-indigo-950 to-slate-950 rounded-[32px] p-6 text-white overflow-hidden shadow-md aspect-[4/3] flex flex-col justify-between select-none group">
             
             {/* Background image overlay */}
@@ -337,12 +337,12 @@ export default function DashboardView({
               <div className="bg-white/10 backdrop-blur-md px-3.5 py-2.5 rounded-2xl border border-white/20 shadow-inner">
                 <span className="text-sm font-black tracking-widest font-mono text-indigo-200">CC</span>
               </div>
-              <span className="bg-[#009BF5]/30 backdrop-blur-md text-[9px] font-mono tracking-wider font-extrabold uppercase px-2.5 py-1 rounded-full border border-blue-400/20">
+              <span className="bg-[#4285F4]/30 backdrop-blur-md text-[9px] font-mono tracking-wider font-extrabold uppercase px-2.5 py-1 rounded-full border border-blue-400/20">
                 2026 Period
               </span>
             </div>
 
-            {/* Middle Row: Title "Cordillera School" */}
+            {/* Middle Row: Title "Colegio Cordillera" */}
             <div className="relative z-10 text-left mt-4">
               <h3 className="text-2xl md:text-3xl font-black font-sans leading-tight tracking-tight text-white">
                 Cordillera <br />School
@@ -370,7 +370,7 @@ export default function DashboardView({
           {/* Dual Metrics Row */}
           <div className="grid grid-cols-2 gap-4">
             
-            {/* Card 1: Attendance */}
+            {/* Card 1: Asistencia */}
             <div 
               onClick={() => onNavigate("schedule")}
               className="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 p-5 rounded-[24px] shadow-sm hover:shadow-md hover:border-emerald-500/30 transition-all cursor-pointer text-left flex flex-col justify-between min-h-[105px]"
@@ -385,7 +385,7 @@ export default function DashboardView({
               </div>
             </div>
 
-            {/* Card 2: Enrollment */}
+            {/* Card 2: Matrícula */}
             <div 
               onClick={() => setIsMatriculado(!isMatriculado)}
               className="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 p-5 rounded-[24px] shadow-sm hover:shadow-md hover:border-amber-500/30 transition-all cursor-pointer text-left flex flex-col justify-between min-h-[105px]"
@@ -411,12 +411,12 @@ export default function DashboardView({
 
           </div>
 
-          {/* Bottom Card: Average Grade Gauge Meter */}
+          {/* Bottom Card: Promedio Grade Gauge Meter */}
           <div className="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 p-6 rounded-[32px] shadow-sm text-left relative flex flex-col justify-between min-h-[250px]">
             
             {/* Card Header */}
             <div className="flex items-center justify-between">
-              <span className="text-xs font-mono font-black uppercase tracking-wider text-slate-900 dark:text-white">Average Grade</span>
+              <span className="text-xs font-mono font-black uppercase tracking-wider text-slate-900 dark:text-white">GPA</span>
               <button className="h-7 w-7 flex items-center justify-center bg-slate-950 hover:bg-slate-800 text-white rounded-full transition-colors">
                 <ArrowUpRight className="h-3.5 w-3.5" />
               </button>
@@ -472,7 +472,7 @@ export default function DashboardView({
                   <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
                   <span>Lowest</span>
                 </div>
-                <span className="font-sans font-extrabold text-slate-700 dark:text-slate-300 truncate w-full">Math</span>
+                <span className="font-sans font-extrabold text-slate-700 dark:text-slate-300 truncate w-full">Mathematics</span>
                 <span className="text-[10px] font-black text-amber-600 dark:text-amber-500 font-mono">7.6</span>
               </div>
 
@@ -483,7 +483,7 @@ export default function DashboardView({
         </div>
 
         {/* ==============================================
-            COLUMN 2: "Events" Classes & Timeline (col-span-4)
+            COLUMN 2: "Eventos" Classes & Timeline (col-span-4)
             ============================================== */}
         <div className="lg:col-span-4 space-y-6">
           
@@ -503,14 +503,14 @@ export default function DashboardView({
             <div>
               <div className="flex items-center justify-between gap-1 overflow-x-auto pb-1 scrollbar-none select-none">
                 
-                {/* Feb 28 (Today) */}
+                {/* Feb 28 (Hoy) */}
                 <div className="flex flex-col items-center gap-1">
                   <span className="text-[9px] font-mono text-slate-400 uppercase font-black tracking-wider">February</span>
                   <button 
                     onClick={() => setSelectedDay("Feb 28")}
                     className={`h-14 w-12 rounded-2xl flex flex-col justify-center items-center transition-all cursor-pointer font-sans text-xs ${
                       selectedDay === "Feb 28"
-                        ? "bg-[#009BF5] text-white font-extrabold shadow-md shadow-blue-500/10"
+                        ? "bg-[#00A1FF] text-white font-extrabold shadow-md shadow-blue-500/10"
                         : "bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border border-slate-100 dark:border-slate-850"
                     }`}
                   >
@@ -520,14 +520,14 @@ export default function DashboardView({
                   </button>
                 </div>
 
-                {/* Feb 29 (Tomorrow) */}
+                {/* Feb 29 (Mañana) */}
                 <div className="flex flex-col items-center gap-1">
                   <span className="text-[9px] font-mono text-transparent uppercase font-black select-none">•</span>
                   <button 
                     onClick={() => setSelectedDay("Feb 29")}
                     className={`h-14 w-12 rounded-2xl flex flex-col justify-center items-center transition-all cursor-pointer font-sans text-xs ${
                       selectedDay === "Feb 29"
-                        ? "bg-[#009BF5] text-white font-extrabold shadow-md shadow-blue-500/10"
+                        ? "bg-[#00A1FF] text-white font-extrabold shadow-md shadow-blue-500/10"
                         : "bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border border-slate-100 dark:border-slate-850"
                     }`}
                   >
@@ -544,7 +544,7 @@ export default function DashboardView({
                     onClick={() => setSelectedDay("Mar 01")}
                     className={`h-14 w-12 rounded-2xl flex flex-col justify-center items-center transition-all cursor-pointer font-sans text-xs ${
                       selectedDay === "Mar 01"
-                        ? "bg-[#009BF5] text-white font-extrabold shadow-md shadow-blue-500/10"
+                        ? "bg-[#00A1FF] text-white font-extrabold shadow-md shadow-blue-500/10"
                         : "bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border border-slate-100 dark:border-slate-850"
                     }`}
                   >
@@ -561,7 +561,7 @@ export default function DashboardView({
                     onClick={() => setSelectedDay("Mar 02")}
                     className={`h-14 w-12 rounded-2xl flex flex-col justify-center items-center transition-all cursor-pointer font-sans text-xs ${
                       selectedDay === "Mar 02"
-                        ? "bg-[#009BF5] text-white font-extrabold shadow-md shadow-blue-500/10"
+                        ? "bg-[#00A1FF] text-white font-extrabold shadow-md shadow-blue-500/10"
                         : "bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border border-slate-100 dark:border-slate-850"
                     }`}
                   >
@@ -651,7 +651,7 @@ export default function DashboardView({
             {/* Quick static disclaimer */}
             <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 p-3 rounded-2xl text-[10px] text-slate-500 dark:text-slate-400 border border-slate-100 dark:border-slate-850">
               <Info className="h-3.5 w-3.5 text-blue-500 shrink-0" />
-              <span>Gemma automatically updates the school schedule based on the official school bulletin.</span>
+              <span>Gemma automatically updates the school agenda based on the official School log.</span>
             </div>
 
           </div>
@@ -680,7 +680,7 @@ export default function DashboardView({
 
             {/* Filter Buttons Pills */}
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none select-none">
-              {["All", "Announcement", "Service", "Wallet", "Grade"].map((category) => (
+              {["All", "Announcement", "Wallet", "Grade"].map((category) => (
                 <button
                   key={category}
                   onClick={() => setNewsFilter(category)}
@@ -740,17 +740,17 @@ export default function DashboardView({
                   {item.actionType === "matricula" && (
                     <div className="pt-2 border-t border-slate-100 dark:border-slate-850/60 flex items-center justify-between">
                       <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500">
-                        Recommended Room: Kinder A
+                        Recommended room: Kinder A
                       </span>
                       <button 
                         onClick={() => setIsMatriculado(!isMatriculado)}
                         className={`px-3.5 py-1.5 rounded-xl text-[10px] font-bold font-mono uppercase tracking-wide cursor-pointer transition-colors ${
                           isMatriculado 
                             ? "bg-emerald-50 text-emerald-600 border border-emerald-200" 
-                            : "bg-white dark:bg-slate-900 text-[#009BF5] dark:text-blue-400 hover:text-white hover:bg-[#009BF5] border border-[#009BF5]/30"
+                            : "bg-white dark:bg-slate-900 text-[#4285F4] dark:text-blue-400 hover:text-white hover:bg-[#4285F4] border border-[#4285F4]/30"
                         }`}
                       >
-                        {isMatriculado ? "Enrolled ✓" : "Pre-Enroll"}
+                        {isMatriculado ? "Enrolled ✓" : "Pre-enroll"}
                       </button>
                     </div>
                   )}
@@ -855,7 +855,7 @@ export default function DashboardView({
               </div>
               <div>
                 <span className="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider block">
-                  Event Details
+                  Event Detail
                 </span>
                 <h4 className="text-base font-black text-slate-900 dark:text-white leading-tight">
                   {selectedEvent.title}
@@ -874,12 +874,12 @@ export default function DashboardView({
               </p>
               <p className="flex items-center gap-1.5">
                 <Users className="h-3.5 w-3.5 text-slate-400" />
-                <span>Group: Grade 12A - Cordillera School</span>
+                <span>Group: Senior Year A - Cordillera School</span>
               </p>
             </div>
 
             <div className="space-y-1.5 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-              <span className="text-[9px] font-mono font-bold uppercase text-slate-400 block tracking-wider">Activity Description</span>
+              <span className="text-[9px] font-mono font-bold uppercase text-slate-400 block tracking-wider">Activity description</span>
               <p className="font-sans">
                 {selectedEvent.description || "This school activity is coordinated based on the teacher calendar of Cordillera School."}
               </p>
@@ -889,7 +889,7 @@ export default function DashboardView({
               onClick={() => setSelectedEvent(null)}
               className="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl transition-colors"
             >
-              Got it
+              Understood
             </button>
 
           </div>
