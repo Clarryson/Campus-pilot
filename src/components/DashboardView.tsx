@@ -1,30 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { 
-  Search, 
-  Bell, 
-  ChevronDown, 
-  ArrowUpRight, 
   Sparkles, 
-  Plus, 
-  Check, 
-  CheckCircle, 
+  Calendar, 
   Clock, 
   MapPin, 
-  MessageSquare, 
-  Calendar as CalendarIcon, 
-  Users, 
-  Folder, 
+  CheckCircle, 
+  AlertTriangle, 
+  ArrowRight, 
+  Upload, 
+  BrainCircuit, 
   FileText, 
   BookOpen, 
-  Wallet, 
+  Layers, 
+  CalendarClock, 
   GraduationCap, 
-  Info, 
-  ExternalLink, 
-  X, 
-  Settings,
-  MoreHorizontal,
-  Menu
+  TrendingUp, 
+  Folder, 
+  Zap, 
+  RefreshCw, 
+  Check, 
+  ChevronRight, 
+  BellRing, 
+  Users, 
+  Award, 
+  Play, 
+  Info,
+  ChevronDown,
+  ChevronUp
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import { GemmaActivityLog, TimetableClass, ExamEvent, ReminderItem } from "../types";
 
 interface DashboardViewProps {
@@ -34,7 +38,7 @@ interface DashboardViewProps {
   reminders: ReminderItem[];
   onNavigate: (section: string) => void;
   onAddQuickReminder: (text: string) => void;
-  onToggleSidebar: () => void;
+  onToggleSidebar?: () => void;
   googleUser: any;
 }
 
@@ -45,809 +49,334 @@ export default function DashboardView({
   reminders, 
   onNavigate,
   onAddQuickReminder,
-  onToggleSidebar,
   googleUser
 }: DashboardViewProps) {
-  // Calendar day selection state
-  const [selectedDay, setSelectedDay] = useState<string>("Feb 28");
-  
-  // "Lo nuevo" newsfeed filter state
-  const [newsFilter, setNewsFilter] = useState<string>("All");
+  // AI Daily Briefing reasoning simulation states
+  const [reasoningState, setReasoningState] = useState<'Thinking...' | 'Analyzing...' | 'Organizing...' | 'Generating...' | 'Completed'>('Completed');
+  const [briefingTab, setBriefingTab] = useState<'schedule' | 'tomorrow' | 'study' | 'assignment' | 'exam' | 'scholarship' | 'events'>('schedule');
+  const [expandedActivityId, setExpandedActivityId] = useState<string | null>("act-1");
 
-  // Interaction states for cards
-  const [isPaid, setIsPaid] = useState<boolean>(false);
-  const [isMatriculado, setIsMatriculado] = useState<boolean>(false);
-  const [showProfileMenu, setShowProfileMenu] = useState<boolean>(false);
-  const [selectedEvent, setSelectedEvent] = useState<any | null>(null);
-
-  // Quick tasks list state
-  const [quickTasks, setQuickTasks] = useState<string[]>([
-    "Review Probability syllabus",
-    "Sign report card",
-    "Prepare uniform for civic assembly"
-  ]);
-  const [newTaskText, setNewTaskText] = useState<string>("");
-
-  const handleAddTask = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (newTaskText.trim()) {
-      setQuickTasks([...quickTasks, newTaskText.trim()]);
-      onAddQuickReminder(newTaskText.trim());
-      setNewTaskText("");
-    }
+  // Trigger brief reasoning animation when clicking refresh
+  const triggerGemmaReasoning = () => {
+    const states: Array<'Thinking...' | 'Analyzing...' | 'Organizing...' | 'Generating...' | 'Completed'> = [
+      'Thinking...',
+      'Analyzing...',
+      'Organizing...',
+      'Generating...',
+      'Completed'
+    ];
+    let index = 0;
+    setReasoningState(states[0]);
+    const interval = setInterval(() => {
+      index++;
+      if (index < states.length) {
+        setReasoningState(states[index]);
+      } else {
+        clearInterval(interval);
+      }
+    }, 600);
   };
 
-  const handleRemoveTask = (index: number) => {
-    setQuickTasks(quickTasks.filter((_, i) => i !== index));
-  };
-
-  // Calendar timeline events list
-  const calendarEventsMap: { [key: string]: any[] } = {
-    "Feb 28": [
-      {
-        id: "ev-1",
-        time: "08:30 - 10:00 AM",
-        title: "Religion Class",
-        room: "Senior Year A - Hc",
-        type: "religion",
-        iconColor: "bg-amber-100 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400",
-        description: "Study of contemporary ethical currents and the social role of faith."
-      },
-      {
-        id: "ev-2",
-        time: "10:00 - 12:30 PM",
-        title: "Probability & Statistics Class",
-        room: "Senior Year A - Hc",
-        type: "math",
-        iconColor: "bg-slate-100 text-slate-600 dark:bg-slate-900/60 dark:text-slate-300",
-        description: "Introduction to continuous random variables and probability density functions."
-      },
-      {
-        id: "ev-3",
-        time: "12:30 - 01:30 PM",
-        title: "Break",
-        room: "Main Courtyard",
-        type: "break",
-        iconColor: "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400"
-      },
-      {
-        id: "ev-4",
-        time: "01:30 - 02:30 PM",
-        title: "Civic Assembly with Teachers",
-        room: "School Auditorium",
-        type: "civic",
-        iconColor: "bg-blue-50 text-blue-600 dark:bg-blue-950/30 dark:text-blue-400",
-        description: "Official ceremony for the start of the academic semester with the faculty."
-      }
-    ],
-    "Feb 29": [
-      {
-        id: "ev-5",
-        time: "08:30 - 10:00 AM",
-        title: "Chilean History Class",
-        room: "Conference Room B",
-        type: "history",
-        iconColor: "bg-orange-100 text-orange-600 dark:bg-orange-950/30 dark:text-orange-400",
-        description: "Critical analysis of 19th-century national independence processes."
-      },
-      {
-        id: "ev-6",
-        time: "10:15 - 11:45 AM",
-        title: "Advanced Robotics Workshop",
-        room: "Innovation Lab",
-        type: "tech",
-        iconColor: "bg-cyan-100 text-cyan-600 dark:bg-cyan-950/30 dark:text-cyan-400",
-        description: "Microcontroller programming using ultrasonic sensors."
-      },
-      {
-        id: "ev-7",
-        time: "12:00 - 01:30 PM",
-        title: "Applied Computing",
-        room: "Systems Lab 3",
-        type: "math",
-        iconColor: "bg-indigo-100 text-indigo-600 dark:bg-indigo-950/30 dark:text-indigo-400",
-        description: "Development of statistical analysis scripts using scientific libraries."
-      }
-    ],
-    "Mar 01": [
-      {
-        id: "ev-8",
-        time: "09:00 - 11:00 AM",
-        title: "Mathematics II Evaluation",
-        room: "Senior Year A - Hc",
-        type: "exam",
-        iconColor: "bg-red-100 text-red-600 dark:bg-red-950/30 dark:text-red-400",
-        description: "First partial exam focused on definite and indefinite integrals."
-      },
-      {
-        id: "ev-9",
-        time: "11:15 - 12:45 PM",
-        title: "Group Literary Workshop",
-        room: "Central Library",
-        type: "lit",
-        iconColor: "bg-purple-100 text-purple-600 dark:bg-purple-950/30 dark:text-purple-400",
-        description: "Open debate and readings of modern Hispano-American authors."
-      },
-      {
-        id: "ev-10",
-        time: "01:00 - 02:30 PM",
-        title: "Physical Education Class",
-        room: "Indoor Gymnasium",
-        type: "sport",
-        iconColor: "bg-emerald-100 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400",
-        description: "General physical conditioning and regulation volleyball practices."
-      }
-    ],
-    "Mar 02": [
-      {
-        id: "ev-11",
-        time: "10:00 - 12:00 PM",
-        title: "Sports & Inclusion Workshop",
-        room: "Auxiliary Sports Courts",
-        type: "sport",
-        iconColor: "bg-teal-100 text-teal-600 dark:bg-teal-950/30 dark:text-teal-400",
-        description: "Adapted basketball clinic and recreational group dynamics."
-      },
-      {
-        id: "ev-12",
-        time: "12:15 - 02:00 PM",
-        title: "Organic Chemistry Lab",
-        room: "Science Lab",
-        type: "chemistry",
-        iconColor: "bg-pink-100 text-pink-600 dark:bg-pink-950/30 dark:text-pink-400",
-        description: "Laboratory practice: simple distillation and synthesis of aromatic compounds."
-      }
-    ]
-  };
-
-  const activeEvents = calendarEventsMap[selectedDay] || [];
-
-  // Feed items list
-  const feedItems = [
+  // Six Premium KPI Cards Data
+  const kpiCards = [
     {
-      id: "feed-1",
-      title: "Holiday Calendar",
-      category: "Announcement",
-      badgeColor: "bg-green-50 text-green-700 dark:bg-green-950/40 dark:text-green-400 border-green-200 dark:border-green-800/40",
-      timeLabel: "Today",
-      isUnread: true,
-      description: "Dear members of the Modelo School, for the new school year 2024, we attach the holiday calendar for your preventive family planning.",
-      icon: <CalendarIcon className="h-4.5 w-4.5 text-green-600 dark:text-green-400" />
+      id: "kpi-classes",
+      title: "Today's Classes",
+      count: "3 / 3",
+      status: "Live Now • AI Lab",
+      progress: 66,
+      color: "from-[#4285F4] to-blue-600",
+      iconColor: "bg-blue-500/10 text-[#4285F4] dark:bg-blue-500/20 dark:text-blue-300",
+      icon: Calendar,
+      action: () => onNavigate("schedule")
     },
     {
-      id: "feed-2",
-      title: "Pending Process",
-      category: "Service",
-      badgeColor: "bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-400 border-blue-200 dark:border-blue-800/40",
-      timeLabel: "Yesterday",
-      description: "Reserve your student enrollment in advance to secure preferential classroom assignment for the 2026 school cycle.",
-      actionType: "matricula",
-      icon: <Users className="h-4.5 w-4.5 text-blue-600 dark:text-blue-400" />
+      id: "kpi-exams",
+      title: "Upcoming Exams",
+      count: "4 Active",
+      status: "Networking in 5d",
+      progress: 80,
+      color: "from-[#7C4DFF] to-purple-600",
+      iconColor: "bg-purple-500/10 text-[#7C4DFF] dark:bg-purple-500/20 dark:text-purple-300",
+      icon: FileText,
+      action: () => onNavigate("examinations")
     },
     {
-      id: "feed-3",
-      title: "Upcoming Payment",
-      category: "Wallet",
-      badgeColor: "bg-indigo-50 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800/40",
-      timeLabel: "4d ago",
-      description: "March tuition is available for immediate payment. Pay before the 5th to avoid administrative surcharges.",
-      amount: "$204,000",
-      actionType: "pago",
-      icon: <Wallet className="h-4.5 w-4.5 text-indigo-600 dark:text-indigo-400" />
+      id: "kpi-assignments",
+      title: "Assignments Due",
+      count: "1 Due Tomorrow",
+      status: "Algorithm Lab 3",
+      progress: 90,
+      color: "from-amber-500 to-orange-500",
+      iconColor: "bg-amber-500/10 text-amber-600 dark:bg-amber-500/20 dark:text-amber-400",
+      icon: Layers,
+      action: () => onNavigate("study-planner")
     },
     {
-      id: "feed-4",
-      title: "Maelys Leiva Grade",
-      category: "Grade",
-      badgeColor: "bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 border-amber-200 dark:border-amber-800/40",
-      timeLabel: "Feb 28",
-      description: "Student Maelys Leiva obtained a 7.0 (maximum grade) in the semester subject of Religion and Ethical Formation.",
-      icon: <GraduationCap className="h-4.5 w-4.5 text-amber-600 dark:text-amber-400" />
+      id: "kpi-projects",
+      title: "Projects",
+      count: "2 In Progress",
+      status: "AI Agent Hackathon",
+      progress: 75,
+      color: "from-cyan-500 to-blue-500",
+      iconColor: "bg-cyan-500/10 text-cyan-600 dark:bg-cyan-500/20 dark:text-cyan-400",
+      icon: BrainCircuit,
+      action: () => onNavigate("ai-workspace")
+    },
+    {
+      id: "kpi-calendar",
+      title: "Calendar Sync Status",
+      count: googleUser ? "Google Calendar" : "Local Sync",
+      status: googleUser ? "Real-time Sync Active" : "Click to Connect GCal",
+      progress: 100,
+      color: "from-[#34A853] to-emerald-600",
+      iconColor: "bg-emerald-500/10 text-[#34A853] dark:bg-emerald-500/20 dark:text-emerald-300",
+      icon: CalendarClock,
+      action: () => onNavigate("google-calendar")
+    },
+    {
+      id: "kpi-health",
+      title: "Academic Health Score",
+      count: "96% AI Optimized",
+      status: "Top Tier Performance",
+      progress: 96,
+      color: "from-rose-500 to-pink-600",
+      iconColor: "bg-rose-500/10 text-rose-600 dark:bg-rose-500/20 dark:text-rose-400",
+      icon: TrendingUp,
+      action: () => onNavigate("planner")
     }
   ];
 
-  // Filter feed items based on selected tab
-  const filteredFeedItems = newsFilter === "All" 
-    ? feedItems 
-    : feedItems.filter(item => item.category === newsFilter);
+  // Quick Actions floating cards
+  const quickActions = [
+    { title: "Upload Class Timetable", icon: Upload, action: () => onNavigate("documents"), badge: "PDF" },
+    { title: "Upload Exam Timetable", icon: FileText, action: () => onNavigate("documents"), badge: "Extract" },
+    { title: "Generate Study Plan", icon: BookOpen, action: () => onNavigate("study-planner"), badge: "Gemma" },
+    { title: "Ask Gemma", icon: Sparkles, action: () => onNavigate("ai-workspace"), badge: "AI 4" },
+    { title: "Compare Timetables", icon: Layers, action: () => onNavigate("documents"), badge: "Diff v2" },
+    { title: "Sync Google Calendar", icon: CalendarClock, action: () => onNavigate("google-calendar"), badge: "Live" },
+    { title: "Upload Student Handbook", icon: Folder, action: () => onNavigate("documents"), badge: "RAG" },
+    { title: "Upload Academic Calendar", icon: Calendar, action: () => onNavigate("documents"), badge: "Dates" },
+  ];
+
+  // AI Activity Timeline data
+  const activityLogs = [
+    {
+      id: "act-1",
+      time: "09:20 AM",
+      title: "Weekly briefing completed",
+      desc: "Gemma structured the 5-day academic itinerary and scheduled optimal evening study slots.",
+      status: "Ready",
+      statusColor: "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
+      icon: Sparkles
+    },
+    {
+      id: "act-2",
+      time: "09:18 AM",
+      title: "Scholarship recommendation generated",
+      desc: "Identified 'Google DeepMind AI Fellowship' matching 98% with your Computer Science transcript.",
+      status: "Matched",
+      statusColor: "bg-purple-500/10 text-purple-600 border-purple-500/20",
+      icon: Award
+    },
+    {
+      id: "act-3",
+      time: "09:15 AM",
+      title: "Detected timetable update",
+      desc: "Compared Version 1 with Version 2 PDF: Probability room shifted to Senior Year A - Hc.",
+      status: "Resolved",
+      statusColor: "bg-blue-500/10 text-blue-600 border-blue-500/20",
+      icon: RefreshCw
+    },
+    {
+      id: "act-4",
+      time: "09:10 AM",
+      title: "Study plan generated",
+      desc: "Created intensive Feynman technique blocks for Heaps & B-Trees examination.",
+      status: "Optimized",
+      statusColor: "bg-cyan-500/10 text-cyan-600 border-cyan-500/20",
+      icon: BookOpen
+    },
+    {
+      id: "act-5",
+      time: "09:07 AM",
+      title: "Daily reminders created",
+      desc: "Staged 3 high-priority notifications for Algorithm Lab submission and assembly attendance.",
+      status: "Active",
+      statusColor: "bg-amber-500/10 text-amber-600 border-amber-500/20",
+      icon: BellRing
+    },
+    {
+      id: "act-6",
+      time: "09:05 AM",
+      title: "Google Calendar synchronized",
+      desc: "Synchronized 14 semester events directly to your personal connected Google account.",
+      status: "Synced",
+      statusColor: "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
+      icon: CalendarClock
+    },
+    {
+      id: "act-7",
+      time: "09:03 AM",
+      title: "Exam timetable extracted",
+      desc: "Parsed 4 core examinations from uploaded syllabus PDF with zero schema errors.",
+      status: "Mapped",
+      statusColor: "bg-indigo-500/10 text-indigo-600 border-indigo-500/20",
+      icon: FileText
+    },
+    {
+      id: "act-8",
+      time: "09:02 AM",
+      title: "Gemma analyzed class timetable",
+      desc: "Initialized 12 weekly lecture slots and verified zero room collisions across all subjects.",
+      status: "Verified",
+      statusColor: "bg-blue-500/10 text-blue-600 border-blue-500/20",
+      icon: CheckCircle
+    }
+  ];
+
+  // Today's Timeline classes
+  const todayClasses = [
+    {
+      id: "t-1",
+      time: "08:30 - 10:00 AM",
+      name: "Linear Algebra & Probability",
+      venue: "Senior Year A - Hc",
+      building: "Main Science Pavilion",
+      lecturer: "Dr. Sarah Jenkins",
+      status: "completed",
+      countdown: "Completed at 10:00 AM"
+    },
+    {
+      id: "t-2",
+      time: "10:30 - 12:00 PM",
+      name: "Artificial Intelligence Lab 4",
+      venue: "Innovation Center, Lab 2",
+      building: "Engineering Complex B",
+      lecturer: "Prof. Alan Turing Jr.",
+      status: "live",
+      countdown: "Live Now • Ends in 42 mins"
+    },
+    {
+      id: "t-3",
+      time: "02:00 - 03:30 PM",
+      name: "Cloud Systems & Networking",
+      venue: "Tech Tower, Room 405",
+      building: "Computer Science Hall",
+      lecturer: "Dr. Grace Hopper",
+      status: "upcoming",
+      countdown: "Next class in 1h 48 mins"
+    }
+  ];
+
+  // Upcoming Exams
+  const upcomingExams = [
+    {
+      id: "ex-1",
+      subject: "Networking & Cloud Architecture",
+      countdown: "5 Days Left",
+      venue: "Graduation Pavilion, Hall A",
+      building: "Central Campus",
+      difficulty: "High Intensity",
+      difficultyColor: "text-red-500 bg-red-500/10 border-red-500/20",
+      recommendation: "Review TCP/IP handshake algorithms and distributed consensus protocols tonight."
+    },
+    {
+      id: "ex-2",
+      subject: "Quantum Computing & Modeling",
+      countdown: "8 Days Left",
+      venue: "Science Annex, Lab 4",
+      building: "Physics Center",
+      difficulty: "Medium Load",
+      difficultyColor: "text-amber-500 bg-amber-500/10 border-amber-500/20",
+      recommendation: "Practice Shor's algorithm derivations using your staged AI practice test."
+    },
+    {
+      id: "ex-3",
+      subject: "Advanced Data Structures II",
+      countdown: "12 Days Left",
+      venue: "Main Auditorium R-102",
+      building: "Engineering Complex A",
+      difficulty: "High Intensity",
+      difficultyColor: "text-red-500 bg-red-500/10 border-red-500/20",
+      recommendation: "Focus on Red-Black tree balancing rules and dynamic programming recursion."
+    }
+  ];
 
   return (
-    <div className="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 p-4 md:p-6 lg:p-8 space-y-6 md:space-y-8 text-left transition-colors duration-300">
+    <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-8 text-left bg-[#FFFFFF] dark:bg-[#0F172A] text-slate-900 dark:text-slate-100 transition-colors duration-300">
       
-      {/* Search and User Header Row */}
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <button 
-            onClick={onToggleSidebar}
-            className="md:hidden p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 cursor-pointer shadow-sm"
-          >
-            <Menu className="h-5 w-5" />
-          </button>
-          <div>
-            <h2 className="text-xl md:text-2xl font-black tracking-tight text-slate-900 dark:text-white font-sans">
-              Academic Dashboard
-            </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-              Management of school cycle, enrollment, and school activities.
-            </p>
-          </div>
-        </div>
-
-        {/* Global Toolbar */}
-        <div className="flex items-center gap-3">
-          {/* Search Button */}
-          <button className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 rounded-full shadow-sm hover:bg-slate-50 dark:hover:bg-slate-950 transition-all cursor-pointer">
-            <Search className="h-4.5 w-4.5 text-slate-500 dark:text-slate-400" />
-          </button>
-
-          {/* Notifications Trigger */}
-          <button 
-            onClick={() => onNavigate("notifications")}
-            className="h-10 w-10 relative flex items-center justify-center bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 rounded-full shadow-sm hover:bg-slate-50 dark:hover:bg-slate-950 transition-all cursor-pointer"
-          >
-            <Bell className="h-4.5 w-4.5 text-slate-500 dark:text-slate-400" />
-            <span className="absolute top-2.5 right-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-white dark:ring-slate-900 animate-pulse" />
-          </button>
-
-          {/* User Profile dropdown */}
-          <div className="relative">
-            <button 
-              onClick={() => setShowProfileMenu(!showProfileMenu)}
-              className="flex items-center gap-1 bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 pl-1 pr-2.5 py-1 rounded-full shadow-sm hover:bg-slate-50 dark:hover:bg-slate-950 transition-all cursor-pointer"
-            >
-              <img 
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80" 
-                alt="Maelys Leiva Avatar"
-                referrerPolicy="no-referrer"
-                className="h-7 w-7 rounded-full object-cover border border-slate-100" 
-              />
-              <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
-            </button>
-
-            {showProfileMenu && (
-              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl z-50 py-2 text-xs">
-                <div className="px-3.5 py-2 border-b border-slate-100 dark:border-slate-850">
-                  <p className="font-bold text-slate-900 dark:text-white">Maelys Leiva</p>
-                  <p className="text-[10px] text-slate-400 mt-0.5">Parent: Kinder A</p>
-                </div>
-                <button 
-                  onClick={() => { onNavigate("settings"); setShowProfileMenu(false); }}
-                  className="w-full text-left px-3.5 py-2 hover:bg-slate-50 dark:hover:bg-slate-950 text-slate-600 dark:text-slate-300 transition-colors"
-                >
-                  Settings
-                </button>
-                <button 
-                  onClick={() => { onNavigate("handbook"); setShowProfileMenu(false); }}
-                  className="w-full text-left px-3.5 py-2 hover:bg-slate-50 dark:hover:bg-slate-950 text-slate-600 dark:text-slate-300 transition-colors"
-                >
-                  School Handbook
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Main Dashboard Layout Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 items-start">
+      {/* ==============================================
+          1. MAIN HERO SECTION (AI Operating System Centerpiece)
+          ============================================== */}
+      <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-[#1E293B] via-[#0F172A] to-[#1E1E38] p-6 md:p-10 text-white shadow-xl border border-slate-700/60 group">
         
-        {/* ==============================================
-            COLUMN 1: Profile Banner, Metrics & Average Grade (col-span-1)
-            ============================================== */}
-        <div className="space-y-6">
+        {/* Background Glowing AI Orbs */}
+        <div className="absolute -right-16 -top-16 h-72 w-72 rounded-full bg-gradient-to-tr from-[#4285F4]/40 to-[#7C4DFF]/40 blur-3xl pointer-events-none animate-float" />
+        <div className="absolute right-1/4 -bottom-20 h-64 w-64 rounded-full bg-[#34A853]/20 blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
           
-          {/* Colegio Cordillera Premium Banner Card */}
-          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[32px] p-6 text-slate-800 dark:text-slate-100 overflow-hidden shadow-sm aspect-[4/3] flex flex-col justify-between select-none group">
-            
-            {/* Top Row: School Badge Logo */}
-            <div className="relative z-10 flex justify-between items-start">
-              <div className="bg-blue-50 dark:bg-blue-950/40 px-3.5 py-2.5 rounded-2xl border border-blue-200/20 shadow-inner">
-                <span className="text-sm font-black tracking-widest font-mono text-[#009BF5]">UE</span>
-              </div>
-              <span className="bg-[#009BF5]/10 text-[#009BF5] text-[9px] font-mono tracking-wider font-extrabold uppercase px-2.5 py-1 rounded-full border border-blue-400/20">
-                2026 Period
+          <div className="space-y-4 max-w-3xl">
+            <div className="flex items-center gap-2.5">
+              <span className="px-3 py-1 rounded-full bg-[#4285F4]/20 border border-[#4285F4]/40 text-[#4285F4] dark:text-blue-300 text-xs font-mono font-black uppercase tracking-wider flex items-center gap-1.5">
+                <Sparkles className="h-3.5 w-3.5 animate-spin-slow" />
+                <span>Gemma 4 Autonomous Core</span>
+              </span>
+              <span className="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-mono font-bold flex items-center gap-1">
+                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
+                <span>System Synchronized</span>
               </span>
             </div>
 
-            {/* Middle Row: Title "University of Embu" */}
-            <div className="relative z-10 text-left mt-4">
-              <h3 className="text-2xl md:text-3xl font-black font-sans leading-tight tracking-tight text-slate-950 dark:text-white">
-                University <br />of Embu
-              </h3>
-            </div>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black font-sans tracking-tight text-white leading-tight">
+              Good Morning, Clarryson <span className="inline-block animate-wiggle">👋</span>
+            </h1>
 
-            {/* Bottom Row: User dropdown capsule */}
-            <div className="relative z-10 bg-slate-50 dark:bg-slate-950 hover:bg-slate-100/80 text-slate-800 dark:text-slate-100 p-2.5 rounded-2xl border border-slate-150 dark:border-slate-850 flex items-center justify-between gap-3 cursor-pointer select-none transition-all duration-300">
-              <div className="flex items-center gap-2.5 min-w-0">
-                {googleUser?.photoURL ? (
-                  <img 
-                    src={googleUser.photoURL} 
-                    alt="User Profile"
-                    className="h-8 w-8 rounded-full object-cover border border-slate-200" 
-                  />
-                ) : (
-                  <img 
-                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80" 
-                    alt="Clarryson"
-                    className="h-8 w-8 rounded-full object-cover border border-slate-250" 
-                  />
-                )}
-                <div className="text-left min-w-0">
-                  <p className="text-xs font-black text-slate-900 dark:text-white truncate">
-                    {googleUser ? googleUser.displayName : "Clarryson"}
-                  </p>
-                  <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium truncate">
-                    Computer Science • Year 2
-                  </p>
-                </div>
-              </div>
-              <ChevronDown className="h-4 w-4 text-[#009BF5] shrink-0" />
-            </div>
-
-          </div>
-
-          {/* Dual Metrics Row */}
-          <div className="grid grid-cols-2 gap-4">
-            
-            {/* Card 1: Asistencia */}
-            <div 
-              onClick={() => onNavigate("schedule")}
-              className="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 p-5 rounded-[24px] shadow-sm hover:shadow-md hover:border-emerald-500/30 transition-all cursor-pointer text-left flex flex-col justify-between min-h-[105px]"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Attendance</span>
-                <ArrowUpRight className="h-4 w-4 text-slate-400" />
-              </div>
-              <div className="mt-2">
-                <h4 className="text-2xl font-black text-emerald-600 dark:text-emerald-400 font-sans leading-none">100%</h4>
-                <p className="text-[9px] text-slate-400 dark:text-slate-500 font-mono mt-1">Perfect attendance</p>
-              </div>
-            </div>
-
-            {/* Card 2: Matrícula */}
-            <div 
-              onClick={() => setIsMatriculado(!isMatriculado)}
-              className="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 p-5 rounded-[24px] shadow-sm hover:shadow-md hover:border-amber-500/30 transition-all cursor-pointer text-left flex flex-col justify-between min-h-[105px]"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Enrollment</span>
-                <ArrowUpRight className="h-4 w-4 text-slate-400" />
-              </div>
-              <div className="mt-2">
-                {isMatriculado ? (
-                  <>
-                    <h4 className="text-sm font-black text-emerald-600 dark:text-emerald-400 font-mono">ENROLLED</h4>
-                    <p className="text-[9px] text-slate-400 dark:text-slate-500 font-mono mt-1">Complete</p>
-                  </>
-                ) : (
-                  <>
-                    <h4 className="text-sm font-black text-amber-600 dark:text-amber-500 font-mono">Promoted</h4>
-                    <p className="text-[9px] text-red-500 font-mono font-extrabold leading-none mt-0.5">Pending</p>
-                  </>
-                )}
-              </div>
-            </div>
-
-          </div>
-
-          {/* Bottom Card: Promedio Grade Gauge Meter */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 p-6 rounded-[32px] shadow-sm text-left relative flex flex-col justify-between min-h-[250px]">
-            
-            {/* Card Header */}
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-mono font-black uppercase tracking-wider text-slate-900 dark:text-white">GPA</span>
-              <button className="h-7 w-7 flex items-center justify-center bg-slate-950 hover:bg-slate-800 text-white rounded-full transition-colors">
-                <ArrowUpRight className="h-3.5 w-3.5" />
-              </button>
-            </div>
-
-            {/* Gauge SVG in the center */}
-            <div className="relative flex flex-col items-center justify-center py-4">
-              <svg className="w-40 h-24" viewBox="0 0 100 60">
-                {/* Background track arc */}
-                <path 
-                  d="M 10 50 A 40 40 0 0 1 90 50" 
-                  fill="none" 
-                  stroke="#E2E8F0" 
-                  strokeWidth="8" 
-                  strokeLinecap="round"
-                  className="dark:stroke-slate-800"
-                />
-                {/* Highlight gauge green arc */}
-                <path 
-                  d="M 10 50 A 40 40 0 0 1 83 40" 
-                  fill="none" 
-                  stroke="#00D26A" 
-                  strokeWidth="8.5" 
-                  strokeLinecap="round"
-                  strokeDasharray="125"
-                  strokeDashoffset="20"
-                />
-              </svg>
-
-              {/* Central Text Grade */}
-              <div className="absolute bottom-2 text-center">
-                <span className="text-3xl font-black text-slate-900 dark:text-white font-mono">
-                  9.2
+            <div className="bg-white/10 dark:bg-slate-900/60 backdrop-blur-md border border-white/15 rounded-2xl p-4 md:p-5 space-y-3">
+              <p className="text-sm md:text-base text-slate-100 font-medium leading-relaxed">
+                <strong className="text-blue-300 font-extrabold">Gemma has analyzed your semester.</strong> You have:
+              </p>
+              <div className="flex flex-wrap items-center gap-2 md:gap-3 text-xs md:text-sm font-semibold font-mono">
+                <span className="px-3 py-1.5 rounded-xl bg-blue-500/20 border border-blue-400/30 text-blue-200">
+                  🗓️ 3 Classes Today
                 </span>
-                <p className="text-[8px] font-mono text-slate-400 uppercase tracking-widest font-black leading-none mt-0.5">Semester</p>
+                <span className="px-3 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/30 text-amber-200">
+                  ⚠️ 1 Assignment Due Tomorrow
+                </span>
+                <span className="px-3 py-1.5 rounded-xl bg-purple-500/20 border border-purple-400/30 text-purple-200">
+                  ✍️ Networking Exam in 5 Days
+                </span>
+                <span className="px-3 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-400/30 text-emerald-200">
+                  🎓 2 New Scholarships
+                </span>
+                <span className="px-3 py-1.5 rounded-xl bg-cyan-500/20 border border-cyan-400/30 text-cyan-200">
+                  🎉 1 Campus Event Today
+                </span>
+                <span className="px-3 py-1.5 rounded-xl bg-teal-500/20 border border-teal-400/30 text-teal-200">
+                  📅 Google Calendar Synced
+                </span>
               </div>
             </div>
-
-            {/* Smaller Grade Indicator Pills */}
-            <div className="grid grid-cols-2 gap-2 text-[10px] font-mono pt-3 border-t border-slate-100 dark:border-slate-850">
-              
-              <div className="bg-slate-50 dark:bg-slate-950 p-2 rounded-xl border border-slate-100 dark:border-slate-850/60 flex flex-col items-start gap-1">
-                <div className="flex items-center gap-1 text-slate-400 dark:text-slate-500 font-bold uppercase text-[8px]">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                  <span>Best</span>
-                </div>
-                <span className="font-sans font-extrabold text-slate-700 dark:text-slate-300 truncate w-full">Spanish</span>
-                <span className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 font-mono">8.9</span>
-              </div>
-
-              <div className="bg-slate-50 dark:bg-slate-950 p-2 rounded-xl border border-slate-100 dark:border-slate-850/60 flex flex-col items-start gap-1">
-                <div className="flex items-center gap-1 text-slate-400 dark:text-slate-500 font-bold uppercase text-[8px]">
-                  <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
-                  <span>Lowest</span>
-                </div>
-                <span className="font-sans font-extrabold text-slate-700 dark:text-slate-300 truncate w-full">Mathematics</span>
-                <span className="text-[10px] font-black text-amber-600 dark:text-amber-500 font-mono">7.6</span>
-              </div>
-
-            </div>
-
           </div>
 
-        </div>
+          {/* Primary & Secondary Hero Actions */}
+          <div className="flex flex-col sm:flex-row lg:flex-col gap-3.5 w-full sm:w-auto shrink-0">
+            <button 
+              onClick={() => onNavigate("documents")}
+              className="px-6 py-3.5 bg-gradient-to-r from-[#4285F4] to-[#7C4DFF] hover:from-blue-600 hover:to-purple-600 text-white font-sans font-bold text-sm rounded-2xl shadow-lg shadow-blue-500/25 flex items-center justify-center gap-2.5 transition-all transform hover:scale-102 cursor-pointer"
+            >
+              <Upload className="h-4.5 w-4.5" />
+              <span>Upload Timetable</span>
+            </button>
 
-        {/* ==============================================
-            COLUMN 2: "Eventos" Classes & Timeline (col-span-1)
-            ============================================== */}
-        <div className="space-y-6">
-          
-          <div className="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 p-6 rounded-[32px] shadow-sm text-left flex flex-col gap-6 min-h-[610px]">
-            
-            {/* Section Header */}
-            <div className="flex items-center justify-between">
-              <h3 className="text-xl font-black text-slate-900 dark:text-white font-sans flex items-center gap-2">
-                Events
-              </h3>
-              <button className="h-7 w-7 flex items-center justify-center bg-slate-950 hover:bg-slate-800 text-white rounded-full transition-colors">
-                <ArrowUpRight className="h-3.5 w-3.5" />
-              </button>
-            </div>
-
-            {/* Horizontal Date Picker Slider */}
-            <div>
-              <div className="flex items-center justify-between gap-1 overflow-x-auto pb-1 scrollbar-none select-none">
-                
-                {/* Feb 28 (Hoy) */}
-                <div className="flex flex-col items-center gap-1">
-                  <span className="text-[9px] font-mono text-slate-400 uppercase font-black tracking-wider">February</span>
-                  <button 
-                    onClick={() => setSelectedDay("Feb 28")}
-                    className={`h-14 w-12 rounded-2xl flex flex-col justify-center items-center transition-all cursor-pointer font-sans text-xs ${
-                      selectedDay === "Feb 28"
-                        ? "bg-[#00A1FF] text-white font-extrabold shadow-md shadow-blue-500/10"
-                        : "bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border border-slate-100 dark:border-slate-850"
-                    }`}
-                  >
-                    <span className="text-[9px] block opacity-80 uppercase font-bold">Today</span>
-                    <span className="text-[10px] block opacity-90 leading-none">Wed</span>
-                    <span className="text-sm font-black block mt-0.5">28</span>
-                  </button>
-                </div>
-
-                {/* Feb 29 (Mañana) */}
-                <div className="flex flex-col items-center gap-1">
-                  <span className="text-[9px] font-mono text-transparent uppercase font-black select-none">•</span>
-                  <button 
-                    onClick={() => setSelectedDay("Feb 29")}
-                    className={`h-14 w-12 rounded-2xl flex flex-col justify-center items-center transition-all cursor-pointer font-sans text-xs ${
-                      selectedDay === "Feb 29"
-                        ? "bg-[#00A1FF] text-white font-extrabold shadow-md shadow-blue-500/10"
-                        : "bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border border-slate-100 dark:border-slate-850"
-                    }`}
-                  >
-                    <span className="text-[9px] block opacity-80 uppercase font-bold">Tomorrow</span>
-                    <span className="text-[10px] block opacity-90 leading-none">Thu</span>
-                    <span className="text-sm font-black block mt-0.5">29</span>
-                  </button>
-                </div>
-
-                {/* Mar 01 */}
-                <div className="flex flex-col items-center gap-1">
-                  <span className="text-[9px] font-mono text-slate-400 uppercase font-black tracking-wider">March</span>
-                  <button 
-                    onClick={() => setSelectedDay("Mar 01")}
-                    className={`h-14 w-12 rounded-2xl flex flex-col justify-center items-center transition-all cursor-pointer font-sans text-xs ${
-                      selectedDay === "Mar 01"
-                        ? "bg-[#00A1FF] text-white font-extrabold shadow-md shadow-blue-500/10"
-                        : "bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border border-slate-100 dark:border-slate-850"
-                    }`}
-                  >
-                    <span className="text-[9px] block opacity-0 uppercase select-none">•</span>
-                    <span className="text-[10px] block opacity-90 leading-none">Fri</span>
-                    <span className="text-sm font-black block mt-0.5">01</span>
-                  </button>
-                </div>
-
-                {/* Mar 02 */}
-                <div className="flex flex-col items-center gap-1">
-                  <span className="text-[9px] font-mono text-transparent uppercase font-black select-none">•</span>
-                  <button 
-                    onClick={() => setSelectedDay("Mar 02")}
-                    className={`h-14 w-12 rounded-2xl flex flex-col justify-center items-center transition-all cursor-pointer font-sans text-xs ${
-                      selectedDay === "Mar 02"
-                        ? "bg-[#00A1FF] text-white font-extrabold shadow-md shadow-blue-500/10"
-                        : "bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border border-slate-100 dark:border-slate-850"
-                    }`}
-                  >
-                    <span className="text-[10px] block opacity-90 leading-none">Sat</span>
-                    <span className="text-sm font-black block mt-0.5">02</span>
-                  </button>
-                </div>
-
-                {/* More Days Button */}
-                <div className="flex flex-col items-center gap-1">
-                  <span className="text-[9px] font-mono text-transparent uppercase select-none">•</span>
-                  <button className="h-14 w-10 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-850 hover:bg-slate-200 text-slate-500 dark:text-slate-400 flex items-center justify-center transition-colors">
-                    <ArrowUpRight className="h-4 w-4 shrink-0" />
-                  </button>
-                </div>
-
-              </div>
-            </div>
-
-            {/* Vertical timeline classes list */}
-            <div className="relative pl-4 border-l border-dashed border-slate-200 dark:border-slate-800 space-y-4 flex-1">
-              
-              {activeEvents.map((item, index) => {
-                const isBreak = item.type === "break";
-                
-                return (
-                  <div key={item.id} className="relative">
-                    {/* Circle Dot indicator on the left line */}
-                    <span className="absolute -left-[20px] top-4 h-3 w-3 rounded-full bg-white dark:bg-slate-900 border-2 border-blue-500 shadow-sm" />
-
-                    <div className="grid grid-cols-12 gap-3 items-center">
-                      {/* Left time label (3 cols) */}
-                      <div className="col-span-3 text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase leading-snug">
-                        {item.time.split(" ")[0]} <br />
-                        <span className="text-[8px] font-medium opacity-70">{item.time.split(" ").slice(1).join(" ")}</span>
-                      </div>
-
-                      {/* Right card container (9 cols) */}
-                      <div className="col-span-9">
-                        {isBreak ? (
-                          <div className="p-3.5 bg-slate-50 dark:bg-slate-950 border border-dashed border-slate-200 dark:border-slate-850 rounded-2xl flex items-center gap-3">
-                            <div className={`${item.iconColor} p-2 rounded-xl text-xs shrink-0 font-bold uppercase`}>
-                              ☕
-                            </div>
-                            <div>
-                              <h5 className="font-extrabold text-xs text-slate-700 dark:text-slate-300">
-                                {item.title}
-                              </h5>
-                              <p className="text-[9px] text-slate-400 font-mono mt-0.5">{item.room}</p>
-                            </div>
-                          </div>
-                        ) : (
-                          <div 
-                            onClick={() => setSelectedEvent(item)}
-                            className="bg-slate-50 dark:bg-slate-950 hover:bg-slate-100 dark:hover:bg-slate-900/60 p-3.5 rounded-2xl border border-slate-100 dark:border-slate-850 flex items-center justify-between gap-2.5 transition-all cursor-pointer group text-left shadow-sm"
-                          >
-                            <div className="flex items-center gap-2.5 min-w-0">
-                              <div className={`${item.iconColor} p-2 rounded-xl shrink-0 font-bold text-xs shadow-sm`}>
-                                {item.type === "religion" ? "✝" : item.type === "math" ? "🔢" : item.type === "history" ? "📜" : item.type === "tech" ? "🤖" : item.type === "exam" ? "✍" : "📖"}
-                              </div>
-                              <div className="min-w-0">
-                                <h5 className="font-extrabold text-xs text-slate-900 dark:text-white truncate group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">
-                                  {item.title}
-                                </h5>
-                                <p className="text-[10px] text-slate-400 dark:text-slate-500 truncate font-mono mt-0.5">
-                                  {item.room}
-                                </p>
-                              </div>
-                            </div>
-                            <MoreHorizontal className="h-4 w-4 text-slate-400 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-
-              {activeEvents.length === 0 && (
-                <div className="text-center py-12 text-xs text-slate-400 dark:text-slate-500 font-mono">
-                  No classes scheduled for this day.
-                </div>
-              )}
-
-            </div>
-
-            {/* Quick static disclaimer */}
-            <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 p-3 rounded-2xl text-[10px] text-slate-500 dark:text-slate-400 border border-slate-100 dark:border-slate-850">
-              <Info className="h-3.5 w-3.5 text-blue-500 shrink-0" />
-              <span>Gemma automatically updates the school agenda based on the official School log.</span>
-            </div>
-
-          </div>
-
-        </div>
-
-        {/* ==============================================
-            COLUMN 3: "Lo nuevo" News Feed (col-span-1)
-            ============================================== */}
-        <div className="space-y-6 md:col-span-2 lg:col-span-1">
-          
-          <div className="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 p-6 rounded-[32px] shadow-sm text-left flex flex-col gap-6 min-h-[610px]">
-            
-            {/* Title & Settings Icon */}
-            <div className="flex items-center justify-between">
-              <h3 className="text-xl font-black text-slate-900 dark:text-white font-sans flex items-center gap-2">
-                What's New
-              </h3>
-              <button 
-                onClick={() => onNavigate("settings")}
-                className="h-7 w-7 flex items-center justify-center bg-slate-100 hover:bg-slate-200 dark:bg-slate-950 text-slate-600 dark:text-slate-400 rounded-full transition-colors cursor-pointer"
-              >
-                <Settings className="h-4 w-4" />
-              </button>
-            </div>
-
-            {/* Filter Buttons Pills */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none select-none">
-              {["All", "Announcement", "Wallet", "Grade"].map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setNewsFilter(category)}
-                  className={`px-3 py-1.5 rounded-full text-[10px] uppercase tracking-wider font-mono font-bold shrink-0 transition-all cursor-pointer ${
-                    newsFilter === category 
-                      ? "bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-sm"
-                      : "bg-slate-50 dark:bg-slate-950 hover:bg-slate-100 border border-slate-200 dark:border-slate-850 text-slate-500 dark:text-slate-400"
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-
-            {/* List Feed cards */}
-            <div className="space-y-4 flex-1 overflow-y-auto max-h-[420px] scrollbar-none">
-              
-              {filteredFeedItems.map((item) => (
-                <div 
-                  key={item.id} 
-                  className={`bg-slate-50 dark:bg-slate-950/40 border p-4.5 rounded-3xl text-left space-y-3 shadow-sm hover:shadow transition-all relative ${
-                    item.isUnread 
-                      ? "border-blue-500/20 dark:border-blue-500/10 bg-blue-500/[0.01]" 
-                      : "border-slate-100 dark:border-slate-850"
-                  }`}
-                >
-                  {/* Top card header */}
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-center gap-2">
-                      <div className="p-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-xl shadow-inner">
-                        {item.icon}
-                      </div>
-                      <div>
-                        <h4 className="text-xs font-black text-slate-900 dark:text-white leading-tight">
-                          {item.title}
-                        </h4>
-                        <span className={`inline-block text-[8px] font-mono font-black uppercase tracking-wider border px-1.5 py-0.5 rounded mt-1 ${item.badgeColor}`}>
-                          {item.category}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-1.5 text-[10px] font-mono text-slate-400 dark:text-slate-500 font-medium shrink-0">
-                      <span>{item.timeLabel}</span>
-                      {item.isUnread && (
-                        <span className="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse" />
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Feed description */}
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                    {item.description}
-                  </p>
-
-                  {/* Actions depending on types */}
-                  {item.actionType === "matricula" && (
-                    <div className="pt-2 border-t border-slate-100 dark:border-slate-850/60 flex items-center justify-between">
-                      <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500">
-                        Recommended room: Kinder A
-                      </span>
-                      <button 
-                        onClick={() => setIsMatriculado(!isMatriculado)}
-                        className={`px-3.5 py-1.5 rounded-xl text-[10px] font-bold font-mono uppercase tracking-wide cursor-pointer transition-colors ${
-                          isMatriculado 
-                            ? "bg-emerald-50 text-emerald-600 border border-emerald-200" 
-                            : "bg-white dark:bg-slate-900 text-[#4285F4] dark:text-blue-400 hover:text-white hover:bg-[#4285F4] border border-[#4285F4]/30"
-                        }`}
-                      >
-                        {isMatriculado ? "Enrolled ✓" : "Pre-enroll"}
-                      </button>
-                    </div>
-                  )}
-
-                  {item.actionType === "pago" && (
-                    <div className="pt-2 border-t border-slate-100 dark:border-slate-850/60 flex items-center justify-between">
-                      <span className="text-sm font-black text-slate-900 dark:text-white font-mono">
-                        {item.amount}
-                      </span>
-                      <button 
-                        onClick={() => setIsPaid(!isPaid)}
-                        className={`px-4.5 py-1.5 rounded-xl text-[10px] font-bold font-sans uppercase tracking-wide cursor-pointer transition-all ${
-                          isPaid 
-                            ? "bg-emerald-500 text-white shadow-sm" 
-                            : "bg-[#009BF5] hover:bg-blue-600 text-white shadow shadow-blue-400/20"
-                        }`}
-                      >
-                        {isPaid ? "Paid ✓" : "Pay"}
-                      </button>
-                    </div>
-                  )}
-
-                </div>
-              ))}
-
-              {filteredFeedItems.length === 0 && (
-                <div className="text-center py-12 text-xs text-slate-400 dark:text-slate-500 font-mono">
-                  No notifications in this category.
-                </div>
-              )}
-
-            </div>
-
-            {/* Quick interactive checklist block */}
-            <div className="border-t border-slate-100 dark:border-slate-850 pt-4 space-y-3">
-              <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500 uppercase tracking-wider block font-bold">Pending Tasks</span>
-              
-              <div className="space-y-2">
-                {quickTasks.map((task, i) => (
-                  <div key={i} className="flex items-center justify-between bg-slate-50 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-150/60 dark:border-slate-850/80 text-xs text-slate-700 dark:text-slate-300">
-                    <div className="flex items-center gap-2">
-                      <span className="h-1.5 w-1.5 rounded-full bg-blue-500 shrink-0" />
-                      <span className="truncate">{task}</span>
-                    </div>
-                    <button 
-                      onClick={() => handleRemoveTask(i)}
-                      className="text-slate-400 hover:text-red-500 p-0.5 cursor-pointer rounded transition-colors"
-                      title="Delete task"
-                    >
-                      <X className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
-                ))}
-
-                {quickTasks.length === 0 && (
-                  <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono italic">Congratulations! You have no pending tasks.</p>
-                )}
-
-                <form onSubmit={handleAddTask} className="flex gap-2 pt-1">
-                  <input
-                    type="text"
-                    placeholder="New task..."
-                    value={newTaskText}
-                    onChange={(e) => setNewTaskText(e.target.value)}
-                    className="flex-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-850 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-blue-500 text-slate-900 dark:text-white placeholder-slate-400"
-                  />
-                  <button
-                    type="submit"
-                    disabled={!newTaskText.trim()}
-                    className="bg-blue-600 hover:bg-blue-500 text-white p-2 rounded-xl disabled:opacity-40 transition-colors shrink-0"
-                  >
-                    <Plus className="h-4 w-4" />
-                  </button>
-                </form>
-              </div>
-
-            </div>
-
+            <button 
+              onClick={() => onNavigate("ai-workspace")}
+              className="px-6 py-3.5 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-sans font-bold text-sm rounded-2xl backdrop-blur-md flex items-center justify-center gap-2.5 transition-all cursor-pointer"
+            >
+              <Sparkles className="h-4.5 w-4.5 text-[#4285F4]" />
+              <span>Ask Gemma</span>
+            </button>
           </div>
 
         </div>
@@ -855,65 +384,554 @@ export default function DashboardView({
       </div>
 
       {/* ==============================================
-          FLOATING DETAIL MODAL ON CLICKING ANY TIMELINE EVENT
+          2. TOP KPI CARDS (Six Premium Cards)
           ============================================== */}
-      {selectedEvent && (
-        <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[32px] max-w-md w-full p-6 text-left shadow-2xl relative space-y-4">
-            
-            <button 
-              onClick={() => setSelectedEvent(null)}
-              className="absolute top-4 right-4 h-8 w-8 flex items-center justify-center bg-slate-100 hover:bg-slate-200 dark:bg-slate-950 text-slate-500 hover:text-slate-800 rounded-full cursor-pointer transition-colors"
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {kpiCards.map((card) => {
+          const Icon = card.icon;
+          return (
+            <div 
+              key={card.id}
+              onClick={card.action}
+              className="m3-card bg-[#F8FAFC] dark:bg-[#1E293B] border border-[#E5E7EB] dark:border-slate-800 p-5 cursor-pointer flex flex-col justify-between min-h-[145px] group"
             >
-              <X className="h-4 w-4" />
-            </button>
-
-            <div className="flex items-center gap-3">
-              <div className={`${selectedEvent.iconColor} p-3 rounded-2xl text-lg font-bold`}>
-                {selectedEvent.type === "religion" ? "✝" : selectedEvent.type === "math" ? "🔢" : selectedEvent.type === "history" ? "📜" : selectedEvent.type === "tech" ? "🤖" : "📖"}
+              <div className="flex items-start justify-between">
+                <div>
+                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                    {card.title}
+                  </span>
+                  <h3 className="text-2xl font-black font-sans tracking-tight text-slate-900 dark:text-white mt-1.5 group-hover:text-[#4285F4] transition-colors">
+                    {card.count}
+                  </h3>
+                </div>
+                <div className={`p-3 rounded-2xl ${card.iconColor} shadow-xs group-hover:scale-110 transition-transform`}>
+                  <Icon className="h-5 w-5" />
+                </div>
               </div>
-              <div>
-                <span className="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider block">
-                  Event Detail
-                </span>
-                <h4 className="text-base font-black text-slate-900 dark:text-white leading-tight">
-                  {selectedEvent.title}
-                </h4>
+
+              <div className="space-y-2 mt-3">
+                <div className="flex items-center justify-between text-xs font-medium text-slate-600 dark:text-slate-300">
+                  <span className="truncate">{card.status}</span>
+                  <span className="font-mono font-bold">{card.progress}%</span>
+                </div>
+                <div className="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+                  <div 
+                    className={`h-full rounded-full bg-gradient-to-r ${card.color} transition-all duration-1000`} 
+                    style={{ width: `${card.progress}%` }} 
+                  />
+                </div>
               </div>
             </div>
+          );
+        })}
+      </div>
 
-            <div className="space-y-2 text-xs border-y border-slate-100 dark:border-slate-850 py-3 font-mono text-slate-500 dark:text-slate-400">
-              <p className="flex items-center gap-1.5">
-                <Clock className="h-3.5 w-3.5 text-slate-400" />
-                <span>Time: {selectedEvent.time}</span>
-              </p>
-              <p className="flex items-center gap-1.5">
-                <MapPin className="h-3.5 w-3.5 text-slate-400" />
-                <span>Location: {selectedEvent.room}</span>
-              </p>
-              <p className="flex items-center gap-1.5">
-                <Users className="h-3.5 w-3.5 text-slate-400" />
-                <span>Group: Senior Year A - Cordillera School</span>
-              </p>
+      {/* ==============================================
+          3. AI DAILY BRIEFING (Centerpiece of Dashboard)
+          ============================================== */}
+      <div className="m3-card bg-white dark:bg-[#1E293B] border border-[#E5E7EB] dark:border-slate-800 p-6 md:p-8 space-y-6 shadow-sm">
+        
+        {/* Briefing Header & Reasoning Selector */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-100 dark:border-slate-800">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="px-2.5 py-1 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 text-[#4285F4] dark:text-blue-400 text-xs font-mono font-black uppercase tracking-wider flex items-center gap-1.5">
+                <Sparkles className="h-3.5 w-3.5" />
+                <span>Gemma 4 Centerpiece</span>
+              </span>
             </div>
+            <h2 className="text-2xl md:text-3xl font-black font-sans tracking-tight text-slate-900 dark:text-white mt-2">
+              AI Daily Briefing & Reasoning Engine
+            </h2>
+            <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-1">
+              Gemma autonomously synthesizes your timetable, upcoming exams, study intensity, and campus recommendations into one unified briefing.
+            </p>
+          </div>
 
-            <div className="space-y-1.5 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-              <span className="text-[9px] font-mono font-bold uppercase text-slate-400 block tracking-wider">Activity description</span>
-              <p className="font-sans">
-                {selectedEvent.description || "This school activity is coordinated based on the teacher calendar of Cordillera School."}
-              </p>
-            </div>
-
+          {/* Reasoning States Simulator */}
+          <div className="flex items-center gap-3 bg-[#F8FAFC] dark:bg-slate-900 border border-[#E5E7EB] dark:border-slate-800 px-4 py-2.5 rounded-2xl shrink-0">
+            <span className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400">Gemma State:</span>
+            <span className={`px-3 py-1 rounded-xl font-mono text-xs font-bold flex items-center gap-1.5 ${
+              reasoningState === 'Completed' 
+                ? 'bg-emerald-500/10 text-[#34A853] dark:text-emerald-300 border border-emerald-500/20' 
+                : 'bg-blue-500/10 text-[#4285F4] dark:text-blue-300 border border-blue-500/20 animate-pulse'
+            }`}>
+              <span className="h-2 w-2 rounded-full bg-current animate-ping" />
+              <span>{reasoningState}</span>
+            </span>
             <button 
-              onClick={() => setSelectedEvent(null)}
-              className="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl transition-colors"
+              onClick={triggerGemmaReasoning}
+              className="p-1.5 text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors rounded-lg cursor-pointer"
+              title="Re-run Gemma Reasoning"
             >
-              Understood
+              <RefreshCw className="h-4 w-4" />
             </button>
-
           </div>
         </div>
-      )}
+
+        {/* Briefing Category Tabs */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none select-none">
+          {[
+            { id: 'schedule', label: "Today's Schedule", icon: Calendar },
+            { id: 'tomorrow', label: "Tomorrow Preview", icon: Clock },
+            { id: 'study', label: "Study Recommendation", icon: BookOpen },
+            { id: 'assignment', label: "Assignment Reminder", icon: Layers },
+            { id: 'exam', label: "Exam Countdown", icon: FileText },
+            { id: 'scholarship', label: "Scholarship Recommendation", icon: Award },
+            { id: 'events', label: "Campus Event Recommendation", icon: Sparkles },
+          ].map((tab) => {
+            const Icon = tab.icon;
+            const isTabActive = briefingTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setBriefingTab(tab.id as any)}
+                className={`px-4 py-2.5 rounded-2xl text-xs font-bold font-sans flex items-center gap-2 whitespace-nowrap transition-all cursor-pointer ${
+                  isTabActive
+                    ? "bg-[#4285F4] text-white shadow-md shadow-blue-500/20 font-black"
+                    : "bg-[#F8FAFC] dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-[#E5E7EB] dark:border-slate-800 hover:text-slate-900 dark:hover:text-white"
+                }`}
+              >
+                <Icon className="h-3.5 w-3.5 shrink-0" />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Briefing Content Area */}
+        <div className="bg-[#F8FAFC] dark:bg-slate-900 border border-[#E5E7EB] dark:border-slate-800 rounded-3xl p-6 md:p-8 space-y-4 text-left relative overflow-hidden">
+          
+          <AnimatePresence mode="wait">
+            {briefingTab === 'schedule' && (
+              <motion.div 
+                key="schedule"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="space-y-4"
+              >
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-bold font-sans text-slate-900 dark:text-white flex items-center gap-2">
+                    <Calendar className="h-5 w-5 text-[#4285F4]" />
+                    <span>Gemma Briefing: Today's 3-Class Itinerary</span>
+                  </h3>
+                  <span className="text-xs font-mono text-[#34A853] font-bold">100% Attendance Tracked</span>
+                </div>
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Your academic day begins at <strong>08:30 AM</strong> with <strong className="text-slate-900 dark:text-white">Linear Algebra & Probability</strong> in Senior Year A - Hc, followed by <strong className="text-[#4285F4]">Artificial Intelligence Lab 4</strong> right now at 10:30 AM, and concludes with Cloud Systems at 02:00 PM. No room collisions or time overlaps exist.
+                </p>
+                <div className="pt-2 flex flex-wrap gap-3">
+                  <button onClick={() => onNavigate("schedule")} className="px-4 py-2 bg-[#4285F4] text-white text-xs font-bold rounded-xl shadow-sm cursor-pointer">
+                    View Full Roadmap
+                  </button>
+                  <button onClick={() => onNavigate("ai-workspace")} className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold rounded-xl cursor-pointer">
+                    Ask Gemma About Lectures
+                  </button>
+                </div>
+              </motion.div>
+            )}
+
+            {briefingTab === 'tomorrow' && (
+              <motion.div 
+                key="tomorrow"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="space-y-4"
+              >
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-bold font-sans text-slate-900 dark:text-white flex items-center gap-2">
+                    <Clock className="h-5 w-5 text-purple-500" />
+                    <span>Tomorrow Preview (Thursday, Feb 29)</span>
+                  </h3>
+                  <span className="text-xs font-mono text-purple-500 font-bold">2 Workshops Staged</span>
+                </div>
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Tomorrow you have <strong className="text-slate-900 dark:text-white">Chilean History Class</strong> at 08:30 AM in Conference Room B, and the <strong className="text-purple-400">Advanced Robotics Workshop</strong> at 10:15 AM in Innovation Lab. Gemma has pre-cached microcontroller reference documentation.
+                </p>
+              </motion.div>
+            )}
+
+            {briefingTab === 'study' && (
+              <motion.div 
+                key="study"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="space-y-4"
+              >
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-bold font-sans text-slate-900 dark:text-white flex items-center gap-2">
+                    <BookOpen className="h-5 w-5 text-emerald-500" />
+                    <span>Gemma Study Recommendation: Feynman Technique</span>
+                  </h3>
+                  <span className="text-xs font-mono text-emerald-500 font-bold">Priority High</span>
+                </div>
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Based on your upcoming Networking exam in 5 days, Gemma recommends devoting <strong>90 minutes tonight</strong> between 07:00 PM and 08:30 PM to active recall on <strong className="text-slate-900 dark:text-white">TCP/IP Handshake & Distributed Consensus Protocols</strong>.
+                </p>
+                <button onClick={() => onNavigate("study-planner")} className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl shadow-sm cursor-pointer">
+                  Launch Study Block Matrix
+                </button>
+              </motion.div>
+            )}
+
+            {briefingTab === 'assignment' && (
+              <motion.div 
+                key="assignment"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="space-y-4"
+              >
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-bold font-sans text-slate-900 dark:text-white flex items-center gap-2">
+                    <Layers className="h-5 w-5 text-amber-500" />
+                    <span>Assignment Reminder: Algorithm Lab 3 Due Tomorrow</span>
+                  </h3>
+                  <span className="text-xs font-mono text-amber-500 font-bold">Due Friday 11:59 PM</span>
+                </div>
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Your <strong className="text-slate-900 dark:text-white">Heaps & B-Trees implementation script</strong> for CSC 212 is scheduled for submission tomorrow. Gemma has reviewed your staging branch and verified no memory leaks exist.
+                </p>
+              </motion.div>
+            )}
+
+            {briefingTab === 'exam' && (
+              <motion.div 
+                key="exam"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="space-y-4"
+              >
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-bold font-sans text-slate-900 dark:text-white flex items-center gap-2">
+                    <FileText className="h-5 w-5 text-red-500" />
+                    <span>Exam Countdown: Networking & Cloud Architecture (5 Days)</span>
+                  </h3>
+                  <span className="text-xs font-mono text-red-500 font-bold">High Intensity</span>
+                </div>
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Scheduled at the <strong>Graduation Pavilion, Hall A</strong>. Gemma cognitive load analysis indicates your preparation index is at <strong className="text-emerald-500">80% on track</strong>. 3 mock examination papers are pre-generated.
+                </p>
+              </motion.div>
+            )}
+
+            {briefingTab === 'scholarship' && (
+              <motion.div 
+                key="scholarship"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="space-y-4"
+              >
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-bold font-sans text-slate-900 dark:text-white flex items-center gap-2">
+                    <Award className="h-5 w-5 text-purple-500" />
+                    <span>Scholarship Recommendation: Google DeepMind AI Fellowship</span>
+                  </h3>
+                  <span className="text-xs font-mono text-purple-500 font-bold">98% Match Score</span>
+                </div>
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Provides <strong>$15,000 full semester tuition coverage + mentorship</strong>. Your Computer Science Year 2 GPA (9.2) exceeds the eligibility threshold. Application deadline: August 15.
+                </p>
+                <button onClick={() => onNavigate("scholarships")} className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold rounded-xl shadow-sm cursor-pointer">
+                  View All 2 Scholarships
+                </button>
+              </motion.div>
+            )}
+
+            {briefingTab === 'events' && (
+              <motion.div 
+                key="events"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="space-y-4"
+              >
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-bold font-sans text-slate-900 dark:text-white flex items-center gap-2">
+                    <Sparkles className="h-5 w-5 text-cyan-500" />
+                    <span>Campus Event Recommendation: Build with Gemma Hackathon</span>
+                  </h3>
+                  <span className="text-xs font-mono text-cyan-500 font-bold">Today • Student Union</span>
+                </div>
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Join Google Developer Groups (GDG) and University of Embu innovation teams for the live demonstration of AI autonomous agents. Pizza and Google Cloud credits provided.
+                </p>
+                <button onClick={() => onNavigate("events")} className="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-xl shadow-sm cursor-pointer">
+                  Register & View Events
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+        </div>
+
+      </div>
+
+      {/* ==============================================
+          4. QUICK ACTIONS (Floating Cards with Hover & M3 Ripple)
+          ============================================== */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-bold font-sans text-slate-900 dark:text-white flex items-center gap-2">
+            <span>Quick Autonomous Actions</span>
+            <span className="text-xs font-mono text-slate-400 font-normal">(Instant Execution)</span>
+          </h3>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3.5">
+          {quickActions.map((item, idx) => {
+            const Icon = item.icon;
+            return (
+              <button
+                key={idx}
+                onClick={item.action}
+                className="m3-card bg-white dark:bg-[#1E293B] border border-[#E5E7EB] dark:border-slate-800 p-4 rounded-2xl flex flex-col items-center justify-center gap-2.5 text-center hover:border-[#4285F4] group transition-all duration-300 cursor-pointer shadow-xs"
+              >
+                <div className="p-3 rounded-2xl bg-[#F8FAFC] dark:bg-slate-900 text-[#4285F4] dark:text-blue-400 border border-slate-200/50 dark:border-slate-800/60 group-hover:bg-[#4285F4] group-hover:text-white transition-all shadow-xs">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <span className="text-xs font-bold text-slate-800 dark:text-slate-200 leading-tight group-hover:text-[#4285F4] dark:group-hover:text-blue-300 transition-colors">
+                  {item.title}
+                </span>
+                <span className="px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-[9px] font-mono font-bold text-slate-500 dark:text-slate-400">
+                  {item.badge}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* ==============================================
+          5. AI ACTIVITY TIMELINE & TODAY'S TIMELINE (Two-Column Layout)
+          ============================================== */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        {/* LEFT COLUMN: AI Activity Timeline (col-span-7) */}
+        <div className="lg:col-span-7 space-y-4">
+          <div className="m3-card bg-white dark:bg-[#1E293B] border border-[#E5E7EB] dark:border-slate-800 p-6 md:p-8 space-y-6 shadow-sm">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+              <div>
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#4285F4] block">
+                  Autonomous Behavior Feed
+                </span>
+                <h3 className="text-xl font-black font-sans text-slate-900 dark:text-white mt-1 flex items-center gap-2">
+                  AI Activity Timeline
+                </h3>
+              </div>
+              <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-[#34A853] text-xs font-mono font-bold border border-emerald-500/20">
+                Live Monitoring
+              </span>
+            </div>
+
+            <div className="space-y-3 relative pl-4 border-l border-dashed border-slate-200 dark:border-slate-800">
+              {activityLogs.map((log) => {
+                const Icon = log.icon;
+                const isExpanded = expandedActivityId === log.id;
+                return (
+                  <div key={log.id} className="relative">
+                    {/* Circle timeline dot */}
+                    <span className="absolute -left-[21px] top-4 h-3.5 w-3.5 rounded-full bg-white dark:bg-slate-900 border-2 border-[#4285F4] shadow-xs" />
+
+                    <div 
+                      onClick={() => setExpandedActivityId(isExpanded ? null : log.id)}
+                      className="bg-[#F8FAFC] dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 rounded-2xl p-4 hover:border-[#4285F4]/40 transition-all cursor-pointer group space-y-2"
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <div className="p-2 rounded-xl bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-800 text-[#4285F4] shrink-0 shadow-xs">
+                            <Icon className="h-4 w-4" />
+                          </div>
+                          <div className="min-w-0">
+                            <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate group-hover:text-[#4285F4] transition-colors">
+                              {log.title}
+                            </h4>
+                            <span className="text-[10px] font-mono text-slate-400 block mt-0.5">
+                              {log.time}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 shrink-0">
+                          <span className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold border uppercase ${log.statusColor}`}>
+                            {log.status}
+                          </span>
+                          {isExpanded ? (
+                            <ChevronUp className="h-4 w-4 text-slate-400" />
+                          ) : (
+                            <ChevronDown className="h-4 w-4 text-slate-400" />
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Expandable details */}
+                      <AnimatePresence>
+                        {isExpanded && (
+                          <motion.div 
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="pt-2 border-t border-slate-200/60 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 font-sans leading-relaxed"
+                          >
+                            {log.desc}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT COLUMN: Today's Timeline & Upcoming Exams (col-span-5) */}
+        <div className="lg:col-span-5 space-y-8">
+          
+          {/* Today's Timeline Vertical Box */}
+          <div className="m3-card bg-white dark:bg-[#1E293B] border border-[#E5E7EB] dark:border-slate-800 p-6 md:p-8 space-y-6 shadow-sm">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+              <div>
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">
+                  February 28, 2026
+                </span>
+                <h3 className="text-xl font-black font-sans text-slate-900 dark:text-white mt-1 flex items-center gap-2">
+                  Today's Timeline
+                </h3>
+              </div>
+              <span className="px-3 py-1 rounded-full bg-blue-500/10 text-[#4285F4] text-xs font-mono font-bold border border-blue-500/20">
+                3 Lectures
+              </span>
+            </div>
+
+            <div className="space-y-4">
+              {todayClasses.map((cls) => {
+                const isLive = cls.status === "live";
+                const isCompleted = cls.status === "completed";
+                return (
+                  <div 
+                    key={cls.id}
+                    onClick={() => onNavigate("schedule")}
+                    className={`p-4.5 rounded-2xl border transition-all cursor-pointer ${
+                      isLive 
+                        ? "bg-blue-500/5 dark:bg-blue-950/30 border-[#4285F4] shadow-md shadow-blue-500/10"
+                        : isCompleted
+                        ? "bg-slate-50 dark:bg-slate-900/40 border-slate-200/60 dark:border-slate-800/60 opacity-70"
+                        : "bg-[#F8FAFC] dark:bg-slate-900 border-[#E5E7EB] dark:border-slate-800 hover:border-[#4285F4]/40"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-1.5 text-xs font-mono text-slate-500 dark:text-slate-400 font-bold">
+                        <Clock className="h-3.5 w-3.5 text-[#4285F4]" />
+                        <span>{cls.time}</span>
+                      </div>
+                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono font-extrabold uppercase tracking-wider ${
+                        isLive ? "bg-cyan-500 text-white animate-pulse" : isCompleted ? "bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300" : "bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400"
+                      }`}>
+                        {cls.status}
+                      </span>
+                    </div>
+
+                    <h4 className="text-base font-bold text-slate-900 dark:text-white mt-2 font-sans">
+                      {cls.name}
+                    </h4>
+
+                    <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500 dark:text-slate-400 font-mono">
+                      <span className="flex items-center gap-1 text-[#4285F4]">
+                        <MapPin className="h-3.5 w-3.5" />
+                        <span>{cls.venue}</span>
+                      </span>
+                      <span>•</span>
+                      <span>{cls.lecturer}</span>
+                    </div>
+
+                    <div className="mt-3 pt-3 border-t border-slate-200/40 dark:border-slate-800 flex items-center justify-between text-xs">
+                      <span className="font-mono text-[11px] text-slate-500 dark:text-slate-400">
+                        {cls.countdown}
+                      </span>
+                      {isLive && (
+                        <button className="px-3 py-1 bg-[#4285F4] hover:bg-blue-600 text-white text-[10px] font-bold rounded-lg uppercase tracking-wider transition-all">
+                          Open Notes & Venue
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Upcoming Exams Premium Cards */}
+          <div className="m3-card bg-white dark:bg-[#1E293B] border border-[#E5E7EB] dark:border-slate-800 p-6 md:p-8 space-y-6 shadow-sm">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+              <div>
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#7C4DFF] block">
+                  Cognitive Load & Revision
+                </span>
+                <h3 className="text-xl font-black font-sans text-slate-900 dark:text-white mt-1 flex items-center gap-2">
+                  Upcoming Exams
+                </h3>
+              </div>
+              <button 
+                onClick={() => onNavigate("examinations")}
+                className="text-xs font-mono text-[#4285F4] hover:underline font-bold cursor-pointer"
+              >
+                View All (4)
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              {upcomingExams.map((exam) => (
+                <div 
+                  key={exam.id}
+                  className="bg-[#F8FAFC] dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-2xl p-4.5 space-y-3 hover:border-purple-500/40 transition-all shadow-xs"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="px-2.5 py-1 rounded-lg bg-purple-500/10 text-[#7C4DFF] dark:text-purple-300 font-mono font-bold text-xs">
+                      {exam.countdown}
+                    </span>
+                    <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono font-black uppercase tracking-wider border ${exam.difficultyColor}`}>
+                      {exam.difficulty}
+                    </span>
+                  </div>
+
+                  <h4 className="text-base font-bold text-slate-900 dark:text-white font-sans">
+                    {exam.subject}
+                  </h4>
+
+                  <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 font-mono">
+                    <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
+                      <MapPin className="h-3.5 w-3.5" />
+                      <span>{exam.venue}</span>
+                    </span>
+                    <span>•</span>
+                    <span>{exam.building}</span>
+                  </div>
+
+                  <div className="bg-white dark:bg-slate-950 border border-slate-200/60 dark:border-slate-850 p-3 rounded-xl text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
+                    <strong className="text-[#7C4DFF] font-bold">Gemma Advice:</strong> {exam.recommendation}
+                  </div>
+
+                  <button 
+                    onClick={() => onNavigate("ai-workspace")}
+                    className="w-full py-2.5 bg-gradient-to-r from-[#4285F4] to-[#7C4DFF] hover:from-blue-600 hover:to-purple-600 text-white font-sans font-bold text-xs rounded-xl shadow-sm flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                  >
+                    <BrainCircuit className="h-4 w-4" />
+                    <span>Start Revision & Practice Test</span>
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+      </div>
 
     </div>
   );

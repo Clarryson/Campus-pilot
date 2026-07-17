@@ -1,11 +1,11 @@
 {
-  "projectId": "gen-lang-client-0101586541",
-  "appId": "1:758469882142:web:b0f373c3dbf17cb490590f",
-  "apiKey": "AIzaSyD-PWD7XYLgh35BDts0HiDPIH-D4taqsd8",
-  "authDomain": "gen-lang-client-0101586541.firebaseapp.com",
-  "storageBucket": "gen-lang-client-0101586541.firebasestorage.app",
-  "messagingSenderId": "758469882142",
-  "measurementId": "G-KGZLXHY335",
-  "oAuthClientId": "758469882142-h7qptqv96q7igs36r6glduet11s6klg1.apps.googleusercontent.com",
+  "projectId": "campus-uni-pilot",
+  "appId": "1:232751561343:web:6885cf5ac55d1669b09d4a",
+  "apiKey": "AIzaSyAmtHxrRGmaOBjPIyrIVWt9mJi-Y7lXWec",
+  "authDomain": "campus-uni-pilot.firebaseapp.com",
+  "storageBucket": "campus-uni-pilot.firebasestorage.app",
+  "messagingSenderId": "232751561343",
+  "measurementId": "G-JBMGSWGKKC",
+  "oAuthClientId": "232751561343-n6dolhdbegmbig3acqu9f70nhcn4mpmv.apps.googleusercontent.com",
   "recaptchaSiteKey": ""
 }

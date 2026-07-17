@@ -20,8 +20,8 @@ import {
 
 // Import modular components
 import LandingPage from "./components/LandingPage";
-import Sidebar from "./components/Sidebar";
 import TopBar from "./components/TopBar";
+import Navigation from "./components/Navigation";
 import DashboardView from "./components/DashboardView";
 import ScheduleView from "./components/ScheduleView";
 import PlannerView from "./components/PlannerView";
@@ -68,12 +68,13 @@ export default function App() {
   const [studyPlanIntensity, setStudyPlanIntensity] = useState<'light' | 'medium' | 'intensive'>('medium');
   const [fontSize, setFontSize] = useState<'normal' | 'large' | 'xlarge'>(() => {
     const saved = localStorage.getItem('fontSize');
-    return (saved as 'normal' | 'large' | 'xlarge') || 'large';
+    return (saved as 'normal' | 'large' | 'xlarge') || 'normal';
   });
-  // Lock theme strictly to light mode (white theme) as requested
-  const theme = 'light';
-  const setTheme = () => {};
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  
+  // Theme State
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    return (localStorage.getItem('theme') as 'light' | 'dark') || 'light';
+  });
 
   // Google Calendar Auth States
   const [googleUser, setGoogleUser] = useState<any | null>(null);
@@ -266,7 +267,7 @@ export default function App() {
           
           setChatMessages(prev => [...prev, {
             sender: 'gemma',
-            text: `### 📂 Document Upload Resolved Autonomously\n\nI analyzed your newly uploaded file: **${file.name}**.\n\n**Gemma Assessment:** {result.summary || 'Database mapped correctly'}\n\nI have updated your core schedules, staged new calendar events, and flagged necessary comparisons in your activity stream.`,
+            text: `### 📂 Document Upload Resolved Autonomously\n\nI analyzed your newly uploaded file: **${file.name}**.\n\n**Gemma Assessment:** ${result.summary || 'Database mapped correctly'}\n\nI have updated your core schedules, staged new calendar events, and flagged necessary comparisons in your activity stream.`,
             timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           }]);
         }
@@ -385,25 +386,6 @@ export default function App() {
     }
   };
 
-  // Toggle checklist tasks
-  const handleToggleReminder = async (id: string) => {
-    try {
-      const response = await fetch("/api/reminders/toggle", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id })
-      });
-      if (response.ok) {
-        const data = await response.json();
-        if (data.state) {
-          syncWithState(data.state);
-        }
-      }
-    } catch (error) {
-      console.error("Toggle task failed:", error);
-    }
-  };
-
   // Mark alerts read
   const handleMarkNotificationsRead = async () => {
     try {
@@ -432,17 +414,9 @@ export default function App() {
     setCurrentSection(section);
   };
 
-  const handleAskAI = () => {
-    setCurrentSection('ai-workspace');
-  };
-
-  const handleLogout = () => {
-    setViewMode('landing');
-  };
-
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900 text-slate-100' : 'bg-white text-slate-800'} font-sans selection:bg-indigo-500 selection:text-white flex flex-col ${
-      fontSize === 'normal' ? 'text-base' : fontSize === 'xlarge' ? 'text-xl app-font-xlarge' : 'text-lg app-font-large'
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-[#0F172A] text-slate-100' : 'bg-[#FFFFFF] text-slate-900'} font-sans selection:bg-[#4285F4] selection:text-white flex flex-col ${
+      fontSize === 'normal' ? 'text-base' : fontSize === 'xlarge' ? 'text-xl' : 'text-lg'
     }`}>
       
       {/* LANDING PAGE ROUTE */}
@@ -453,50 +427,28 @@ export default function App() {
           onGoogleSignIn={handleGoogleSignIn} 
         />
       ) : (
-        /* APPLICATION WORKSPACE DASHBOARD */
-        <div className="flex h-screen overflow-hidden relative">
+        /* HORIZONTAL AI OPERATING SYSTEM WORKSPACE */
+        <div className="flex flex-col min-h-screen overflow-hidden bg-[#FFFFFF] dark:bg-[#0F172A]">
           
-          {/* Persistent Sidebar left */}
-          <Sidebar 
-            currentSection={currentSection} 
-            onSelectSection={(sec) => {
-              navigateToSection(sec);
-              setIsSidebarOpen(false);
-            }} 
-            onAskAI={() => {
-              handleAskAI();
-              setIsSidebarOpen(false);
-            }} 
-            onLogout={handleLogout} 
+          {/* Top App Bar across ALL views */}
+          <TopBar 
+            notificationsCount={unreadCount} 
+            onBellClick={() => setCurrentSection('notifications')} 
             googleUser={googleUser}
+            onNavigate={navigateToSection}
             theme={theme}
             onToggleTheme={() => setTheme(prev => prev === 'light' ? 'dark' : 'light')}
-            isOpen={isSidebarOpen}
-            onClose={() => setIsSidebarOpen(false)}
           />
 
-          {isSidebarOpen && (
-            <div 
-              className="fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-30 md:hidden"
-              onClick={() => setIsSidebarOpen(false)}
-            />
-          )}
+          {/* Sticky Horizontal Navigation Bar across ALL views */}
+          <Navigation 
+            currentSection={currentSection} 
+            onSelectSection={navigateToSection} 
+          />
 
-          {/* Main workspace container right */}
-          <div className="flex-1 flex flex-col min-w-0 bg-slate-50 dark:bg-slate-900 overflow-hidden">
+          {/* Main Content Area */}
+          <main className="flex-1 overflow-y-auto bg-[#FFFFFF] dark:bg-[#0F172A] transition-colors duration-300">
             
-            {/* Header top bar */}
-            {currentSection !== 'dashboard' && (
-              <TopBar 
-                notificationsCount={unreadCount} 
-                onBellClick={() => setCurrentSection('notifications')} 
-                googleUser={googleUser}
-                onNavigate={navigateToSection}
-                onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
-              />
-            )}
-
-            {/* Dynamic View rendering based on Sidebar Section selection */}
             {currentSection === 'dashboard' && (
               <DashboardView 
                 gemmaActivities={gemmaActivities} 
@@ -505,7 +457,6 @@ export default function App() {
                 reminders={reminders} 
                 onNavigate={navigateToSection}
                 onAddQuickReminder={handleAddQuickReminder}
-                onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
                 googleUser={googleUser}
               />
             )}
@@ -518,7 +469,7 @@ export default function App() {
               />
             )}
 
-            {currentSection === 'planner' && (
+            {(currentSection === 'planner' || currentSection === 'study-planner') && (
               <PlannerView 
                 timetable={timetable} 
                 studyPlans={studyPlans} 
@@ -597,7 +548,7 @@ export default function App() {
               />
             )}
 
-          </div>
+          </main>
 
         </div>
       )}
@@ -609,27 +560,27 @@ export default function App() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
-            className="fixed bottom-4 right-4 max-w-sm bg-[#111A2E] border border-cyan-500/30 rounded-2xl p-4 shadow-2xl shadow-black/80 z-50 flex flex-col gap-3"
+            className="fixed bottom-4 right-4 max-w-sm bg-[#111A2E] border border-blue-500/30 rounded-2xl p-4 shadow-2xl shadow-black/80 z-50 flex flex-col gap-3"
           >
             <div className="flex items-center justify-between">
-              <span className="flex items-center gap-1.5 text-xs text-cyan-400 font-mono font-bold uppercase tracking-wider">
-                <Bell className="h-4 w-4 animate-bounce" />
-                Autonomous Agent Alert
+              <span className="flex items-center gap-1.5 text-xs text-blue-400 font-mono font-bold uppercase tracking-wider">
+                <Bell className="h-4 w-4 animate-bounce text-[#4285F4]" />
+                Gemma Autonomous Alert
               </span>
               <button 
                 onClick={handleMarkNotificationsRead}
-                className="text-[10px] text-gray-500 hover:text-white font-mono uppercase hover:underline cursor-pointer"
+                className="text-[10px] text-slate-400 hover:text-white font-mono uppercase hover:underline cursor-pointer"
               >
                 Clear
               </button>
             </div>
             
-            <p className="text-xs text-gray-300 leading-relaxed font-sans text-left">
+            <p className="text-xs text-slate-200 leading-relaxed font-sans text-left">
               {notifications.find(n => !n.read)?.message}
             </p>
 
             {unreadCount > 1 && (
-              <span className="text-[9px] text-cyan-400 font-mono italic text-left">
+              <span className="text-[9px] text-blue-400 font-mono italic text-left">
                 + {unreadCount - 1} more autonomous alerts pending resolution
               </span>
             )}
