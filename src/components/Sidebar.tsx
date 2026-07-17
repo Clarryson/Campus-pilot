@@ -38,15 +38,15 @@ export default function Sidebar({
 
   // Menu items list mapping the exact labels and icons in the image to our functional application sections
   const menuItems = [
-    { id: "dashboard", label: "Inicio", icon: Home },
-    { id: "notifications", label: "Comunicados", icon: MessageSquare },
-    { id: "schedule", label: "Calendario", icon: Calendar },
-    { id: "planner", label: "Alumnos", icon: Users },
-    { id: "documents", label: "Mis Archivos", icon: Folder },
-    { id: "examinations", label: "Documentos", icon: FileText },
-    { id: "scholarships", label: "Biblioteca", icon: BookOpen },
-    { id: "ai-workspace", label: "Asistente AI", icon: Sparkles },
-    { id: "settings", label: "Configuración", icon: Settings },
+    { id: "dashboard", label: "Home", icon: Home },
+    { id: "notifications", label: "Announcements", icon: MessageSquare },
+    { id: "schedule", label: "Calendar", icon: Calendar },
+    { id: "planner", label: "Students", icon: Users },
+    { id: "documents", label: "My Files", icon: Folder },
+    { id: "examinations", label: "Documents", icon: FileText },
+    { id: "scholarships", label: "Library", icon: BookOpen },
+    { id: "ai-workspace", label: "AI Assistant", icon: Sparkles },
+    { id: "settings", label: "Settings", icon: Settings },
   ];
 
   return (
@@ -75,7 +75,7 @@ export default function Sidebar({
           <button 
             onClick={onToggleTheme}
             className="p-1.5 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400 hover:text-blue-500 cursor-pointer transition-colors"
-            title={theme === 'light' ? "Modo Oscuro" : "Modo Claro"}
+            title={theme === 'light' ? "Dark Mode" : "Light Mode"}
           >
             {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
           </button>
@@ -139,10 +139,10 @@ export default function Sidebar({
 
           <div className="space-y-1 relative z-10 mt-3">
             <h4 className="text-xs font-black tracking-tight leading-snug">
-              Mejora tu Plan
+              Upgrade Your Plan
             </h4>
             <p className="text-[10px] text-white/80 leading-relaxed font-sans">
-              Y accede a funciones avanzadas y beneficios que tenemos para ti.
+              And access advanced features and benefits we have for you.
             </p>
           </div>
 
@@ -150,7 +150,7 @@ export default function Sidebar({
             onClick={() => onSelectSection("settings")}
             className="w-full mt-3 py-2 bg-white hover:bg-slate-50 text-[#0084FF] text-[10px] font-black rounded-xl transition-all shadow-sm flex items-center justify-center gap-1 cursor-pointer"
           >
-            <span>Ver Planes</span>
+            <span>View Plans</span>
             <ChevronRight className="h-3.5 w-3.5 shrink-0" />
           </button>
 

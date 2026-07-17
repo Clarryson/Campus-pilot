@@ -47,7 +47,7 @@ export default function DashboardView({
   const [selectedDay, setSelectedDay] = useState<string>("Feb 28");
   
   // "Lo nuevo" newsfeed filter state
-  const [newsFilter, setNewsFilter] = useState<string>("Todos");
+  const [newsFilter, setNewsFilter] = useState<string>("All");
 
   // Interaction states for cards
   const [isPaid, setIsPaid] = useState<boolean>(false);
@@ -57,9 +57,9 @@ export default function DashboardView({
 
   // Quick tasks list state
   const [quickTasks, setQuickTasks] = useState<string[]>([
-    "Revisar temario de Probabilidad",
-    "Firmar libreta de calificaciones",
-    "Preparar uniforme para acto cívico"
+    "Review Probability syllabus",
+    "Sign report card",
+    "Prepare uniform for civic assembly"
   ]);
   const [newTaskText, setNewTaskText] = useState<string>("");
 
@@ -82,115 +82,115 @@ export default function DashboardView({
       {
         id: "ev-1",
         time: "08:30 - 10:00 AM",
-        title: "Clase de Religión",
-        room: "Cuarto Año Medio A - Hc",
+        title: "Religion Class",
+        room: "Senior Year A - Hc",
         type: "religion",
         iconColor: "bg-amber-100 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400",
-        description: "Estudio de las corrientes éticas contemporáneas y el rol social de la fe."
+        description: "Study of contemporary ethical currents and the social role of faith."
       },
       {
         id: "ev-2",
         time: "10:00 - 12:30 PM",
-        title: "Clase de Probabilidades y Esta..",
-        room: "Cuarto Año Medio A - Hc",
+        title: "Probability & Statistics Class",
+        room: "Senior Year A - Hc",
         type: "math",
         iconColor: "bg-slate-100 text-slate-600 dark:bg-slate-900/60 dark:text-slate-300",
-        description: "Introducción a variables aleatorias continuas y funciones de densidad de probabilidad."
+        description: "Introduction to continuous random variables and probability density functions."
       },
       {
         id: "ev-3",
         time: "12:30 - 01:30 PM",
-        title: "Descanso",
-        room: "Patio Principal",
+        title: "Break",
+        room: "Main Courtyard",
         type: "break",
         iconColor: "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400"
       },
       {
         id: "ev-4",
         time: "01:30 - 02:30 PM",
-        title: "Acto cívico con profesores",
-        room: "Auditorio Escolar",
+        title: "Civic Assembly with Teachers",
+        room: "School Auditorium",
         type: "civic",
         iconColor: "bg-blue-50 text-blue-600 dark:bg-blue-950/30 dark:text-blue-400",
-        description: "Ceremonia oficial del inicio de semestre académico con el cuerpo docente."
+        description: "Official ceremony for the start of the academic semester with the faculty."
       }
     ],
     "Feb 29": [
       {
         id: "ev-5",
         time: "08:30 - 10:00 AM",
-        title: "Clase de Historia de Chile",
-        room: "Sala de Conferencias B",
+        title: "Chilean History Class",
+        room: "Conference Room B",
         type: "history",
         iconColor: "bg-orange-100 text-orange-600 dark:bg-orange-950/30 dark:text-orange-400",
-        description: "Análisis crítico de los procesos de independencia nacional del siglo XIX."
+        description: "Critical analysis of 19th-century national independence processes."
       },
       {
         id: "ev-6",
         time: "10:15 - 11:45 AM",
-        title: "Taller de Robótica Avanzada",
-        room: "Laboratorio de Innovación",
+        title: "Advanced Robotics Workshop",
+        room: "Innovation Lab",
         type: "tech",
         iconColor: "bg-cyan-100 text-cyan-600 dark:bg-cyan-950/30 dark:text-cyan-400",
-        description: "Programación de microcontroladores utilizando sensores ultrasónicos."
+        description: "Microcontroller programming using ultrasonic sensors."
       },
       {
         id: "ev-7",
         time: "12:00 - 01:30 PM",
-        title: "Computación Aplicada",
-        room: "Laboratorio 3 de Sistemas",
+        title: "Applied Computing",
+        room: "Systems Lab 3",
         type: "math",
         iconColor: "bg-indigo-100 text-indigo-600 dark:bg-indigo-950/30 dark:text-indigo-400",
-        description: "Desarrollo de scripts de análisis estadístico empleando librerías científicas."
+        description: "Development of statistical analysis scripts using scientific libraries."
       }
     ],
     "Mar 01": [
       {
         id: "ev-8",
         time: "09:00 - 11:00 AM",
-        title: "Evaluación de Matemáticas II",
-        room: "Cuarto Año Medio A - Hc",
+        title: "Mathematics II Evaluation",
+        room: "Senior Year A - Hc",
         type: "exam",
         iconColor: "bg-red-100 text-red-600 dark:bg-red-950/30 dark:text-red-400",
-        description: "Primer examen parcial enfocado en integrales definidas e indefinidas."
+        description: "First partial exam focused on definite and indefinite integrals."
       },
       {
         id: "ev-9",
         time: "11:15 - 12:45 PM",
-        title: "Taller Literario Grupal",
-        room: "Biblioteca Central",
+        title: "Group Literary Workshop",
+        room: "Central Library",
         type: "lit",
         iconColor: "bg-purple-100 text-purple-600 dark:bg-purple-950/30 dark:text-purple-400",
-        description: "Debate abierto y lecturas de autores hispanoamericanos modernos."
+        description: "Open debate and readings of modern Hispano-American authors."
       },
       {
         id: "ev-10",
         time: "01:00 - 02:30 PM",
-        title: "Clase de Educación Física",
-        room: "Gimnasio Techado",
+        title: "Physical Education Class",
+        room: "Indoor Gymnasium",
         type: "sport",
         iconColor: "bg-emerald-100 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400",
-        description: "Acondicionamiento físico general y prácticas reglamentarias de voleibol."
+        description: "General physical conditioning and regulation volleyball practices."
       }
     ],
     "Mar 02": [
       {
         id: "ev-11",
         time: "10:00 - 12:00 PM",
-        title: "Taller Deportivo e Inclusión",
-        room: "Canchas Deportivas Auxiliares",
+        title: "Sports & Inclusion Workshop",
+        room: "Auxiliary Sports Courts",
         type: "sport",
         iconColor: "bg-teal-100 text-teal-600 dark:bg-teal-950/30 dark:text-teal-400",
-        description: "Clínica de baloncesto adaptado y dinámicas grupales recreativas."
+        description: "Adapted basketball clinic and recreational group dynamics."
       },
       {
         id: "ev-12",
         time: "12:15 - 02:00 PM",
-        title: "Laboratorio de Química Orgánica",
-        room: "Laboratorio de Ciencias",
+        title: "Organic Chemistry Lab",
+        room: "Science Lab",
         type: "chemistry",
         iconColor: "bg-pink-100 text-pink-600 dark:bg-pink-950/30 dark:text-pink-400",
-        description: "Prácticas de laboratorio: destilación simple y síntesis de compuestos aromáticos."
+        description: "Laboratory practice: simple distillation and synthesis of aromatic compounds."
       }
     ]
   };
@@ -201,48 +201,48 @@ export default function DashboardView({
   const feedItems = [
     {
       id: "feed-1",
-      title: "Calendario de Feriados",
-      category: "Comunicado",
+      title: "Holiday Calendar",
+      category: "Announcement",
       badgeColor: "bg-green-50 text-green-700 dark:bg-green-950/40 dark:text-green-400 border-green-200 dark:border-green-800/40",
-      timeLabel: "Hoy",
+      timeLabel: "Today",
       isUnread: true,
-      description: "Estimados miembros del colegio Modelo, con motivo del nuevo año escolar 2024 adjuntamos el calendario de feriados para su planificación familiar preventiva.",
+      description: "Dear members of the Modelo School, for the new school year 2024, we attach the holiday calendar for your preventive family planning.",
       icon: <CalendarIcon className="h-4.5 w-4.5 text-green-600 dark:text-green-400" />
     },
     {
       id: "feed-2",
-      title: "Proceso Pendiente",
-      category: "Servicio",
+      title: "Pending Process",
+      category: "Service",
       badgeColor: "bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-400 border-blue-200 dark:border-blue-800/40",
-      timeLabel: "Ayer",
-      description: "Reserve la matrícula de sus alumnos con anticipación para asegurar la asignación del aula preferencial en el ciclo 2026.",
+      timeLabel: "Yesterday",
+      description: "Reserve your student enrollment in advance to secure preferential classroom assignment for the 2026 school cycle.",
       actionType: "matricula",
       icon: <Users className="h-4.5 w-4.5 text-blue-600 dark:text-blue-400" />
     },
     {
       id: "feed-3",
-      title: "Próximo Pago",
-      category: "Billetera",
+      title: "Upcoming Payment",
+      category: "Wallet",
       badgeColor: "bg-indigo-50 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800/40",
-      timeLabel: "Hace 4d",
-      description: "Colegiatura de Marzo está disponible para cobro inmediato. Paga antes del 05 para evitar recargos administrativos.",
-      amount: "$204.000",
+      timeLabel: "4d ago",
+      description: "March tuition is available for immediate payment. Pay before the 5th to avoid administrative surcharges.",
+      amount: "$204,000",
       actionType: "pago",
       icon: <Wallet className="h-4.5 w-4.5 text-indigo-600 dark:text-indigo-400" />
     },
     {
       id: "feed-4",
-      title: "Calificación Maelys Leiva",
-      category: "Calificación",
+      title: "Maelys Leiva Grade",
+      category: "Grade",
       badgeColor: "bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 border-amber-200 dark:border-amber-800/40",
       timeLabel: "Feb 28",
-      description: "El alumno Maelys Leiva obtuvo un 7.0 (nota máxima) en la asignatura semestral de Religión y Formación Ética.",
+      description: "Student Maelys Leiva obtained a 7.0 (maximum grade) in the semester subject of Religion and Ethical Formation.",
       icon: <GraduationCap className="h-4.5 w-4.5 text-amber-600 dark:text-amber-400" />
     }
   ];
 
   // Filter feed items based on selected tab
-  const filteredFeedItems = newsFilter === "Todos" 
+  const filteredFeedItems = newsFilter === "All" 
     ? feedItems 
     : feedItems.filter(item => item.category === newsFilter);
 
@@ -253,10 +253,10 @@ export default function DashboardView({
       <div className="flex items-center justify-between gap-4">
         <div>
           <h2 className="text-xl md:text-2xl font-black tracking-tight text-slate-900 dark:text-white font-sans">
-            Panel Académico
+            Academic Dashboard
           </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-            Gestión de ciclo escolar, matrículas y actividades escolares.
+            Management of school cycle, enrollment, and school activities.
           </p>
         </div>
 
@@ -295,19 +295,19 @@ export default function DashboardView({
               <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl z-50 py-2 text-xs">
                 <div className="px-3.5 py-2 border-b border-slate-100 dark:border-slate-850">
                   <p className="font-bold text-slate-900 dark:text-white">Maelys Leiva</p>
-                  <p className="text-[10px] text-slate-400 mt-0.5">Apoderado: Kinder A</p>
+                  <p className="text-[10px] text-slate-400 mt-0.5">Parent: Kinder A</p>
                 </div>
                 <button 
                   onClick={() => { onNavigate("settings"); setShowProfileMenu(false); }}
                   className="w-full text-left px-3.5 py-2 hover:bg-slate-50 dark:hover:bg-slate-950 text-slate-600 dark:text-slate-300 transition-colors"
                 >
-                  Configuración
+                  Settings
                 </button>
                 <button 
                   onClick={() => { onNavigate("handbook"); setShowProfileMenu(false); }}
                   className="w-full text-left px-3.5 py-2 hover:bg-slate-50 dark:hover:bg-slate-950 text-slate-600 dark:text-slate-300 transition-colors"
                 >
-                  Manual Escolar
+                  School Handbook
                 </button>
               </div>
             )}
@@ -338,14 +338,14 @@ export default function DashboardView({
                 <span className="text-sm font-black tracking-widest font-mono text-indigo-200">CC</span>
               </div>
               <span className="bg-[#4285F4]/30 backdrop-blur-md text-[9px] font-mono tracking-wider font-extrabold uppercase px-2.5 py-1 rounded-full border border-blue-400/20">
-                Periodo 2026
+                2026 Period
               </span>
             </div>
 
             {/* Middle Row: Title "Colegio Cordillera" */}
             <div className="relative z-10 text-left mt-4">
               <h3 className="text-2xl md:text-3xl font-black font-sans leading-tight tracking-tight text-white">
-                Colegio <br />Cordillera
+                Cordillera <br />School
               </h3>
             </div>
 
@@ -376,12 +376,12 @@ export default function DashboardView({
               className="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 p-5 rounded-[24px] shadow-sm hover:shadow-md hover:border-emerald-500/30 transition-all cursor-pointer text-left flex flex-col justify-between min-h-[105px]"
             >
               <div className="flex items-center justify-between">
-                <span className="text-[11px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Asistencia</span>
+                <span className="text-[11px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Attendance</span>
                 <ArrowUpRight className="h-4 w-4 text-slate-400" />
               </div>
               <div className="mt-2">
                 <h4 className="text-2xl font-black text-emerald-600 dark:text-emerald-400 font-sans leading-none">100%</h4>
-                <p className="text-[9px] text-slate-400 dark:text-slate-500 font-mono mt-1">Asistencia perfecta</p>
+                <p className="text-[9px] text-slate-400 dark:text-slate-500 font-mono mt-1">Perfect attendance</p>
               </div>
             </div>
 
@@ -391,19 +391,19 @@ export default function DashboardView({
               className="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 p-5 rounded-[24px] shadow-sm hover:shadow-md hover:border-amber-500/30 transition-all cursor-pointer text-left flex flex-col justify-between min-h-[105px]"
             >
               <div className="flex items-center justify-between">
-                <span className="text-[11px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Matrícula</span>
+                <span className="text-[11px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Enrollment</span>
                 <ArrowUpRight className="h-4 w-4 text-slate-400" />
               </div>
               <div className="mt-2">
                 {isMatriculado ? (
                   <>
-                    <h4 className="text-sm font-black text-emerald-600 dark:text-emerald-400 font-mono">MATRICULADO</h4>
-                    <p className="text-[9px] text-slate-400 dark:text-slate-500 font-mono mt-1">Completo</p>
+                    <h4 className="text-sm font-black text-emerald-600 dark:text-emerald-400 font-mono">ENROLLED</h4>
+                    <p className="text-[9px] text-slate-400 dark:text-slate-500 font-mono mt-1">Complete</p>
                   </>
                 ) : (
                   <>
-                    <h4 className="text-sm font-black text-amber-600 dark:text-amber-500 font-mono">Promovido</h4>
-                    <p className="text-[9px] text-red-500 font-mono font-extrabold leading-none mt-0.5">Pendiente</p>
+                    <h4 className="text-sm font-black text-amber-600 dark:text-amber-500 font-mono">Promoted</h4>
+                    <p className="text-[9px] text-red-500 font-mono font-extrabold leading-none mt-0.5">Pending</p>
                   </>
                 )}
               </div>
@@ -416,7 +416,7 @@ export default function DashboardView({
             
             {/* Card Header */}
             <div className="flex items-center justify-between">
-              <span className="text-xs font-mono font-black uppercase tracking-wider text-slate-900 dark:text-white">Promedio</span>
+              <span className="text-xs font-mono font-black uppercase tracking-wider text-slate-900 dark:text-white">GPA</span>
               <button className="h-7 w-7 flex items-center justify-center bg-slate-950 hover:bg-slate-800 text-white rounded-full transition-colors">
                 <ArrowUpRight className="h-3.5 w-3.5" />
               </button>
@@ -451,7 +451,7 @@ export default function DashboardView({
                 <span className="text-3xl font-black text-slate-900 dark:text-white font-mono">
                   9.2
                 </span>
-                <p className="text-[8px] font-mono text-slate-400 uppercase tracking-widest font-black leading-none mt-0.5">Semestral</p>
+                <p className="text-[8px] font-mono text-slate-400 uppercase tracking-widest font-black leading-none mt-0.5">Semester</p>
               </div>
             </div>
 
@@ -461,18 +461,18 @@ export default function DashboardView({
               <div className="bg-slate-50 dark:bg-slate-950 p-2 rounded-xl border border-slate-100 dark:border-slate-850/60 flex flex-col items-start gap-1">
                 <div className="flex items-center gap-1 text-slate-400 dark:text-slate-500 font-bold uppercase text-[8px]">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                  <span>Mejor</span>
+                  <span>Best</span>
                 </div>
-                <span className="font-sans font-extrabold text-slate-700 dark:text-slate-300 truncate w-full">Español</span>
+                <span className="font-sans font-extrabold text-slate-700 dark:text-slate-300 truncate w-full">Spanish</span>
                 <span className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 font-mono">8.9</span>
               </div>
 
               <div className="bg-slate-50 dark:bg-slate-950 p-2 rounded-xl border border-slate-100 dark:border-slate-850/60 flex flex-col items-start gap-1">
                 <div className="flex items-center gap-1 text-slate-400 dark:text-slate-500 font-bold uppercase text-[8px]">
                   <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
-                  <span>Inferior</span>
+                  <span>Lowest</span>
                 </div>
-                <span className="font-sans font-extrabold text-slate-700 dark:text-slate-300 truncate w-full">Matemáticas</span>
+                <span className="font-sans font-extrabold text-slate-700 dark:text-slate-300 truncate w-full">Mathematics</span>
                 <span className="text-[10px] font-black text-amber-600 dark:text-amber-500 font-mono">7.6</span>
               </div>
 
@@ -492,7 +492,7 @@ export default function DashboardView({
             {/* Section Header */}
             <div className="flex items-center justify-between">
               <h3 className="text-xl font-black text-slate-900 dark:text-white font-sans flex items-center gap-2">
-                Eventos
+                Events
               </h3>
               <button className="h-7 w-7 flex items-center justify-center bg-slate-950 hover:bg-slate-800 text-white rounded-full transition-colors">
                 <ArrowUpRight className="h-3.5 w-3.5" />
@@ -505,7 +505,7 @@ export default function DashboardView({
                 
                 {/* Feb 28 (Hoy) */}
                 <div className="flex flex-col items-center gap-1">
-                  <span className="text-[9px] font-mono text-slate-400 uppercase font-black tracking-wider">Febrero</span>
+                  <span className="text-[9px] font-mono text-slate-400 uppercase font-black tracking-wider">February</span>
                   <button 
                     onClick={() => setSelectedDay("Feb 28")}
                     className={`h-14 w-12 rounded-2xl flex flex-col justify-center items-center transition-all cursor-pointer font-sans text-xs ${
@@ -514,8 +514,8 @@ export default function DashboardView({
                         : "bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border border-slate-100 dark:border-slate-850"
                     }`}
                   >
-                    <span className="text-[9px] block opacity-80 uppercase font-bold">Hoy</span>
-                    <span className="text-[10px] block opacity-90 leading-none">Mié</span>
+                    <span className="text-[9px] block opacity-80 uppercase font-bold">Today</span>
+                    <span className="text-[10px] block opacity-90 leading-none">Wed</span>
                     <span className="text-sm font-black block mt-0.5">28</span>
                   </button>
                 </div>
@@ -531,15 +531,15 @@ export default function DashboardView({
                         : "bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border border-slate-100 dark:border-slate-850"
                     }`}
                   >
-                    <span className="text-[9px] block opacity-80 uppercase font-bold">Mañana</span>
-                    <span className="text-[10px] block opacity-90 leading-none">Jue</span>
+                    <span className="text-[9px] block opacity-80 uppercase font-bold">Tomorrow</span>
+                    <span className="text-[10px] block opacity-90 leading-none">Thu</span>
                     <span className="text-sm font-black block mt-0.5">29</span>
                   </button>
                 </div>
 
                 {/* Mar 01 */}
                 <div className="flex flex-col items-center gap-1">
-                  <span className="text-[9px] font-mono text-slate-400 uppercase font-black tracking-wider">Marzo</span>
+                  <span className="text-[9px] font-mono text-slate-400 uppercase font-black tracking-wider">March</span>
                   <button 
                     onClick={() => setSelectedDay("Mar 01")}
                     className={`h-14 w-12 rounded-2xl flex flex-col justify-center items-center transition-all cursor-pointer font-sans text-xs ${
@@ -549,7 +549,7 @@ export default function DashboardView({
                     }`}
                   >
                     <span className="text-[9px] block opacity-0 uppercase select-none">•</span>
-                    <span className="text-[10px] block opacity-90 leading-none">Vie</span>
+                    <span className="text-[10px] block opacity-90 leading-none">Fri</span>
                     <span className="text-sm font-black block mt-0.5">01</span>
                   </button>
                 </div>
@@ -565,7 +565,7 @@ export default function DashboardView({
                         : "bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border border-slate-100 dark:border-slate-850"
                     }`}
                   >
-                    <span className="text-[10px] block opacity-90 leading-none">Sab</span>
+                    <span className="text-[10px] block opacity-90 leading-none">Sat</span>
                     <span className="text-sm font-black block mt-0.5">02</span>
                   </button>
                 </div>
@@ -642,7 +642,7 @@ export default function DashboardView({
 
               {activeEvents.length === 0 && (
                 <div className="text-center py-12 text-xs text-slate-400 dark:text-slate-500 font-mono">
-                  No hay clases programadas para este día.
+                  No classes scheduled for this day.
                 </div>
               )}
 
@@ -651,7 +651,7 @@ export default function DashboardView({
             {/* Quick static disclaimer */}
             <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 p-3 rounded-2xl text-[10px] text-slate-500 dark:text-slate-400 border border-slate-100 dark:border-slate-850">
               <Info className="h-3.5 w-3.5 text-blue-500 shrink-0" />
-              <span>Gemma actualiza automáticamente la agenda escolar en base al diario oficial del Colegio.</span>
+              <span>Gemma automatically updates the school agenda based on the official School log.</span>
             </div>
 
           </div>
@@ -668,7 +668,7 @@ export default function DashboardView({
             {/* Title & Settings Icon */}
             <div className="flex items-center justify-between">
               <h3 className="text-xl font-black text-slate-900 dark:text-white font-sans flex items-center gap-2">
-                Lo nuevo
+                What's New
               </h3>
               <button 
                 onClick={() => onNavigate("settings")}
@@ -680,7 +680,7 @@ export default function DashboardView({
 
             {/* Filter Buttons Pills */}
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none select-none">
-              {["Todos", "Comunicado", "Billetera", "Calificación"].map((category) => (
+              {["All", "Announcement", "Wallet", "Grade"].map((category) => (
                 <button
                   key={category}
                   onClick={() => setNewsFilter(category)}
@@ -740,7 +740,7 @@ export default function DashboardView({
                   {item.actionType === "matricula" && (
                     <div className="pt-2 border-t border-slate-100 dark:border-slate-850/60 flex items-center justify-between">
                       <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500">
-                        Aula recomendada: Kinder A
+                        Recommended room: Kinder A
                       </span>
                       <button 
                         onClick={() => setIsMatriculado(!isMatriculado)}
@@ -750,7 +750,7 @@ export default function DashboardView({
                             : "bg-white dark:bg-slate-900 text-[#4285F4] dark:text-blue-400 hover:text-white hover:bg-[#4285F4] border border-[#4285F4]/30"
                         }`}
                       >
-                        {isMatriculado ? "Matriculado ✓" : "Prematricular"}
+                        {isMatriculado ? "Enrolled ✓" : "Pre-enroll"}
                       </button>
                     </div>
                   )}
@@ -768,7 +768,7 @@ export default function DashboardView({
                             : "bg-[#009BF5] hover:bg-blue-600 text-white shadow shadow-blue-400/20"
                         }`}
                       >
-                        {isPaid ? "Pagado ✓" : "Pagar"}
+                        {isPaid ? "Paid ✓" : "Pay"}
                       </button>
                     </div>
                   )}
@@ -778,7 +778,7 @@ export default function DashboardView({
 
               {filteredFeedItems.length === 0 && (
                 <div className="text-center py-12 text-xs text-slate-400 dark:text-slate-500 font-mono">
-                  No hay notificaciones de esta categoría.
+                  No notifications in this category.
                 </div>
               )}
 
@@ -786,7 +786,7 @@ export default function DashboardView({
 
             {/* Quick interactive checklist block */}
             <div className="border-t border-slate-100 dark:border-slate-850 pt-4 space-y-3">
-              <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500 uppercase tracking-wider block font-bold">Tareas Pendientes</span>
+              <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500 uppercase tracking-wider block font-bold">Pending Tasks</span>
               
               <div className="space-y-2">
                 {quickTasks.map((task, i) => (
@@ -798,7 +798,7 @@ export default function DashboardView({
                     <button 
                       onClick={() => handleRemoveTask(i)}
                       className="text-slate-400 hover:text-red-500 p-0.5 cursor-pointer rounded transition-colors"
-                      title="Eliminar tarea"
+                      title="Delete task"
                     >
                       <X className="h-3.5 w-3.5" />
                     </button>
@@ -806,13 +806,13 @@ export default function DashboardView({
                 ))}
 
                 {quickTasks.length === 0 && (
-                  <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono italic">¡Felicidades! No tienes tareas pendientes.</p>
+                  <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono italic">Congratulations! You have no pending tasks.</p>
                 )}
 
                 <form onSubmit={handleAddTask} className="flex gap-2 pt-1">
                   <input
                     type="text"
-                    placeholder="Nueva tarea..."
+                    placeholder="New task..."
                     value={newTaskText}
                     onChange={(e) => setNewTaskText(e.target.value)}
                     className="flex-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-850 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-blue-500 text-slate-900 dark:text-white placeholder-slate-400"
@@ -855,7 +855,7 @@ export default function DashboardView({
               </div>
               <div>
                 <span className="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider block">
-                  Detalle del Evento
+                  Event Detail
                 </span>
                 <h4 className="text-base font-black text-slate-900 dark:text-white leading-tight">
                   {selectedEvent.title}
@@ -866,22 +866,22 @@ export default function DashboardView({
             <div className="space-y-2 text-xs border-y border-slate-100 dark:border-slate-850 py-3 font-mono text-slate-500 dark:text-slate-400">
               <p className="flex items-center gap-1.5">
                 <Clock className="h-3.5 w-3.5 text-slate-400" />
-                <span>Horario: {selectedEvent.time}</span>
+                <span>Time: {selectedEvent.time}</span>
               </p>
               <p className="flex items-center gap-1.5">
                 <MapPin className="h-3.5 w-3.5 text-slate-400" />
-                <span>Ubicación: {selectedEvent.room}</span>
+                <span>Location: {selectedEvent.room}</span>
               </p>
               <p className="flex items-center gap-1.5">
                 <Users className="h-3.5 w-3.5 text-slate-400" />
-                <span>Grupo: Cuarto Medio A - Colegio Cordillera</span>
+                <span>Group: Senior Year A - Cordillera School</span>
               </p>
             </div>
 
             <div className="space-y-1.5 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-              <span className="text-[9px] font-mono font-bold uppercase text-slate-400 block tracking-wider">Descripción de la actividad</span>
+              <span className="text-[9px] font-mono font-bold uppercase text-slate-400 block tracking-wider">Activity description</span>
               <p className="font-sans">
-                {selectedEvent.description || "Esta actividad escolar está coordinada en base al calendario de profesores del Colegio Cordillera."}
+                {selectedEvent.description || "This school activity is coordinated based on the teacher calendar of Cordillera School."}
               </p>
             </div>
 
@@ -889,7 +889,7 @@ export default function DashboardView({
               onClick={() => setSelectedEvent(null)}
               className="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl transition-colors"
             >
-              Entendido
+              Understood
             </button>
 
           </div>
