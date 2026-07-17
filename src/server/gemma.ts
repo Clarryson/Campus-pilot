@@ -857,6 +857,21 @@ Autonomously interpret these results. Write your final answer to the student exp
 // ------------------------------------------------------------------------
 async function runOfflineSimulation(prompt: string, state: DBState): Promise<{ text: string }> {
   const p = prompt.toLowerCase();
+  const profile = state.studentProfile || {
+    name: "Clarryson",
+    university: "University of Embu",
+    course: "Bachelor of Science in Computer Science",
+    department: "Computer Science",
+    year: 2,
+    semester: 1,
+    registrationNumber: "ENG/CS/2024/001"
+  };
+
+  const timetableDoc = state.documents.find(d => d.type === 'timetable');
+  const timetableDocName = timetableDoc ? timetableDoc.name : "timetable PDF";
+
+  const examDoc = state.documents.find(d => d.type === 'exam');
+  const examDocName = examDoc ? examDoc.name : "examination PDF";
   
   if (p.includes("week") || p.includes("timetable") || p.includes("schedule")) {
     const classesList = state.timetable.map(t => `- **${t.courseCode}**: ${t.courseName} | ${t.day} ${t.startTime} - ${t.endTime} at ${t.venue} (${t.building})`).join("\n");
@@ -865,22 +880,20 @@ async function runOfflineSimulation(prompt: string, state: DBState): Promise<{ t
     logGemmaActivity(
       "Timetable",
       "Gemma compiled the weekly academic briefing.",
-      "Triggered offline simulator for weekly timetable check. Resolved student agenda of 5 courses. Determined structural distribution: Monday (Data Structures), Tuesday (OOP II), Wednesday (DBMS), Thursday (Discrete Structures), Friday (Calculus III)."
+      `Triggered offline simulator for weekly timetable check. Resolved student agenda of ${state.timetable.length} courses for ${profile.course}.`
     );
 
     return {
       text: `### 🗓️ Your Weekly Academic Briefing (${profile.university} - ${profile.course})
+      As your autonomous academic agent, I have compiled your complete weekly syllabus extracted from **${timetableDocName}**:
 
-As your autonomous academic agent, I have compiled your complete weekly syllabus extracted from **Class_Timetable_v1.pdf**:
-
-${classesList}
+${classesList || "No lectures found in your active timetable database. Try uploading a timetable PDF first."}
 
 ---
 
 #### 💡 Gemma's Strategic Study Recommendations:
-1. **Discrete Proofs Check**: You have **CSC 214 (Discrete Structures)** on Thursday mornings. This topic has dense mathematical proofs. Set aside Wednesday evening for preparation.
-2. **Double Laboratories**: **CSC 212 Object Oriented Programming II** is taught in **Computer Lab 2**. Ensure you have cloned your latest socket multi-threaded server repository to complete the lab exercise.
-3. **Database Projects**: **CSC 213 (DBMS)** is scheduled for Wednesdays. Your Normalization project is approaching. Let's arrange a 2-hour study block on Wednesday evening to solve BCNF decompositions.`
+1. **Curriculum Review**: Ensure you have allocated self-study blocks for all active courses listed in your ${profile.course} itinerary.
+2. **Venue Preparation**: Double check lecture venue slots. Reach out to your class representative if you detect room collisions.`
     };
   }
 
@@ -892,7 +905,7 @@ ${classesList}
     logGemmaActivity(
       "System",
       "Gemma analyzed tomorrow's timetable for student briefings.",
-      "Parsed Wednesday/Thursday schedule vectors. Extracted OOP II classes scheduled under Prof. Mary Wambui. Validated room availability of Computer Lab 2."
+      `Parsed tomorrow's schedule vectors for ${profile.course} student.`
     );
 
     return {
@@ -905,41 +918,44 @@ ${classDetails || "You have no classes scheduled for tomorrow! Enjoy your self-d
 ---
 
 #### 💡 Gemma's Preparation Checklist:
-- **Programming Lab**: You have an active OOP II lab session in **Computer Lab 2**. Professor Mary Wambui is reviewing multi-threaded clients.
-- **Project Progress**: Your socket client-server programming project is high priority (high urgency). I highly recommend completing the thread-pooling section before lab time.`
+- **Active Attendance**: Bring necessary reference notebooks and materials for tomorrow's classes.
+- **Project Progress**: Check if any active project deliverables overlap with scheduled lecture modules.`
     };
   }
 
   if (p.includes("exam") || p.includes("test")) {
-    const exams = state.exams.map(e => `- **${e.courseCode} - ${e.courseName}**\n  - 📅 Date: ${e.date}\n  - ⏰ Time: ${e.time} (Duration: ${e.duration})\n  - 📍 Venue: ${e.venue}`).join("\n\n");
+    const examsList = state.exams.map(e => `- **${e.courseCode} - ${e.courseName}**\n  - 📅 Date: ${e.date}\n  - ⏰ Time: ${e.time} (Duration: ${e.duration})\n  - 📍 Venue: ${e.venue}`).join("\n\n");
 
     logGemmaActivity(
       "Exam",
       "Gemma verified upcoming exam deadlines and space density.",
-      "Exam timetable scanned. Located 3 major tests scheduled from Dec 8 to Dec 12. Computed study buffer gap: only 1 study gap exists between DSA and DBMS exams. Triggered exam density alerts."
+      `Exam timetable scanned. Located ${state.exams.length} tests in database.`
     );
 
     return {
-      text: `### 📝 Your Exam Schedule (December 2026)
+      text: `### 📝 Your Exam Schedule
 
-I have parsed **Exam_Timetable_v1.pdf** and registered 3 core final exams in your calendar database:
+I have parsed **${examDocName}** and registered ${state.exams.length} final exams in your calendar database:
 
-${exams}
+${examsList || "No final examinations registered yet. Try uploading an exam timetable PDF first."}
 
 ---
 
 #### ⚠️ Critical Density Warnings:
-- **1-Day Gap Warning**: There is only **one day** of gap between your **Data Structures (CSC 211)** exam on Dec 8 and your **DBMS (CSC 213)** exam on Dec 10.
-- **Gemma Plan**: I have autonomously scheduled joint revision modules commencing in November to avoid last-minute cramming.`
+- **Revision Strategy**: Gemma has autonomously configured early warnings in your notification panel. Review these settings regularly to track revision progress.`
     };
   }
 
   if (p.includes("scholarship")) {
-    const schols = state.scholarships.map(s => `- **${s.title}** by ${s.provider}\n  - 💰 Award: ${s.amount}\n  - 📅 Deadline: ${s.deadline}\n  - 🎯 Eligibility: ${s.eligibility}`).join("\n\n");
+    // Dynamically list scholarships or fallback to a standard list matched to course
+    const matchingScholarships = state.scholarships.length > 0 ? state.scholarships : [
+      { title: `${profile.department} Merit Fellowship`, provider: "Global Foundation", amount: "$5,000", deadline: "2026-12-15", eligibility: `Undergraduates in ${profile.department}` }
+    ];
+    const schols = matchingScholarships.map(s => `- **${s.title}** by ${s.provider}\n  - 💰 Award: ${s.amount}\n  - 📅 Deadline: ${s.deadline}\n  - 🎯 Eligibility: ${s.eligibility}`).join("\n\n");
     return {
       text: `### 🎓 Matching Scholarships Found (Autonomous Match)
 
-Based on your student profile at **${profile.university}**, I crawled matching opportunities:
+Based on your student profile as a student at **${profile.university}** registered in **${profile.course}**, I crawled matching opportunities:
 
 ${schols}`
     };
@@ -951,7 +967,7 @@ ${schols}`
     logGemmaActivity(
       "Study Plan",
       "Gemma generated optimized weekly revision plan.",
-      "Calculated coursework complexity and deadline priorities. Outlined a 5-day balanced study plan allocating structured slots for DSA AVL tree trees and DBMS Normal Forms."
+      "Calculated coursework complexity and deadline priorities."
     );
 
     return {
@@ -959,13 +975,13 @@ ${schols}`
 
 Here is your customized weekly revision routine designed around your classes and current assignment priorities:
 
-${plans}
+${plans || "No study plan blocks generated yet. Use the 'Planner' section to create an optimized study routine."}
 
 ---
 
 #### 🎯 Active Objectives for This Week:
-1. **Red-Black Rotations**: Allocate 2 hours tonight to practice node recoloring rules.
-2. **BCNF Proofs**: Work through DBMS normalizations on Wednesday after your lecture.`
+1. **Concept Reviews**: Devote structured time to courses where study buffers are marked high intensity.
+2. **Practice Questions**: Engage in active recall sessions before final exams.`
     };
   }
 
@@ -976,16 +992,23 @@ ${plans}
     `Gemma evaluated general prompt query: "${prompt}". Provided responsive, structured feedback referring to the local database context.`
   );
 
+  const timetableStatus = state.timetable.length > 0 
+    ? `${state.timetable.length} classes mapped from \`${timetableDocName}\``
+    : "No timetables uploaded yet";
+  const examsStatus = state.exams.length > 0
+    ? `${state.exams.length} exams registered from \`${examDocName}\``
+    : "No exam files uploaded yet";
+
   return {
     text: `### Hello! I am Gemma 4, your Autonomous Academic Assistant.
 
-I am actively tracking your semester at **${profile.university} (${profile.course})**.
+I am actively tracking your semester at the **${profile.university} (${profile.course}, Year ${profile.year} Sem ${profile.semester})** for student **${profile.name}**.
 
 #### 🚀 What I am monitoring right now:
-1. **Timetables**: Classes are mapped from \`Class_Timetable_v1.pdf\`.
-2. **Exams**: 3 exam dates registered from \`Exam_Timetable_v1.pdf\`.
-3. **Deadlines**: Tracking your **AVL Tree implementation** (High priority) and **DBMS Clinic System** normalization (Medium priority).
-4. **Google Calendar**: 3 classes staged and ready to sync.
+1. **Timetables**: ${timetableStatus}.
+2. **Exams**: ${examsStatus}.
+3. **Deadlines**: Tracking ${state.reminders.length} active reminders.
+4. **Google Calendar**: Real-time sync status connected to ${state.calendarEvents.length > 0 ? "Google Account" : "Local Sync Roster"}.
 
 #### 💬 Ask me anything, such as:
 - *"What classes do I have tomorrow?"*
