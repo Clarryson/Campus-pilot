@@ -530,7 +530,10 @@ export default function App() {
                 setChatInput={setChatInput} 
                 chatMessages={chatMessages} 
                 onSendMessage={handleSendMessage} 
-                isGemmaThinking={isGemmaThinking} 
+                isGemmaThinking={isGemmaThinking}
+                gemmaActivities={gemmaActivities}
+                isUploadingFile={uploadingFile}
+                uploadingFileName={uploadingFileName}
               />
             )}
 
