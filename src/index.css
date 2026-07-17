@@ -1,10 +1,9 @@
 /* ──────────────────────────────────────────────────────────────────────────
    Inter · Professional Typography System
+   Font loaded via <link> in index.html — do NOT @import here (Vite strips
+   external @import url() during CSS bundling, causing fonts to silently fail).
    Single font source of truth for all CampusPilot surfaces
 ────────────────────────────────────────────────────────────────────────── */
-
-/* Inter via Google Fonts — variable font, weights 400–700 only */
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
 
 @import "tailwindcss";
 
