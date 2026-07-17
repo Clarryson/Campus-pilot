@@ -222,6 +222,51 @@ async function startServer() {
     }
   });
 
+  // 10. Update student profile and trigger re-parsing of uploaded documents
+  app.post("/api/profile/update", async (req, res) => {
+    const { profile } = req.body;
+    if (!profile) {
+      return res.status(400).json({ error: "Profile data is required." });
+    }
+    try {
+      // 1. Update profile in database
+      Database.update((s) => {
+        s.studentProfile = {
+          ...s.studentProfile,
+          ...profile,
+          year: Number(profile.year),
+          semester: Number(profile.semester)
+        };
+        // 2. Clear old structured data (timetable, exams, study plans, calendar events)
+        s.timetable = [];
+        s.exams = [];
+        s.studyPlans = [];
+        s.calendarEvents = [];
+      });
+
+      // 3. Re-process any previously uploaded documents using the new profile context
+      const state = Database.get();
+      if (state.documents.length > 0) {
+        console.log(`[Profile Update] Re-parsing ${state.documents.length} uploaded files for new profile...`);
+        // We iterate through documents and re-extract using parseAcademicPDF
+        for (const doc of state.documents) {
+          if (doc.filePath && fsExistsSync(doc.filePath)) {
+            try {
+              await parseAcademicPDF(doc.filePath, doc.name, doc.filePath);
+            } catch (err) {
+              console.error(`Failed to re-parse document ${doc.name}:`, err);
+            }
+          }
+        }
+      }
+
+      res.json({ success: true, state: Database.get() });
+    } catch (e: any) {
+      console.error("Profile update failed:", e);
+      res.status(500).json({ error: e.message });
+    }
+  });
+
   // 9. Reset state to default
   app.post("/api/reset", (req, res) => {
     try {

@@ -1,5 +1,9 @@
 import { GoogleGenAI, Type, FunctionDeclaration } from "@google/genai";
 import { Database, DBState, DocumentRecord, TimetableClass, ExamEvent, AssignmentRecord, ProjectRecord, StudyPlanItem, ReminderItem, NotificationItem, GemmaActivityLog, CalendarEventItem } from "./db.js";
+import dotenv from "dotenv";
+
+// Pre-load environment variables to handle ES module load ordering
+dotenv.config();
 
 // Initialize Google Gen AI Client pointing at Google AI Studio (Gemma 4 26B)
 const apiKey = process.env.GEMINI_API_KEY;
@@ -17,7 +21,7 @@ export const ai = new GoogleGenAI({
 });
 
 // Gemma 4 26B Instruction-Tuned model — served via Google AI Studio API
-const AGENT_MODEL = "gemma-4-27b-it";
+const AGENT_MODEL = "gemma-4-26b-a4b-it";
 
 // Helper to log Gemma autonomous reasoning in the DB
 export function logGemmaActivity(category: string, message: string, reasoning: string) {

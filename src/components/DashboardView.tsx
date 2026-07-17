@@ -31,11 +31,24 @@ import {
 import { motion, AnimatePresence } from "motion/react";
 import { GemmaActivityLog, TimetableClass, ExamEvent, ReminderItem } from "../types";
 
+interface StudentProfile {
+  name: string;
+  university: string;
+  course: string;
+  department: string;
+  year: number;
+  semester: number;
+  registrationNumber: string;
+}
+
 interface DashboardViewProps {
   gemmaActivities: GemmaActivityLog[];
   timetable: TimetableClass[];
   exams: ExamEvent[];
   reminders: ReminderItem[];
+  scholarships?: any[];
+  campusEvents?: any[];
+  studentProfile?: StudentProfile | null;
   onNavigate: (section: string) => void;
   onAddQuickReminder: (text: string) => void;
   onToggleSidebar?: () => void;
@@ -47,6 +60,9 @@ export default function DashboardView({
   timetable, 
   exams, 
   reminders, 
+  scholarships = [],
+  campusEvents = [],
+  studentProfile,
   onNavigate,
   onAddQuickReminder,
   googleUser
@@ -54,7 +70,14 @@ export default function DashboardView({
   // AI Daily Briefing reasoning simulation states
   const [reasoningState, setReasoningState] = useState<'Thinking...' | 'Analyzing...' | 'Organizing...' | 'Generating...' | 'Completed'>('Completed');
   const [briefingTab, setBriefingTab] = useState<'schedule' | 'tomorrow' | 'study' | 'assignment' | 'exam' | 'scholarship' | 'events'>('schedule');
-  const [expandedActivityId, setExpandedActivityId] = useState<string | null>("act-1");
+  const [expandedActivityId, setExpandedActivityId] = useState<string | null>(null);
+
+  // Auto-expand first activity if available
+  useEffect(() => {
+    if (gemmaActivities && gemmaActivities.length > 0) {
+      setExpandedActivityId(gemmaActivities[0].id);
+    }
+  }, [gemmaActivities]);
 
   // Trigger brief reasoning animation when clicking refresh
   const triggerGemmaReasoning = () => {
@@ -77,14 +100,26 @@ export default function DashboardView({
     }, 600);
   };
 
+  // Dynamic calculations
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const todayDay = days[new Date().getDay()];
+  const todayClasses = timetable.filter(c => c.day.toLowerCase() === todayDay.toLowerCase());
+  const classesTodayCount = todayClasses.length;
+
+  const examsCount = exams.length;
+  const pendingReminders = reminders.filter(r => !r.completed);
+  const remindersCount = pendingReminders.length;
+  const scholarshipsCount = scholarships.length;
+  const campusEventsCount = campusEvents.length;
+
   // Six Premium KPI Cards Data
   const kpiCards = [
     {
       id: "kpi-classes",
       title: "Today's Classes",
-      count: "3 / 3",
-      status: "Live Now • AI Lab",
-      progress: 66,
+      count: classesTodayCount === 0 ? "None Scheduled" : `${classesTodayCount} Lectures`,
+      status: classesTodayCount > 0 ? `Next: ${todayClasses[0].courseCode} (${todayClasses[0].venue})` : "Free day!",
+      progress: classesTodayCount > 0 ? 100 : 0,
       color: "from-[#4285F4] to-blue-600",
       iconColor: "bg-blue-500/10 text-[#4285F4] dark:bg-blue-500/20 dark:text-blue-300",
       icon: Calendar,
@@ -93,9 +128,9 @@ export default function DashboardView({
     {
       id: "kpi-exams",
       title: "Upcoming Exams",
-      count: "4 Active",
-      status: "Networking in 5d",
-      progress: 80,
+      count: examsCount === 0 ? "No Exams" : `${examsCount} Scheduled`,
+      status: examsCount > 0 ? `First exam: ${exams[0].courseCode}` : "Syllabus clear",
+      progress: examsCount > 0 ? 80 : 0,
       color: "from-[#7C4DFF] to-purple-600",
       iconColor: "bg-purple-500/10 text-[#7C4DFF] dark:bg-purple-500/20 dark:text-purple-300",
       icon: FileText,
@@ -104,24 +139,24 @@ export default function DashboardView({
     {
       id: "kpi-assignments",
       title: "Assignments Due",
-      count: "1 Due Tomorrow",
-      status: "Algorithm Lab 3",
-      progress: 90,
+      count: remindersCount === 0 ? "All Complete" : `${remindersCount} Pending`,
+      status: remindersCount > 0 ? pendingReminders[0].title : "Zero active deadlines",
+      progress: remindersCount > 0 ? 50 : 100,
       color: "from-amber-500 to-orange-500",
       iconColor: "bg-amber-500/10 text-amber-600 dark:bg-amber-500/20 dark:text-amber-400",
       icon: Layers,
-      action: () => onNavigate("study-planner")
+      action: () => onNavigate("planner")
     },
     {
       id: "kpi-projects",
-      title: "Projects",
-      count: "2 In Progress",
-      status: "AI Agent Hackathon",
-      progress: 75,
+      title: "Scholarships",
+      count: scholarshipsCount === 0 ? "0 Listed" : `${scholarshipsCount} Matched`,
+      status: scholarshipsCount > 0 ? `Next deadline: ${scholarships[0].deadline}` : "No matches yet",
+      progress: scholarshipsCount > 0 ? 100 : 0,
       color: "from-cyan-500 to-blue-500",
       iconColor: "bg-cyan-500/10 text-cyan-600 dark:bg-cyan-500/20 dark:text-cyan-400",
       icon: BrainCircuit,
-      action: () => onNavigate("ai-workspace")
+      action: () => onNavigate("scholarships")
     },
     {
       id: "kpi-calendar",
@@ -137,9 +172,9 @@ export default function DashboardView({
     {
       id: "kpi-health",
       title: "Academic Health Score",
-      count: "96% AI Optimized",
-      status: "Top Tier Performance",
-      progress: 96,
+      count: timetable.length > 0 ? "96% AI Optimized" : "Database Blank",
+      status: timetable.length > 0 ? "Top Tier Performance" : "Upload timetable to analyze",
+      progress: timetable.length > 0 ? 96 : 0,
       color: "from-rose-500 to-pink-600",
       iconColor: "bg-rose-500/10 text-rose-600 dark:bg-rose-500/20 dark:text-rose-400",
       icon: TrendingUp,
@@ -158,150 +193,58 @@ export default function DashboardView({
     { title: "Upload Student Handbook", icon: Folder, action: () => onNavigate("documents"), badge: "RAG" },
     { title: "Upload Academic Calendar", icon: Calendar, action: () => onNavigate("documents"), badge: "Dates" },
   ];
+  // Derive activity logs from actual database log state
+  const activityLogs = gemmaActivities.map((act) => ({
+    id: act.id,
+    time: new Date(act.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    title: act.message,
+    desc: act.reasoning,
+    status: act.category,
+    statusColor: act.category === 'Timetable' ? 'bg-blue-500/10 text-blue-600 border-blue-500/20'
+               : act.category === 'Exam' ? 'bg-red-500/10 text-red-600 border-red-500/20'
+               : act.category === 'Study Plan' ? 'bg-purple-500/10 text-purple-600 border-purple-500/20'
+               : 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20',
+    icon: Sparkles
+  }));
 
-  // AI Activity Timeline data
-  const activityLogs = [
-    {
-      id: "act-1",
-      time: "09:20 AM",
-      title: "Weekly briefing completed",
-      desc: "Gemma structured the 5-day academic itinerary and scheduled optimal evening study slots.",
-      status: "Ready",
-      statusColor: "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
-      icon: Sparkles
-    },
-    {
-      id: "act-2",
-      time: "09:18 AM",
-      title: "Scholarship recommendation generated",
-      desc: "Identified 'Google DeepMind AI Fellowship' matching 98% with your Computer Science transcript.",
-      status: "Matched",
-      statusColor: "bg-purple-500/10 text-purple-600 border-purple-500/20",
-      icon: Award
-    },
-    {
-      id: "act-3",
-      time: "09:15 AM",
-      title: "Detected timetable update",
-      desc: "Compared Version 1 with Version 2 PDF: Probability room shifted to Senior Year A - Hc.",
-      status: "Resolved",
-      statusColor: "bg-blue-500/10 text-blue-600 border-blue-500/20",
-      icon: RefreshCw
-    },
-    {
-      id: "act-4",
-      time: "09:10 AM",
-      title: "Study plan generated",
-      desc: "Created intensive Feynman technique blocks for Heaps & B-Trees examination.",
-      status: "Optimized",
-      statusColor: "bg-cyan-500/10 text-cyan-600 border-cyan-500/20",
-      icon: BookOpen
-    },
-    {
-      id: "act-5",
-      time: "09:07 AM",
-      title: "Daily reminders created",
-      desc: "Staged 3 high-priority notifications for Algorithm Lab submission and assembly attendance.",
-      status: "Active",
-      statusColor: "bg-amber-500/10 text-amber-600 border-amber-500/20",
-      icon: BellRing
-    },
-    {
-      id: "act-6",
-      time: "09:05 AM",
-      title: "Google Calendar synchronized",
-      desc: "Synchronized 14 semester events directly to your personal connected Google account.",
-      status: "Synced",
-      statusColor: "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
-      icon: CalendarClock
-    },
-    {
-      id: "act-7",
-      time: "09:03 AM",
-      title: "Exam timetable extracted",
-      desc: "Parsed 4 core examinations from uploaded syllabus PDF with zero schema errors.",
-      status: "Mapped",
-      statusColor: "bg-indigo-500/10 text-indigo-600 border-indigo-500/20",
-      icon: FileText
-    },
-    {
-      id: "act-8",
-      time: "09:02 AM",
-      title: "Gemma analyzed class timetable",
-      desc: "Initialized 12 weekly lecture slots and verified zero room collisions across all subjects.",
-      status: "Verified",
-      statusColor: "bg-blue-500/10 text-blue-600 border-blue-500/20",
-      icon: CheckCircle
-    }
-  ];
+  // Today's Timeline classes derived dynamically
+  const todayClassesList = timetable
+    .filter(c => c.day.toLowerCase() === todayDay.toLowerCase())
+    .map((c, idx) => {
+      // Set status based on index for clean presentation: first is complete, second is live, others upcoming
+      const statusVal = idx === 0 ? "completed" : idx === 1 ? "live" : "upcoming";
+      const countdownVal = statusVal === "completed" ? "Completed"
+                        : statusVal === "live" ? "Live Now"
+                        : `Starts at ${c.startTime}`;
+      return {
+        id: c.id,
+        time: `${c.startTime} - ${c.endTime}`,
+        name: `${c.courseCode}: ${c.courseName}`,
+        venue: c.venue,
+        building: c.building,
+        lecturer: c.lecturer,
+        status: statusVal,
+        countdown: countdownVal
+      };
+    });
 
-  // Today's Timeline classes
-  const todayClasses = [
-    {
-      id: "t-1",
-      time: "08:30 - 10:00 AM",
-      name: "Linear Algebra & Probability",
-      venue: "Senior Year A - Hc",
-      building: "Main Science Pavilion",
-      lecturer: "Dr. Sarah Jenkins",
-      status: "completed",
-      countdown: "Completed at 10:00 AM"
-    },
-    {
-      id: "t-2",
-      time: "10:30 - 12:00 PM",
-      name: "Artificial Intelligence Lab 4",
-      venue: "Innovation Center, Lab 2",
-      building: "Engineering Complex B",
-      lecturer: "Prof. Alan Turing Jr.",
-      status: "live",
-      countdown: "Live Now • Ends in 42 mins"
-    },
-    {
-      id: "t-3",
-      time: "02:00 - 03:30 PM",
-      name: "Cloud Systems & Networking",
-      venue: "Tech Tower, Room 405",
-      building: "Computer Science Hall",
-      lecturer: "Dr. Grace Hopper",
-      status: "upcoming",
-      countdown: "Next class in 1h 48 mins"
-    }
-  ];
-
-  // Upcoming Exams
-  const upcomingExams = [
-    {
-      id: "ex-1",
-      subject: "Networking & Cloud Architecture",
-      countdown: "5 Days Left",
-      venue: "Graduation Pavilion, Hall A",
-      building: "Central Campus",
-      difficulty: "High Intensity",
-      difficultyColor: "text-red-500 bg-red-500/10 border-red-500/20",
-      recommendation: "Review TCP/IP handshake algorithms and distributed consensus protocols tonight."
-    },
-    {
-      id: "ex-2",
-      subject: "Quantum Computing & Modeling",
-      countdown: "8 Days Left",
-      venue: "Science Annex, Lab 4",
-      building: "Physics Center",
-      difficulty: "Medium Load",
-      difficultyColor: "text-amber-500 bg-amber-500/10 border-amber-500/20",
-      recommendation: "Practice Shor's algorithm derivations using your staged AI practice test."
-    },
-    {
-      id: "ex-3",
-      subject: "Advanced Data Structures II",
-      countdown: "12 Days Left",
-      venue: "Main Auditorium R-102",
-      building: "Engineering Complex A",
-      difficulty: "High Intensity",
-      difficultyColor: "text-red-500 bg-red-500/10 border-red-500/20",
-      recommendation: "Focus on Red-Black tree balancing rules and dynamic programming recursion."
-    }
-  ];
+  // Upcoming Exams derived dynamically
+  const upcomingExamsList = exams.map((ex, idx) => {
+    // Generate helpful custom countdowns
+    const diffTime = Math.max(1, Math.round((new Date(ex.date).getTime() - Date.now()) / (1000 * 60 * 60 * 24)));
+    return {
+      id: ex.id,
+      subject: `${ex.courseCode}: ${ex.courseName}`,
+      countdown: `${diffTime} ${diffTime === 1 ? 'Day' : 'Days'} Left`,
+      venue: ex.venue,
+      building: "University Campus",
+      difficulty: idx % 2 === 0 ? "High Intensity" : "Medium Load",
+      difficultyColor: idx % 2 === 0
+        ? "text-red-500 bg-red-500/10 border-red-500/20"
+        : "text-amber-500 bg-amber-500/10 border-amber-500/20",
+      recommendation: `Verify location ${ex.venue} and review primary concepts for ${ex.courseCode}.`
+    };
+  });
 
   return (
     <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-8 text-left bg-[#FFFFFF] dark:bg-[#0F172A] text-slate-900 dark:text-slate-100 transition-colors duration-300">
@@ -330,7 +273,7 @@ export default function DashboardView({
             </div>
 
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black font-sans tracking-tight text-white leading-tight">
-              Good Morning, {googleUser?.displayName ? googleUser.displayName.split(' ')[0] : "Student"} <span className="inline-block animate-wiggle">👋</span>
+              Good Morning, {googleUser?.displayName ? googleUser.displayName.split(' ')[0] : (studentProfile?.name || "Student")} <span className="inline-block animate-wiggle">👋</span>
             </h1>
 
             <div className="bg-white/10 dark:bg-slate-900/60 backdrop-blur-md border border-white/15 rounded-2xl p-4 md:p-5 space-y-3">
@@ -339,22 +282,22 @@ export default function DashboardView({
               </p>
               <div className="flex flex-wrap items-center gap-2 md:gap-3 text-xs md:text-sm font-semibold font-mono">
                 <span className="px-3 py-1.5 rounded-xl bg-blue-500/20 border border-blue-400/30 text-blue-200">
-                  🗓️ 3 Classes Today
+                  🗓️ {classesTodayCount} {classesTodayCount === 1 ? "Class" : "Classes"} Today
                 </span>
                 <span className="px-3 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/30 text-amber-200">
-                  ⚠️ 1 Assignment Due Tomorrow
+                  ⚠️ {remindersCount} {remindersCount === 1 ? "Task" : "Tasks"} Pending
                 </span>
                 <span className="px-3 py-1.5 rounded-xl bg-purple-500/20 border border-purple-400/30 text-purple-200">
-                  ✍️ Networking Exam in 5 Days
+                  ✍️ {examsCount} {examsCount === 1 ? "Exam" : "Exams"} Scheduled
                 </span>
                 <span className="px-3 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-400/30 text-emerald-200">
-                  🎓 2 New Scholarships
+                  🎓 {scholarshipsCount} {scholarshipsCount === 1 ? "Scholarship" : "Scholarships"}
                 </span>
                 <span className="px-3 py-1.5 rounded-xl bg-cyan-500/20 border border-cyan-400/30 text-cyan-200">
-                  🎉 1 Campus Event Today
+                  🎉 {campusEventsCount} {campusEventsCount === 1 ? "Event" : "Events"} Today
                 </span>
                 <span className="px-3 py-1.5 rounded-xl bg-teal-500/20 border border-teal-400/30 text-teal-200">
-                  📅 Google Calendar Synced
+                  📅 {googleUser ? "Google Calendar Active" : "Local Database"}
                 </span>
               </div>
             </div>
@@ -805,12 +748,15 @@ export default function DashboardView({
                 </h3>
               </div>
               <span className="px-3 py-1 rounded-full bg-blue-500/10 text-[#4285F4] text-xs font-mono font-bold border border-blue-500/20">
-                3 Lectures
+                {classesTodayCount} {classesTodayCount === 1 ? "Lecture" : "Lectures"}
               </span>
             </div>
 
             <div className="space-y-4">
-              {todayClasses.map((cls) => {
+              {todayClassesList.length === 0 ? (
+                <div className="p-8 text-center text-xs text-slate-400 font-mono">No lectures today</div>
+              ) : (
+                todayClassesList.map((cls) => {
                 const isLive = cls.status === "live";
                 const isCompleted = cls.status === "completed";
                 return (
@@ -862,7 +808,8 @@ export default function DashboardView({
                     </div>
                   </div>
                 );
-              })}
+              })
+            )}
             </div>
           </div>
 
@@ -881,51 +828,56 @@ export default function DashboardView({
                 onClick={() => onNavigate("examinations")}
                 className="text-xs font-mono text-[#4285F4] hover:underline font-bold cursor-pointer"
               >
-                View All (4)
+                View All ({examsCount})
               </button>
             </div>
 
             <div className="space-y-4">
-              {upcomingExams.map((exam) => (
-                <div 
-                  key={exam.id}
-                  className="bg-[#F8FAFC] dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-2xl p-4.5 space-y-3 hover:border-purple-500/40 transition-all shadow-xs"
-                >
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="px-2.5 py-1 rounded-lg bg-purple-500/10 text-[#7C4DFF] dark:text-purple-300 font-mono font-bold text-xs">
-                      {exam.countdown}
-                    </span>
-                    <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono font-black uppercase tracking-wider border ${exam.difficultyColor}`}>
-                      {exam.difficulty}
-                    </span>
-                  </div>
-
-                  <h4 className="text-base font-bold text-slate-900 dark:text-white font-sans">
-                    {exam.subject}
-                  </h4>
-
-                  <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 font-mono">
-                    <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-                      <MapPin className="h-3.5 w-3.5" />
-                      <span>{exam.venue}</span>
-                    </span>
-                    <span>•</span>
-                    <span>{exam.building}</span>
-                  </div>
-
-                  <div className="bg-white dark:bg-slate-950 border border-slate-200/60 dark:border-slate-850 p-3 rounded-xl text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
-                    <strong className="text-[#7C4DFF] font-bold">Gemma Advice:</strong> {exam.recommendation}
-                  </div>
-
-                  <button 
-                    onClick={() => onNavigate("ai-workspace")}
-                    className="w-full py-2.5 bg-gradient-to-r from-[#4285F4] to-[#7C4DFF] hover:from-blue-600 hover:to-purple-600 text-white font-sans font-bold text-xs rounded-xl shadow-sm flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+              {upcomingExamsList.length === 0 ? (
+                <div className="p-8 text-center text-xs text-slate-400 font-mono">No upcoming exams scheduled</div>
+              ) : (
+                upcomingExamsList.map((exam) => (
+                  <div 
+                    key={exam.id}
+                    className="bg-[#F8FAFC] dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-2xl p-4.5 space-y-3 hover:border-purple-500/40 transition-all shadow-xs"
                   >
-                    <BrainCircuit className="h-4 w-4" />
-                    <span>Start Revision & Practice Test</span>
-                  </button>
-                </div>
-              ))}
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="px-2.5 py-1 rounded-lg bg-purple-500/10 text-[#7C4DFF] dark:text-purple-300 font-mono font-bold text-xs">
+                        {exam.countdown}
+                      </span>
+                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono font-black uppercase tracking-wider border ${exam.difficultyColor}`}>
+                        {exam.difficulty}
+                      </span>
+                    </div>
+
+                    <h4 className="text-base font-bold text-slate-900 dark:text-white font-sans truncate">
+                      {exam.subject}
+                    </h4>
+
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500 dark:text-slate-400 font-mono">
+                      <span className="flex items-center gap-1 text-[#7C4DFF]">
+                        <MapPin className="h-3.5 w-3.5" />
+                        <span>{exam.venue}</span>
+                      </span>
+                      <span>•</span>
+                      <span>{exam.building}</span>
+                    </div>
+
+                    <div className="mt-3 pt-3 border-t border-slate-200/40 dark:border-slate-800 flex flex-col gap-2.5 text-xs">
+                      <p className="text-slate-500 leading-relaxed font-sans font-medium">
+                        {exam.recommendation}
+                      </p>
+                      <button 
+                        onClick={() => onNavigate("ai-workspace")}
+                        className="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-[10.5px] font-mono font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                      >
+                        <BrainCircuit className="h-3.5 w-3.5 text-[#7C4DFF]" />
+                        <span>Start Revision & Practice Test</span>
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
 
