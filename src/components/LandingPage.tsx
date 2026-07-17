@@ -54,7 +54,7 @@ export default function LandingPage({ onLaunchApp, googleUser, onGoogleSignIn }:
             <a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a>
             <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
             <span className="px-2 py-0.5 bg-purple-950/50 border border-purple-800 text-purple-300 rounded text-xs uppercase font-mono font-bold tracking-wider">
-              Gemma v2.0
+              Gemma 4
             </span>
           </nav>
 

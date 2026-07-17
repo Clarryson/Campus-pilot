@@ -11,8 +11,6 @@ import {
   Settings,
   Moon,
   Sun,
-  ChevronRight,
-  ChevronRightCircle,
   HelpCircle
 } from "lucide-react";
 
@@ -114,47 +112,6 @@ export default function Sidebar({
             );
           })}
         </nav>
-
-      </div>
-
-      {/* Bottom Section: Mejora tu Plan banner matching the picture */}
-      <div className="px-1 text-left">
-        
-        {/* Blue Promotion Banner Card matching the picture */}
-        <div className="relative bg-gradient-to-br from-[#00A1FF] via-[#0084FF] to-[#0066FF] text-white p-4.5 rounded-[24px] shadow-lg overflow-hidden select-none flex flex-col justify-between min-h-[140px] group">
-          
-          {/* Circular decorations overlay */}
-          <div className="absolute right-[-10px] top-[-10px] h-16 w-16 bg-white/10 rounded-full blur-md" />
-          <div className="absolute left-[-20px] bottom-[-20px] h-24 w-24 bg-white/5 rounded-full blur-md" />
-
-          {/* Logo badge with up-right arrow circle */}
-          <div className="flex items-center justify-between relative z-10">
-            <div className="h-7 w-7 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center text-white font-black text-xs">
-              N+
-            </div>
-            <button className="text-white hover:text-white/80 transition-colors">
-              <ChevronRightCircle className="h-4.5 w-4.5" />
-            </button>
-          </div>
-
-          <div className="space-y-1 relative z-10 mt-3">
-            <h4 className="text-xs font-black tracking-tight leading-snug">
-              Upgrade Your Plan
-            </h4>
-            <p className="text-[10px] text-white/80 leading-relaxed font-sans">
-              And access advanced features and benefits we have for you.
-            </p>
-          </div>
-
-          <button 
-            onClick={() => onSelectSection("settings")}
-            className="w-full mt-3 py-2 bg-white hover:bg-slate-50 text-[#0084FF] text-[10px] font-black rounded-xl transition-all shadow-sm flex items-center justify-center gap-1 cursor-pointer"
-          >
-            <span>View Plans</span>
-            <ChevronRight className="h-3.5 w-3.5 shrink-0" />
-          </button>
-
-        </div>
 
       </div>
 

@@ -224,7 +224,7 @@ export default function AIWorkspaceView({
               <div className="flex flex-col items-start">
                 <div className="flex items-center gap-1.5 mb-1.5 px-1 text-[10px] font-mono text-indigo-500 animate-pulse">
                   <Bot className="h-3 w-3 animate-spin" />
-                  <span>Gemma is processing university database constraints...</span>
+                  <span>Gemma 4 is processing university database constraints...</span>
                 </div>
                 <div className="bg-slate-50 dark:bg-slate-950 border border-indigo-500/10 p-3 rounded-2xl rounded-tl-none flex items-center gap-3">
                   <span className="flex h-2 w-2 relative">

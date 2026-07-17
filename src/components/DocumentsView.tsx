@@ -196,7 +196,6 @@ export default function DocumentsView({ documents, uploadingFile, onFileUpload }
 
             <div className="flex items-center justify-between text-[10px] font-mono pt-1">
               <span className="text-slate-400 dark:text-slate-500">24% consumed</span>
-              <a href="#upgrade" className="text-cyan-600 dark:text-cyan-400 hover:underline font-black">Upgrade Plan</a>
             </div>
           </div>
 

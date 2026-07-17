@@ -16,7 +16,7 @@ export const ai = new GoogleGenAI({
   },
 });
 
-// Use gemini-3.5-flash as the default model as instructed in the skill guidelines for general/text tasks
+// Use gemini-3.5-flash as the default model configured to run the Gemma 4 autonomous agent reasoning loop
 const AGENT_MODEL = "gemini-3.5-flash";
 
 // Helper to log Gemma autonomous reasoning in the DB
@@ -746,7 +746,7 @@ Never list JSON structures inside the final output. Present them in clean, highl
       };
     }
 
-    // Call Gemma 3.5 series model via the official Google Gen AI SDK
+    // Call the Gemma 4 reasoning engine (using gemini-3.5-flash under the hood) via the official Google Gen AI SDK
     const response = await ai.models.generateContent({
       model: AGENT_MODEL,
       contents: [
