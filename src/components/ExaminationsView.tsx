@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { 
   Calendar, 
   Clock, 
@@ -13,17 +13,29 @@ import {
   MapPin,
   TrendingUp,
   BrainCircuit,
-  Bookmark
+  Bookmark,
+  UploadCloud,
+  RefreshCw
 } from "lucide-react";
 import { ExamEvent } from "../types";
 
 interface ExaminationsViewProps {
   exams: ExamEvent[];
   onStartStudySession?: () => void;
+  uploadingFile?: boolean;
+  onFileUpload?: (file: File) => void;
 }
 
-export default function ExaminationsView({ exams, onStartStudySession }: ExaminationsViewProps) {
+export default function ExaminationsView({ exams, onStartStudySession, uploadingFile, onFileUpload }: ExaminationsViewProps) {
   const [searchTerm, setSearchTerm] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0 && onFileUpload) {
+      onFileUpload(files[0]);
+    }
+  };
 
   const defaultExams: ExamEvent[] = [
     {
@@ -97,8 +109,34 @@ export default function ExaminationsView({ exams, onStartStudySession }: Examina
           </p>
         </div>
 
-        <div className="flex items-center gap-2 shrink-0">
-          <div className="relative w-full md:w-60">
+        <div className="flex flex-wrap items-center gap-3 shrink-0">
+          <input 
+            type="file" 
+            ref={fileInputRef} 
+            onChange={handleFileChange} 
+            accept="application/pdf" 
+            className="hidden" 
+          />
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={uploadingFile}
+            className="px-4 py-2 bg-gradient-to-r from-red-600 to-indigo-600 hover:from-red-500 hover:to-indigo-500 text-white font-sans font-bold text-xs rounded-xl shadow-md flex items-center gap-1.5 transition-all cursor-pointer disabled:opacity-60"
+          >
+            {uploadingFile ? (
+              <>
+                <RefreshCw className="h-4 w-4 animate-spin" />
+                <span>Parsing Exam Timetable...</span>
+              </>
+            ) : (
+              <>
+                <UploadCloud className="h-4 w-4" />
+                <span>Upload Exam Timetable PDF</span>
+              </>
+            )}
+          </button>
+
+          <div className="relative w-full md:w-52">
             <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               <Search className="h-4 w-4 text-slate-400" />
             </span>

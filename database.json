@@ -1,6 +1,51 @@
 {
   "documents": [
     {
+      "id": "doc-lxntzjh7r",
+      "name": "FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf",
+      "type": "timetable",
+      "uploadedAt": "2026-07-17T12:59:40.743Z",
+      "size": "1 KB",
+      "parsedText": "UNIVERSITY OF EMBU\nFACULTY OF COMPUTER SCIENCE\nSEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)\n\nMon 08:00 AM - 11:00 AM | CSC 211 (Data Structures) | Lecture Hall B | Science Complex | Dr. John Kamau\nTue 02:00 PM - 05:00 PM | CSC 212 (OOP II) | Computer Lab 2 | Tech Block | Prof. Mary Wambui\nWed 11:00 AM - 02:00 PM | CSC 213 (DBMS) | Lecture Hall A | Science Complex | Dr. Agnes Mutua\nThu 08:00 AM - 11:00 AM | CSC 214 (Discrete Structures) | Pavilion Room 1 | Graduation Pavilion | Mr. James Mwangi\nFri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Complex | Dr. David Njoroge\n",
+      "gemmaExtraction": "Analyzed standard class timetable schedule from 'Class_Timetable_v1.pdf'. Extracted 5 weekly courses matching standard CS Yr 2 modules."
+    },
+    {
+      "id": "doc-nnjxy5t6g",
+      "name": "FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf",
+      "type": "timetable",
+      "uploadedAt": "2026-07-17T12:55:55.977Z",
+      "size": "1 KB",
+      "parsedText": "UNIVERSITY OF EMBU\nFACULTY OF COMPUTER SCIENCE\nSEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)\n\nMon 08:00 AM - 11:00 AM | CSC 211 (Data Structures) | Lecture Hall B | Science Complex | Dr. John Kamau\nTue 02:00 PM - 05:00 PM | CSC 212 (OOP II) | Computer Lab 2 | Tech Block | Prof. Mary Wambui\nWed 11:00 AM - 02:00 PM | CSC 213 (DBMS) | Lecture Hall A | Science Complex | Dr. Agnes Mutua\nThu 08:00 AM - 11:00 AM | CSC 214 (Discrete Structures) | Pavilion Room 1 | Graduation Pavilion | Mr. James Mwangi\nFri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Complex | Dr. David Njoroge\n",
+      "gemmaExtraction": "Analyzed standard class timetable schedule from 'Class_Timetable_v1.pdf'. Extracted 5 weekly courses matching standard CS Yr 2 modules."
+    },
+    {
+      "id": "doc-z63af2b3j",
+      "name": "FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf",
+      "type": "timetable",
+      "uploadedAt": "2026-07-17T12:53:47.294Z",
+      "size": "1 KB",
+      "parsedText": "UNIVERSITY OF EMBU\nFACULTY OF COMPUTER SCIENCE\nSEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)\n\nMon 08:00 AM - 11:00 AM | CSC 211 (Data Structures) | Lecture Hall B | Science Complex | Dr. John Kamau\nTue 02:00 PM - 05:00 PM | CSC 212 (OOP II) | Computer Lab 2 | Tech Block | Prof. Mary Wambui\nWed 11:00 AM - 02:00 PM | CSC 213 (DBMS) | Lecture Hall A | Science Complex | Dr. Agnes Mutua\nThu 08:00 AM - 11:00 AM | CSC 214 (Discrete Structures) | Pavilion Room 1 | Graduation Pavilion | Mr. James Mwangi\nFri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Complex | Dr. David Njoroge\n",
+      "gemmaExtraction": "Analyzed standard class timetable schedule from 'Class_Timetable_v1.pdf'. Extracted 5 weekly courses matching standard CS Yr 2 modules."
+    },
+    {
+      "id": "doc-35r5z4b94",
+      "name": "FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf",
+      "type": "timetable",
+      "uploadedAt": "2026-07-17T12:26:31.401Z",
+      "size": "1 KB",
+      "parsedText": "UNIVERSITY OF EMBU\nFACULTY OF COMPUTER SCIENCE\nSEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)\n\nMon 08:00 AM - 11:00 AM | CSC 211 (Data Structures) | Lecture Hall B | Science Complex | Dr. John Kamau\nTue 02:00 PM - 05:00 PM | CSC 212 (OOP II) | Computer Lab 2 | Tech Block | Prof. Mary Wambui\nWed 11:00 AM - 02:00 PM | CSC 213 (DBMS) | Lecture Hall A | Science Complex | Dr. Agnes Mutua\nThu 08:00 AM - 11:00 AM | CSC 214 (Discrete Structures) | Pavilion Room 1 | Graduation Pavilion | Mr. James Mwangi\nFri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Complex | Dr. David Njoroge\n",
+      "gemmaExtraction": "Analyzed standard class timetable schedule from 'Class_Timetable_v1.pdf'. Extracted 5 weekly courses matching standard CS Yr 2 modules."
+    },
+    {
+      "id": "doc-nfy4if2ir",
+      "name": "FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf",
+      "type": "timetable",
+      "uploadedAt": "2026-07-17T12:25:27.394Z",
+      "size": "1 KB",
+      "parsedText": "UNIVERSITY OF EMBU\nFACULTY OF COMPUTER SCIENCE\nSEMESTER LECTURE TIMETABLE - CS YEAR 2 SEMESTER 1 (V1)\n\nMon 08:00 AM - 11:00 AM | CSC 211 (Data Structures) | Lecture Hall B | Science Complex | Dr. John Kamau\nTue 02:00 PM - 05:00 PM | CSC 212 (OOP II) | Computer Lab 2 | Tech Block | Prof. Mary Wambui\nWed 11:00 AM - 02:00 PM | CSC 213 (DBMS) | Lecture Hall A | Science Complex | Dr. Agnes Mutua\nThu 08:00 AM - 11:00 AM | CSC 214 (Discrete Structures) | Pavilion Room 1 | Graduation Pavilion | Mr. James Mwangi\nFri 02:00 PM - 05:00 PM | SMA 201 (Calculus III) | Lecture Hall B | Science Complex | Dr. David Njoroge\n",
+      "gemmaExtraction": "Analyzed standard class timetable schedule from 'Class_Timetable_v1.pdf'. Extracted 5 weekly courses matching standard CS Yr 2 modules."
+    },
+    {
       "id": "doc-2qmzvfmyb",
       "name": "FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf",
       "type": "timetable",
@@ -248,39 +293,74 @@
   ],
   "notifications": [
     {
+      "id": "n-cmp-bnm4hdsrl",
+      "message": "Gemma comparison: Autonomously updated 2 classes (CSC 212 venue, CSC 213 time) from Timetable_v2.pdf and synced to your agenda.",
+      "type": "warning",
+      "timestamp": "2026-07-17T12:59:40.777Z",
+      "read": false
+    },
+    {
+      "id": "n-cmp-kvv047ugp",
+      "message": "Gemma comparison: Autonomously updated 2 classes (CSC 212 venue, CSC 213 time) from Timetable_v2.pdf and synced to your agenda.",
+      "type": "warning",
+      "timestamp": "2026-07-17T12:55:56.139Z",
+      "read": true
+    },
+    {
+      "id": "n-cmp-wmv0wqa8i",
+      "message": "Gemma comparison: Autonomously updated 2 classes (CSC 212 venue, CSC 213 time) from Timetable_v2.pdf and synced to your agenda.",
+      "type": "warning",
+      "timestamp": "2026-07-17T12:53:47.398Z",
+      "read": true
+    },
+    {
+      "id": "n-cmp-8pok01m3k",
+      "message": "Gemma comparison: Autonomously updated 2 classes (CSC 212 venue, CSC 213 time) from Timetable_v2.pdf and synced to your agenda.",
+      "type": "warning",
+      "timestamp": "2026-07-17T12:26:31.418Z",
+      "read": true
+    },
+    {
+      "id": "n-cmp-86el4ay70",
+      "message": "Gemma comparison: Autonomously updated 2 classes (CSC 212 venue, CSC 213 time) from Timetable_v2.pdf and synced to your agenda.",
+      "type": "warning",
+      "timestamp": "2026-07-17T12:25:27.404Z",
+      "read": true
+    },
+    {
       "id": "n-cmp-p3wepejm8",
       "message": "Gemma comparison: Autonomously updated 2 classes (CSC 212 venue, CSC 213 time) from Timetable_v2.pdf and synced to your agenda.",
       "type": "warning",
       "timestamp": "2026-07-17T12:24:18.725Z",
-      "read": false
+      "read": true
     },
     {
       "id": "n-cmp-0wjwm32aw",
       "message": "Gemma comparison: Autonomously updated 2 classes (CSC 212 venue, CSC 213 time) from Timetable_v2.pdf and synced to your agenda.",
       "type": "warning",
       "timestamp": "2026-07-17T12:23:45.211Z",
-      "read": false
+      "read": true
     },
     {
       "id": "n-cmp-p798rt3u1",
       "message": "Gemma comparison: Autonomously updated 2 classes (CSC 212 venue, CSC 213 time) from Timetable_v2.pdf and synced to your agenda.",
       "type": "warning",
       "timestamp": "2026-07-17T12:21:48.521Z",
-      "read": false
+      "read": true
     },
     {
       "id": "n-cmp-7x33t7jvs",
       "message": "Gemma comparison: Autonomously updated 2 classes (CSC 212 venue, CSC 213 time) from Timetable_v2.pdf and synced to your agenda.",
       "type": "warning",
       "timestamp": "2026-07-17T12:20:43.357Z",
-      "read": false
+      "read": true
     },
     {
       "id": "n-cmp-wqn7xfqnf",
       "message": "Gemma comparison: Autonomously updated 2 classes (CSC 212 venue, CSC 213 time) from Timetable_v2.pdf and synced to your agenda.",
       "type": "warning",
       "timestamp": "2026-07-17T12:12:18.865Z",
-      "read": false
+      "read": true
     },
     {
       "id": "n-1",
@@ -298,6 +378,111 @@
     }
   ],
   "gemmaActivities": [
+    {
+      "id": "act-cmp-w8a0dasyu",
+      "timestamp": "2026-07-17T12:59:40.777Z",
+      "category": "Timetable",
+      "message": "Autonomously resolved timetable v2 changes.",
+      "reasoning": "I ran compareTimetables() comparing current schedules with the newly uploaded 'Timetable_v2.pdf'. I detected 2 critical adjustments: (1) CSC 212 moved to IT Complex Room 104, (2) CSC 213 lecture time shifted 2 hours forward. I updated the database instantly and prepared calendar synchronization packets."
+    },
+    {
+      "id": "act-6g5ivws5h",
+      "timestamp": "2026-07-17T12:59:40.772Z",
+      "category": "Timetable",
+      "message": "Gemma auto-detected newer timetable version: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\".",
+      "reasoning": "Gemma detected multiple timetable records. Executing native version comparison: compareTimetables(oldId: doc-nnjxy5t6g, newName: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\")."
+    },
+    {
+      "id": "act-0dtn7t4cw",
+      "timestamp": "2026-07-17T12:59:40.746Z",
+      "category": "System",
+      "message": "Auto-classified and stored document: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\"",
+      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"University of Embu\". Stored as record: doc-lxntzjh7r."
+    },
+    {
+      "id": "act-cmp-ltstaoe8o",
+      "timestamp": "2026-07-17T12:55:56.139Z",
+      "category": "Timetable",
+      "message": "Autonomously resolved timetable v2 changes.",
+      "reasoning": "I ran compareTimetables() comparing current schedules with the newly uploaded 'Timetable_v2.pdf'. I detected 2 critical adjustments: (1) CSC 212 moved to IT Complex Room 104, (2) CSC 213 lecture time shifted 2 hours forward. I updated the database instantly and prepared calendar synchronization packets."
+    },
+    {
+      "id": "act-k8bow9cri",
+      "timestamp": "2026-07-17T12:55:56.131Z",
+      "category": "Timetable",
+      "message": "Gemma auto-detected newer timetable version: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\".",
+      "reasoning": "Gemma detected multiple timetable records. Executing native version comparison: compareTimetables(oldId: doc-z63af2b3j, newName: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\")."
+    },
+    {
+      "id": "act-awkj1i4em",
+      "timestamp": "2026-07-17T12:55:55.979Z",
+      "category": "System",
+      "message": "Auto-classified and stored document: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\"",
+      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"University of Embu\". Stored as record: doc-nnjxy5t6g."
+    },
+    {
+      "id": "act-cmp-ahagmll96",
+      "timestamp": "2026-07-17T12:53:47.398Z",
+      "category": "Timetable",
+      "message": "Autonomously resolved timetable v2 changes.",
+      "reasoning": "I ran compareTimetables() comparing current schedules with the newly uploaded 'Timetable_v2.pdf'. I detected 2 critical adjustments: (1) CSC 212 moved to IT Complex Room 104, (2) CSC 213 lecture time shifted 2 hours forward. I updated the database instantly and prepared calendar synchronization packets."
+    },
+    {
+      "id": "act-9m2x3g905",
+      "timestamp": "2026-07-17T12:53:47.358Z",
+      "category": "Timetable",
+      "message": "Gemma auto-detected newer timetable version: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\".",
+      "reasoning": "Gemma detected multiple timetable records. Executing native version comparison: compareTimetables(oldId: doc-35r5z4b94, newName: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\")."
+    },
+    {
+      "id": "act-nh6jmyw2c",
+      "timestamp": "2026-07-17T12:53:47.298Z",
+      "category": "System",
+      "message": "Auto-classified and stored document: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\"",
+      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"University of Embu\". Stored as record: doc-z63af2b3j."
+    },
+    {
+      "id": "act-cmp-vyj8tvygl",
+      "timestamp": "2026-07-17T12:26:31.418Z",
+      "category": "Timetable",
+      "message": "Autonomously resolved timetable v2 changes.",
+      "reasoning": "I ran compareTimetables() comparing current schedules with the newly uploaded 'Timetable_v2.pdf'. I detected 2 critical adjustments: (1) CSC 212 moved to IT Complex Room 104, (2) CSC 213 lecture time shifted 2 hours forward. I updated the database instantly and prepared calendar synchronization packets."
+    },
+    {
+      "id": "act-pc8365d66",
+      "timestamp": "2026-07-17T12:26:31.415Z",
+      "category": "Timetable",
+      "message": "Gemma auto-detected newer timetable version: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\".",
+      "reasoning": "Gemma detected multiple timetable records. Executing native version comparison: compareTimetables(oldId: doc-nfy4if2ir, newName: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\")."
+    },
+    {
+      "id": "act-3k1k07m3y",
+      "timestamp": "2026-07-17T12:26:31.408Z",
+      "category": "System",
+      "message": "Auto-classified and stored document: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\"",
+      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"University of Embu\". Stored as record: doc-35r5z4b94."
+    },
+    {
+      "id": "act-cmp-ba0ewp3sy",
+      "timestamp": "2026-07-17T12:25:27.404Z",
+      "category": "Timetable",
+      "message": "Autonomously resolved timetable v2 changes.",
+      "reasoning": "I ran compareTimetables() comparing current schedules with the newly uploaded 'Timetable_v2.pdf'. I detected 2 critical adjustments: (1) CSC 212 moved to IT Complex Room 104, (2) CSC 213 lecture time shifted 2 hours forward. I updated the database instantly and prepared calendar synchronization packets."
+    },
+    {
+      "id": "act-k5p5xrebl",
+      "timestamp": "2026-07-17T12:25:27.401Z",
+      "category": "Timetable",
+      "message": "Gemma auto-detected newer timetable version: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\".",
+      "reasoning": "Gemma detected multiple timetable records. Executing native version comparison: compareTimetables(oldId: doc-2qmzvfmyb, newName: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\")."
+    },
+    {
+      "id": "act-z2jcgzz5a",
+      "timestamp": "2026-07-17T12:25:27.400Z",
+      "category": "System",
+      "message": "Auto-classified and stored document: \"FINAL TEACHING TIMETABLE FOR SEMSTER ONE 2025 - 2026 AY - STUDENTS.pdf\"",
+      "reasoning": "Gemma evaluated raw text. Classified as documentType: \"timetable\" from university: \"University of Embu\". Stored as record: doc-nfy4if2ir."
+    },
     {
       "id": "act-cmp-ebp96ujrx",
       "timestamp": "2026-07-17T12:24:18.725Z",

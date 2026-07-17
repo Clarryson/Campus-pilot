@@ -45,16 +45,16 @@ This application is designed specifically around the premise that **no action oc
         |                                 |                                 |
         v                                 v                                 v
 +-------+--------+                +-------+--------+                +-------+--------+
-|    Supabase    |                | Google Calendar|                |  Notification  |
+|    Firebase    |                | Google Calendar|                |  Notification  |
 | Database Layer |                |  Sync Engine   |                |  Alert Engine  |
 +----------------+                +----------------+                +----------------+
 ```
 
 ---
 
-## 🗄️ Database Schema (Supabase/PostgreSQL)
+## 🗄️ Database Schema (Firebase / Firestore & Local State)
 
-If migrating from the local persistent file database to Supabase or standard PostgreSQL, deploy the following DDL definitions:
+CampusPilot AI utilizes **Firebase Auth** and a JSON persistent local/Firestore schema for multi-device data synchronization. If migrating or structuring your collections directly inside Firebase Cloud Firestore or standard PostgreSQL, use the following schema mappings:
 
 ```sql
 -- Create Enum Types

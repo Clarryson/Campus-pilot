@@ -36,6 +36,7 @@ import NotificationsView from "./components/NotificationsView";
 import HandbookView from "./components/HandbookView";
 
 export default function App() {
+<<<<<<< HEAD
   // Navigation State — persisted so upload/re-renders don't reset to landing page
   const [viewMode, setViewMode] = useState<'landing' | 'app'>(() => {
     return (localStorage.getItem('viewMode') as 'landing' | 'app') || 'landing';
@@ -43,6 +44,23 @@ export default function App() {
   const [currentSection, setCurrentSection] = useState<string>(
     localStorage.getItem('currentSection') || 'dashboard'
   );
+=======
+  // Navigation State
+  const [viewMode, setViewMode] = useState<'landing' | 'app'>(() => {
+    return (localStorage.getItem('viewMode') as 'landing' | 'app') || 'landing';
+  });
+  const [currentSection, setCurrentSection] = useState<string>(() => {
+    return localStorage.getItem('currentSection') || 'dashboard';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('viewMode', viewMode);
+  }, [viewMode]);
+
+  useEffect(() => {
+    localStorage.setItem('currentSection', currentSection);
+  }, [currentSection]);
+>>>>>>> 4a5f427 (calender upgrade)
 
   // Application DB State
   const [documents, setDocuments] = useState<DocumentRecord[]>([]);
@@ -476,117 +494,122 @@ export default function App() {
             onToggleTheme={() => setTheme(prev => prev === 'light' ? 'dark' : 'light')}
           />
 
-          {/* Sticky Horizontal Navigation Bar across ALL views */}
-          <Navigation 
-            currentSection={currentSection} 
-            onSelectSection={navigateToSection} 
-          />
+          {/* Left Sidebar Navigation and Main Content Layout */}
+          <div className="flex flex-1 overflow-hidden">
+            {/* Left Sidebar Navigation across ALL views */}
+            <Navigation 
+              currentSection={currentSection} 
+              onSelectSection={navigateToSection} 
+            />
 
-          {/* Main Content Area */}
-          <main className="flex-1 overflow-y-auto bg-[#FFFFFF] dark:bg-[#0F172A] transition-colors duration-300">
-            
-            {currentSection === 'dashboard' && (
-              <DashboardView 
-                gemmaActivities={gemmaActivities} 
-                timetable={timetable} 
-                exams={exams} 
-                reminders={reminders} 
-                onNavigate={navigateToSection}
-                onAddQuickReminder={handleAddQuickReminder}
-                googleUser={googleUser}
-              />
-            )}
+            {/* Main Content Area */}
+            <main className="flex-1 overflow-y-auto bg-[#FFFFFF] dark:bg-[#0F172A] transition-colors duration-300">
+              
+              {currentSection === 'dashboard' && (
+                <DashboardView 
+                  gemmaActivities={gemmaActivities} 
+                  timetable={timetable} 
+                  exams={exams} 
+                  reminders={reminders} 
+                  onNavigate={navigateToSection}
+                  onAddQuickReminder={handleAddQuickReminder}
+                  googleUser={googleUser}
+                />
+              )}
 
-            {currentSection === 'schedule' && (
-              <ScheduleView 
-                timetable={timetable} 
-                exams={exams} 
-                onStartStudySession={() => setCurrentSection('ai-workspace')}
-              />
-            )}
+              {currentSection === 'schedule' && (
+                <ScheduleView 
+                  timetable={timetable} 
+                  exams={exams} 
+                  onStartStudySession={() => setCurrentSection('ai-workspace')}
+                  uploadingFile={uploadingFile}
+                  onFileUpload={handleFileUpload}
+                />
+              )}
 
-            {(currentSection === 'planner' || currentSection === 'study-planner') && (
-              <PlannerView 
-                timetable={timetable} 
-                studyPlans={studyPlans} 
-                studyPlanIntensity={studyPlanIntensity}
-                onGenerateStudyPlan={handleGenerateStudyPlan}
-              />
-            )}
+              {(currentSection === 'planner' || currentSection === 'study-planner') && (
+                <PlannerView 
+                  timetable={timetable} 
+                  studyPlans={studyPlans} 
+                  studyPlanIntensity={studyPlanIntensity}
+                  onGenerateStudyPlan={handleGenerateStudyPlan}
+                />
+              )}
 
-            {currentSection === 'documents' && (
-              <DocumentsView 
-                documents={documents} 
-                uploadingFile={uploadingFile}
-                uploadingFileName={uploadingFileName}
-                lastUploadResult={lastUploadResult}
-                onFileUpload={handleFileUpload} 
-              />
-            )}
+              {currentSection === 'documents' && (
+                <DocumentsView 
+                  documents={documents} 
+                  uploadingFile={uploadingFile} 
+                  onFileUpload={handleFileUpload} 
+                />
+              )}
 
-            {currentSection === 'ai-workspace' && (
-              <AIWorkspaceView 
-                chatInput={chatInput} 
-                setChatInput={setChatInput} 
-                chatMessages={chatMessages} 
-                onSendMessage={handleSendMessage} 
-                isGemmaThinking={isGemmaThinking} 
-              />
-            )}
+              {currentSection === 'ai-workspace' && (
+                <AIWorkspaceView 
+                  chatInput={chatInput} 
+                  setChatInput={setChatInput} 
+                  chatMessages={chatMessages} 
+                  onSendMessage={handleSendMessage} 
+                  isGemmaThinking={isGemmaThinking} 
+                />
+              )}
 
-            {currentSection === 'scholarships' && (
-              <ScholarshipsView 
-                scholarships={scholarships} 
-              />
-            )}
+              {currentSection === 'scholarships' && (
+                <ScholarshipsView 
+                  scholarships={scholarships} 
+                />
+              )}
 
-            {currentSection === 'events' && (
-              <EventsView 
-                campusEvents={campusEvents} 
-              />
-            )}
+              {currentSection === 'events' && (
+                <EventsView 
+                  campusEvents={campusEvents} 
+                />
+              )}
 
-            {currentSection === 'examinations' && (
-              <ExaminationsView 
-                exams={exams} 
-                onStartStudySession={() => setCurrentSection('ai-workspace')}
-              />
-            )}
+              {currentSection === 'examinations' && (
+                <ExaminationsView 
+                  exams={exams} 
+                  onStartStudySession={() => setCurrentSection('ai-workspace')}
+                  uploadingFile={uploadingFile}
+                  onFileUpload={handleFileUpload}
+                />
+              )}
 
-            {currentSection === 'google-calendar' && (
-              <GoogleCalendarView 
-                googleUser={googleUser}
-                calendarEvents={calendarEvents}
-                isSyncingCalendar={isSyncingCalendar}
-                onGoogleSignIn={handleGoogleSignIn}
-                onGoogleLogout={handleGoogleLogout}
-                onCalendarSync={handleCalendarSync}
-              />
-            )}
+              {currentSection === 'google-calendar' && (
+                <GoogleCalendarView 
+                  googleUser={googleUser}
+                  calendarEvents={calendarEvents}
+                  isSyncingCalendar={isSyncingCalendar}
+                  onGoogleSignIn={handleGoogleSignIn}
+                  onGoogleLogout={handleGoogleLogout}
+                  onCalendarSync={handleCalendarSync}
+                />
+              )}
 
-            {currentSection === 'notifications' && (
-              <NotificationsView 
-                notifications={notifications}
-                onMarkRead={handleMarkNotificationsRead}
-              />
-            )}
+              {currentSection === 'notifications' && (
+                <NotificationsView 
+                  notifications={notifications}
+                  onMarkRead={handleMarkNotificationsRead}
+                />
+              )}
 
-            {currentSection === 'handbook' && (
-              <HandbookView />
-            )}
+              {currentSection === 'handbook' && (
+                <HandbookView />
+              )}
 
-            {currentSection === 'settings' && (
-              <SettingsView 
-                fontSize={fontSize} 
-                setFontSize={setFontSize} 
-                googleUser={googleUser} 
-                onGoogleSignIn={handleGoogleSignIn} 
-                onGoogleLogout={handleGoogleLogout} 
-                onResetApp={handleResetApp} 
-              />
-            )}
+              {currentSection === 'settings' && (
+                <SettingsView 
+                  fontSize={fontSize} 
+                  setFontSize={setFontSize} 
+                  googleUser={googleUser} 
+                  onGoogleSignIn={handleGoogleSignIn} 
+                  onGoogleLogout={handleGoogleLogout} 
+                  onResetApp={handleResetApp} 
+                />
+              )}
 
-          </main>
+            </main>
+          </div>
 
         </div>
       )}

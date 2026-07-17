@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { 
   Calendar, 
   Clock, 
@@ -9,7 +9,9 @@ import {
   Sparkles,
   Map,
   ArrowRight,
-  Info
+  Info,
+  UploadCloud,
+  RefreshCw
 } from "lucide-react";
 import { TimetableClass, ExamEvent } from "../types";
 
@@ -17,9 +19,19 @@ interface ScheduleViewProps {
   timetable: TimetableClass[];
   exams: ExamEvent[];
   onStartStudySession?: () => void;
+  uploadingFile?: boolean;
+  onFileUpload?: (file: File) => void;
 }
 
-export default function ScheduleView({ timetable, exams, onStartStudySession }: ScheduleViewProps) {
+export default function ScheduleView({ timetable, exams, onStartStudySession, uploadingFile, onFileUpload }: ScheduleViewProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0 && onFileUpload) {
+      onFileUpload(files[0]);
+    }
+  };
   // Mock data representing exact classes in screenshot 5
   const mockSchedule = [
     {
@@ -52,13 +64,44 @@ export default function ScheduleView({ timetable, exams, onStartStudySession }: 
     <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-8 text-left transition-colors duration-300">
       
       {/* Top Banner Info */}
-      <div className="flex flex-col gap-1 border-b border-slate-150/10 dark:border-gray-800/40 pb-6">
-        <h2 className="text-2xl md:text-3xl font-black tracking-tight text-slate-900 dark:text-white flex items-center gap-2.5 font-sans">
-          Academic Roadmap
-        </h2>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-xl">
-          Hello Alex, here's your academic roadmap. You have {mockSchedule.length} classes and {exams.length || 1} mock examination today.
-        </p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-150/10 dark:border-gray-800/40 pb-6">
+        <div>
+          <h2 className="text-2xl md:text-3xl font-black tracking-tight text-slate-900 dark:text-white flex items-center gap-2.5 font-sans">
+            Academic Roadmap & Class Timetable
+          </h2>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-xl">
+            Hello Alex, here's your academic roadmap. You have {mockSchedule.length} classes today. Upload your latest class timetable PDF anytime to autonomously sync rooms and times.
+          </p>
+        </div>
+
+        {/* Quick Upload Action Right inside Class Timetable */}
+        <div className="flex items-center gap-3 shrink-0">
+          <input 
+            type="file" 
+            ref={fileInputRef} 
+            onChange={handleFileChange} 
+            accept="application/pdf" 
+            className="hidden" 
+          />
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={uploadingFile}
+            className="px-5 py-3 bg-gradient-to-r from-[#4285F4] to-[#7C4DFF] hover:from-blue-600 hover:to-purple-600 text-white font-sans font-bold text-xs rounded-2xl shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 transition-all transform hover:scale-102 cursor-pointer disabled:opacity-60"
+          >
+            {uploadingFile ? (
+              <>
+                <RefreshCw className="h-4 w-4 animate-spin" />
+                <span>Gemma Parsing Timetable...</span>
+              </>
+            ) : (
+              <>
+                <UploadCloud className="h-4 w-4" />
+                <span>Upload Class Timetable PDF</span>
+              </>
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Top Banner Metric Alert */}
