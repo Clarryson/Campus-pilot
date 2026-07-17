@@ -11,9 +11,7 @@ import {
   CalendarDays, 
   BookMarked, 
   CalendarClock,
-  X,
-  ChevronRightCircle,
-  ChevronRight
+  X
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -129,40 +127,9 @@ export default function Navigation({ currentSection, onSelectSection, isOpen = f
 
       </div>
 
-      {/* Sidebar Footer: Promo Card + Gemma Status */}
-      <div className="mt-8 space-y-4 pt-4 border-t border-slate-100 dark:border-slate-800/60 text-left">
+      {/* Sidebar Footer: Gemma Status */}
+      <div className="mt-8 pt-4 border-t border-slate-100 dark:border-slate-800/60 text-left">
         
-        {/* CP+ Promo Card */}
-        <div className="relative bg-gradient-to-br from-[#009BF5] via-[#009BF5] to-[#1A3B8B] text-white p-3.5 rounded-2xl shadow-md overflow-hidden flex flex-col justify-between group">
-          <div className="absolute right-[-10px] top-[-10px] h-14 w-14 bg-white/10 rounded-full blur-sm" />
-          
-          <div className="flex items-center justify-between relative z-10">
-            <div className="h-6 w-6 bg-white/20 backdrop-blur-md rounded-md flex items-center justify-center text-white font-black text-[10px]">
-              CP+
-            </div>
-            <button className="text-white/80 hover:text-white transition-colors">
-              <ChevronRightCircle className="h-4 w-4" />
-            </button>
-          </div>
-
-          <div className="space-y-0.5 relative z-10 mt-2">
-            <h4 className="text-xs font-black tracking-tight leading-snug">
-              Upgrade your Plan
-            </h4>
-            <p className="text-[9px] text-white/80 leading-relaxed font-sans">
-              Unlock advanced AI agent workflows & unlimited sync.
-            </p>
-          </div>
-
-          <button 
-            onClick={() => handleTabClick("settings")}
-            className="w-full mt-2.5 py-1.5 bg-white hover:bg-slate-50 text-[#009BF5] text-[10px] font-black rounded-lg transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer"
-          >
-            <span>View Plans</span>
-            <ChevronRight className="h-3 w-3 shrink-0" />
-          </button>
-        </div>
-
         {/* Gemma Status Pill */}
         <div className="px-3 py-1 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 font-sans font-semibold">
           <div className="flex items-center gap-2">
