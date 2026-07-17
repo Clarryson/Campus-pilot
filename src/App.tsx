@@ -101,11 +101,11 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('fontSize', fontSize);
     if (fontSize === 'normal') {
-      document.documentElement.style.fontSize = '14px';
+      document.documentElement.style.fontSize = '16px';
     } else if (fontSize === 'large') {
-      document.documentElement.style.fontSize = '17px';
+      document.documentElement.style.fontSize = '18px';
     } else if (fontSize === 'xlarge') {
-      document.documentElement.style.fontSize = '20px';
+      document.documentElement.style.fontSize = '21px';
     }
   }, [fontSize]);
 
@@ -442,7 +442,7 @@ export default function App() {
 
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-[#0F172A] text-slate-100' : 'bg-slate-50 text-slate-800'} font-sans selection:bg-indigo-500 selection:text-white flex flex-col ${
-      fontSize === 'normal' ? 'text-sm' : fontSize === 'xlarge' ? 'text-lg' : 'text-base'
+      fontSize === 'normal' ? 'text-base' : fontSize === 'xlarge' ? 'text-xl app-font-xlarge' : 'text-lg app-font-large'
     }`}>
       
       {/* LANDING PAGE ROUTE */}
