@@ -36,16 +36,7 @@ import NotificationsView from "./components/NotificationsView";
 import HandbookView from "./components/HandbookView";
 
 export default function App() {
-<<<<<<< HEAD
-  // Navigation State — persisted so upload/re-renders don't reset to landing page
-  const [viewMode, setViewMode] = useState<'landing' | 'app'>(() => {
-    return (localStorage.getItem('viewMode') as 'landing' | 'app') || 'landing';
-  });
-  const [currentSection, setCurrentSection] = useState<string>(
-    localStorage.getItem('currentSection') || 'dashboard'
-  );
-=======
-  // Navigation State
+  // Navigation State — persisted across uploads and page reloads
   const [viewMode, setViewMode] = useState<'landing' | 'app'>(() => {
     return (localStorage.getItem('viewMode') as 'landing' | 'app') || 'landing';
   });
@@ -60,7 +51,6 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('currentSection', currentSection);
   }, [currentSection]);
->>>>>>> 4a5f427 (calender upgrade)
 
   // Application DB State
   const [documents, setDocuments] = useState<DocumentRecord[]>([]);
