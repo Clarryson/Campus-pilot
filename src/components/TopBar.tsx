@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Search, Bell, History, Sparkles, Calendar, Globe } from "lucide-react";
+import { Search, Bell, History, Sparkles, Calendar, Globe, Menu } from "lucide-react";
 
 interface TopBarProps {
   notificationsCount: number;
@@ -7,6 +7,7 @@ interface TopBarProps {
   googleUser: any;
   onSearch?: (term: string) => void;
   onNavigate?: (section: string) => void;
+  onToggleSidebar?: () => void;
 }
 
 export default function TopBar({ 
@@ -14,7 +15,8 @@ export default function TopBar({
   onBellClick, 
   googleUser, 
   onSearch,
-  onNavigate
+  onNavigate,
+  onToggleSidebar
 }: TopBarProps) {
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -29,10 +31,19 @@ export default function TopBar({
     <header className="border-b border-slate-150 dark:border-slate-850 bg-white/80 dark:bg-[#0F172A]/80 backdrop-blur-md px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4 shrink-0 transition-all duration-300 z-20">
       
       {/* Left: Dynamic Greetings matching user specifications */}
-      <div className="flex flex-col gap-0.5 text-left select-none">
-        <h2 className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-1.5 font-sans leading-tight">
-          Good Morning, Clarryson <span className="animate-wiggle inline-block">👋</span>
-        </h2>
+      <div className="flex items-center gap-3">
+        {onToggleSidebar && (
+          <button 
+            onClick={onToggleSidebar}
+            className="md:hidden p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 cursor-pointer shadow-sm"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+        )}
+        <div className="flex flex-col gap-0.5 text-left select-none">
+          <h2 className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-1.5 font-sans leading-tight">
+            Good Morning, Clarryson <span className="animate-wiggle inline-block">👋</span>
+          </h2>
         <div className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium flex flex-wrap items-center gap-x-2 gap-y-0.5">
           <span className="font-bold">University of Embu</span>
           <span className="text-slate-300 dark:text-slate-700 font-bold">•</span>
@@ -43,6 +54,7 @@ export default function TopBar({
           <span>Semester 1</span>
         </div>
       </div>
+    </div>
 
       {/* Right Side Widgets: Global Search, Calendar & Gemma Badges, Notification, Avatar */}
       <div className="flex flex-wrap items-center gap-3 sm:gap-4 ml-auto md:ml-0">

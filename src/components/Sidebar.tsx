@@ -14,7 +14,8 @@ import {
   ChevronRight,
   ChevronRightCircle,
   HelpCircle,
-  Compass
+  Compass,
+  X
 } from "lucide-react";
 
 interface SidebarProps {
@@ -25,6 +26,8 @@ interface SidebarProps {
   googleUser: any;
   theme: 'light' | 'dark';
   onToggleTheme: () => void;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 export default function Sidebar({ 
@@ -34,7 +37,9 @@ export default function Sidebar({
   onLogout,
   googleUser,
   theme,
-  onToggleTheme
+  onToggleTheme,
+  isOpen,
+  onClose
 }: SidebarProps) {
 
   // Menu items list mapping the exact labels and icons in the image to our functional application sections
@@ -51,7 +56,9 @@ export default function Sidebar({
   ];
 
   return (
-    <aside className="w-64 bg-white dark:bg-[#0B0F19] border-r border-slate-200/60 dark:border-slate-800/80 flex flex-col justify-between h-full py-6 px-4 shrink-0 shadow-[0_8px_30px_rgb(0,0,0,0.01)] dark:shadow-none z-30 select-none transition-colors duration-300">
+    <aside className={`fixed inset-y-0 left-0 z-40 w-64 bg-white dark:bg-[#0B0F19] border-r border-slate-200/60 dark:border-slate-800/80 flex flex-col justify-between h-full py-6 px-4 shrink-0 shadow-[0_8px_30px_rgb(0,0,0,0.01)] dark:shadow-none select-none transition-all duration-300 transform md:relative md:translate-x-0 ${
+      isOpen ? "translate-x-0" : "-translate-x-full"
+    }`}>
       
       {/* Top Section: Brand & Navigation */}
       <div className="flex flex-col gap-6 overflow-y-auto max-h-[85%] scrollbar-none text-left">
@@ -70,14 +77,24 @@ export default function Sidebar({
             </div>
           </div>
 
-          {/* Minimalist Theme toggle */}
-          <button 
-            onClick={onToggleTheme}
-            className="p-1.5 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400 hover:text-blue-500 cursor-pointer transition-colors"
-            title={theme === 'light' ? "Dark Mode" : "Light Mode"}
-          >
-            {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
-          </button>
+          <div className="flex items-center gap-1.5">
+            {/* Minimalist Theme toggle */}
+            <button 
+              onClick={onToggleTheme}
+              className="p-1.5 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400 hover:text-blue-500 cursor-pointer transition-colors"
+              title={theme === 'light' ? "Dark Mode" : "Light Mode"}
+            >
+              {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+            </button>
+
+            {/* Mobile close button */}
+            <button 
+              onClick={onClose}
+              className="md:hidden p-1.5 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-500 hover:text-red-500 cursor-pointer transition-colors"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
         </div>
 
         {/* Navigation list */}

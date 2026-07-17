@@ -74,6 +74,7 @@ export default function App() {
     const saved = localStorage.getItem('theme');
     return (saved as 'light' | 'dark') || 'light';
   });
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Google Calendar Auth States
   const [googleUser, setGoogleUser] = useState<any | null>(null);
@@ -454,21 +455,36 @@ export default function App() {
         />
       ) : (
         /* APPLICATION WORKSPACE DASHBOARD */
-        <div className="flex h-screen overflow-hidden">
+        <div className="flex h-screen overflow-hidden relative">
           
           {/* Persistent Sidebar left */}
           <Sidebar 
             currentSection={currentSection} 
-            onSelectSection={navigateToSection} 
-            onAskAI={handleAskAI} 
+            onSelectSection={(sec) => {
+              navigateToSection(sec);
+              setIsSidebarOpen(false);
+            }} 
+            onAskAI={() => {
+              handleAskAI();
+              setIsSidebarOpen(false);
+            }} 
             onLogout={handleLogout} 
             googleUser={googleUser}
             theme={theme}
             onToggleTheme={() => setTheme(prev => prev === 'light' ? 'dark' : 'light')}
+            isOpen={isSidebarOpen}
+            onClose={() => setIsSidebarOpen(false)}
           />
 
+          {isSidebarOpen && (
+            <div 
+              className="fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-30 md:hidden"
+              onClick={() => setIsSidebarOpen(false)}
+            />
+          )}
+
           {/* Main workspace container right */}
-          <div className="flex-1 flex flex-col min-w-0 bg-slate-50 dark:bg-[#0F172A] overflow-hidden">
+          <div className="flex-1 flex flex-col min-w-0 bg-white dark:bg-[#0F172A] overflow-hidden">
             
             {/* Header top bar */}
             {currentSection !== 'dashboard' && (
@@ -477,6 +493,7 @@ export default function App() {
                 onBellClick={() => setCurrentSection('notifications')} 
                 googleUser={googleUser}
                 onNavigate={navigateToSection}
+                onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
               />
             )}
 
@@ -489,6 +506,8 @@ export default function App() {
                 reminders={reminders} 
                 onNavigate={navigateToSection}
                 onAddQuickReminder={handleAddQuickReminder}
+                onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
+                googleUser={googleUser}
               />
             )}
 

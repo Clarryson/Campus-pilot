@@ -22,7 +22,8 @@ import {
   ExternalLink, 
   X, 
   Settings,
-  MoreHorizontal
+  MoreHorizontal,
+  Menu
 } from "lucide-react";
 import { GemmaActivityLog, TimetableClass, ExamEvent, ReminderItem } from "../types";
 
@@ -33,6 +34,8 @@ interface DashboardViewProps {
   reminders: ReminderItem[];
   onNavigate: (section: string) => void;
   onAddQuickReminder: (text: string) => void;
+  onToggleSidebar: () => void;
+  googleUser: any;
 }
 
 export default function DashboardView({ 
@@ -41,7 +44,9 @@ export default function DashboardView({
   exams, 
   reminders, 
   onNavigate,
-  onAddQuickReminder
+  onAddQuickReminder,
+  onToggleSidebar,
+  googleUser
 }: DashboardViewProps) {
   // Calendar day selection state
   const [selectedDay, setSelectedDay] = useState<string>("Feb 28");
@@ -247,17 +252,25 @@ export default function DashboardView({
     : feedItems.filter(item => item.category === newsFilter);
 
   return (
-    <div className="flex-1 overflow-y-auto bg-[#F4F6FA] dark:bg-[#0B0F19] text-slate-800 dark:text-slate-100 p-4 md:p-6 lg:p-8 space-y-6 md:space-y-8 text-left transition-colors duration-300">
+    <div className="flex-1 overflow-y-auto bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 p-4 md:p-6 lg:p-8 space-y-6 md:space-y-8 text-left transition-colors duration-300">
       
       {/* Search and User Header Row */}
       <div className="flex items-center justify-between gap-4">
-        <div>
-          <h2 className="text-xl md:text-2xl font-black tracking-tight text-slate-900 dark:text-white font-sans">
-            Academic Dashboard
-          </h2>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-            Management of school cycle, enrollment, and school activities.
-          </p>
+        <div className="flex items-center gap-3">
+          <button 
+            onClick={onToggleSidebar}
+            className="md:hidden p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 cursor-pointer shadow-sm"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+          <div>
+            <h2 className="text-xl md:text-2xl font-black tracking-tight text-slate-900 dark:text-white font-sans">
+              Academic Dashboard
+            </h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+              Management of school cycle, enrollment, and school activities.
+            </p>
+          </div>
         </div>
 
         {/* Global Toolbar */}
@@ -316,53 +329,59 @@ export default function DashboardView({
       </div>
 
       {/* Main Dashboard Layout Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 items-start">
         
         {/* ==============================================
-            COLUMN 1: Profile Banner, Metrics & Average Grade (col-span-4)
+            COLUMN 1: Profile Banner, Metrics & Average Grade (col-span-1)
             ============================================== */}
-        <div className="lg:col-span-4 space-y-6">
+        <div className="space-y-6">
           
           {/* Colegio Cordillera Premium Banner Card */}
-          <div className="relative bg-gradient-to-br from-indigo-900 via-indigo-950 to-slate-950 rounded-[32px] p-6 text-white overflow-hidden shadow-md aspect-[4/3] flex flex-col justify-between select-none group">
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[32px] p-6 text-slate-800 dark:text-slate-100 overflow-hidden shadow-sm aspect-[4/3] flex flex-col justify-between select-none group">
             
-            {/* Background image overlay */}
-            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=600&q=80')] bg-cover bg-center mix-blend-overlay opacity-30 group-hover:scale-105 transition-transform duration-700 pointer-events-none" />
-            
-            {/* Soft gradient bottom fill */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
-
             {/* Top Row: School Badge Logo */}
             <div className="relative z-10 flex justify-between items-start">
-              <div className="bg-white/10 backdrop-blur-md px-3.5 py-2.5 rounded-2xl border border-white/20 shadow-inner">
-                <span className="text-sm font-black tracking-widest font-mono text-indigo-200">CC</span>
+              <div className="bg-blue-50 dark:bg-blue-950/40 px-3.5 py-2.5 rounded-2xl border border-blue-200/20 shadow-inner">
+                <span className="text-sm font-black tracking-widest font-mono text-[#009BF5]">UE</span>
               </div>
-              <span className="bg-[#4285F4]/30 backdrop-blur-md text-[9px] font-mono tracking-wider font-extrabold uppercase px-2.5 py-1 rounded-full border border-blue-400/20">
+              <span className="bg-[#009BF5]/10 text-[#009BF5] text-[9px] font-mono tracking-wider font-extrabold uppercase px-2.5 py-1 rounded-full border border-blue-400/20">
                 2026 Period
               </span>
             </div>
 
-            {/* Middle Row: Title "Colegio Cordillera" */}
+            {/* Middle Row: Title "University of Embu" */}
             <div className="relative z-10 text-left mt-4">
-              <h3 className="text-2xl md:text-3xl font-black font-sans leading-tight tracking-tight text-white">
-                Cordillera <br />School
+              <h3 className="text-2xl md:text-3xl font-black font-sans leading-tight tracking-tight text-slate-950 dark:text-white">
+                University <br />of Embu
               </h3>
             </div>
 
             {/* Bottom Row: User dropdown capsule */}
-            <div className="relative z-10 bg-white hover:bg-slate-50 text-slate-800 p-2.5 rounded-2xl shadow-lg flex items-center justify-between gap-3 cursor-pointer select-none transition-all duration-300">
+            <div className="relative z-10 bg-slate-50 dark:bg-slate-950 hover:bg-slate-100/80 text-slate-800 dark:text-slate-100 p-2.5 rounded-2xl border border-slate-150 dark:border-slate-850 flex items-center justify-between gap-3 cursor-pointer select-none transition-all duration-300">
               <div className="flex items-center gap-2.5 min-w-0">
-                <img 
-                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80" 
-                  alt="Maelys Leiva"
-                  className="h-8 w-8 rounded-full object-cover border border-slate-100" 
-                />
+                {googleUser?.photoURL ? (
+                  <img 
+                    src={googleUser.photoURL} 
+                    alt="User Profile"
+                    className="h-8 w-8 rounded-full object-cover border border-slate-200" 
+                  />
+                ) : (
+                  <img 
+                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80" 
+                    alt="Clarryson"
+                    className="h-8 w-8 rounded-full object-cover border border-slate-250" 
+                  />
+                )}
                 <div className="text-left min-w-0">
-                  <p className="text-xs font-black text-slate-900 truncate">Maelys Leiva</p>
-                  <p className="text-[10px] text-slate-500 font-medium truncate">Kinder A</p>
+                  <p className="text-xs font-black text-slate-900 dark:text-white truncate">
+                    {googleUser ? googleUser.displayName : "Clarryson"}
+                  </p>
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium truncate">
+                    Computer Science • Year 2
+                  </p>
                 </div>
               </div>
-              <ChevronDown className="h-4 w-4 text-blue-600 shrink-0" />
+              <ChevronDown className="h-4 w-4 text-[#009BF5] shrink-0" />
             </div>
 
           </div>
@@ -483,9 +502,9 @@ export default function DashboardView({
         </div>
 
         {/* ==============================================
-            COLUMN 2: "Eventos" Classes & Timeline (col-span-4)
+            COLUMN 2: "Eventos" Classes & Timeline (col-span-1)
             ============================================== */}
-        <div className="lg:col-span-4 space-y-6">
+        <div className="space-y-6">
           
           <div className="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 p-6 rounded-[32px] shadow-sm text-left flex flex-col gap-6 min-h-[610px]">
             
@@ -659,9 +678,9 @@ export default function DashboardView({
         </div>
 
         {/* ==============================================
-            COLUMN 3: "Lo nuevo" News Feed (col-span-4)
+            COLUMN 3: "Lo nuevo" News Feed (col-span-1)
             ============================================== */}
-        <div className="lg:col-span-4 space-y-6">
+        <div className="space-y-6 md:col-span-2 lg:col-span-1">
           
           <div className="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/80 p-6 rounded-[32px] shadow-sm text-left flex flex-col gap-6 min-h-[610px]">
             
