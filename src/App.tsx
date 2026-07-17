@@ -68,6 +68,8 @@ export default function App() {
   ]);
   const [isGemmaThinking, setIsGemmaThinking] = useState(false);
   const [uploadingFile, setUploadingFile] = useState(false);
+  const [uploadingFileName, setUploadingFileName] = useState<string>("");
+  const [lastUploadResult, setLastUploadResult] = useState<{ fileName: string; summary: string; type: string; itemCount: number } | null>(null);
   const [isSyncingCalendar, setIsSyncingCalendar] = useState(false);
   const [studyPlanIntensity, setStudyPlanIntensity] = useState<'light' | 'medium' | 'intensive'>('medium');
   const [fontSize, setFontSize] = useState<'normal' | 'large' | 'xlarge'>(() => {
@@ -255,6 +257,8 @@ export default function App() {
   // PDF File Upload Handler
   const handleFileUpload = async (file: File) => {
     setUploadingFile(true);
+    setUploadingFileName(file.name);
+    setLastUploadResult(null);
     const reader = new FileReader();
     reader.onload = async () => {
       const base64String = (reader.result as string).split(",")[1];
@@ -273,15 +277,36 @@ export default function App() {
           if (result.state) {
             syncWithState(result.state);
           }
-          
+          // Find the newly added document to get its type
+          const newDoc = result.state?.documents?.[0];
+          setLastUploadResult({
+            fileName: file.name,
+            summary: result.summary || 'Document analyzed and database updated successfully.',
+            type: newDoc?.type || 'document',
+            itemCount: result.state?.timetable?.length || result.state?.exams?.length || 0
+          });
           setChatMessages(prev => [...prev, {
             sender: 'gemma',
-            text: `### 📂 Document Upload Resolved Autonomously\n\nI analyzed your newly uploaded file: **${file.name}**.\n\n**Gemma Assessment:** ${result.summary || 'Database mapped correctly'}\n\nI have updated your core schedules, staged new calendar events, and flagged necessary comparisons in your activity stream.`,
+            text: `### 📂 Document Analyzed Successfully\n\nI analyzed your uploaded file: **${file.name}**.\n\n**Gemma Assessment:** ${result.summary || 'Database mapped correctly'}\n\nI have updated your core schedules, staged new calendar events, and flagged necessary comparisons in your activity stream.`,
             timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           }]);
+        } else {
+          const err = await response.json();
+          setLastUploadResult({
+            fileName: file.name,
+            summary: `Upload failed: ${err.error || 'Unknown error'}`,
+            type: 'error',
+            itemCount: 0
+          });
         }
       } catch (error) {
         console.error("Upload failed:", error);
+        setLastUploadResult({
+          fileName: file.name,
+          summary: 'Network error — could not reach the server.',
+          type: 'error',
+          itemCount: 0
+        });
       } finally {
         setUploadingFile(false);
       }
@@ -492,7 +517,9 @@ export default function App() {
             {currentSection === 'documents' && (
               <DocumentsView 
                 documents={documents} 
-                uploadingFile={uploadingFile} 
+                uploadingFile={uploadingFile}
+                uploadingFileName={uploadingFileName}
+                lastUploadResult={lastUploadResult}
                 onFileUpload={handleFileUpload} 
               />
             )}
