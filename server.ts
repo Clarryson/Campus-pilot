@@ -248,8 +248,15 @@ async function startServer() {
       const state = Database.get();
       if (state.documents.length > 0) {
         console.log(`[Profile Update] Re-parsing ${state.documents.length} uploaded files for new profile...`);
+        const existingDocs = [...state.documents];
+        
+        // Clear the documents database list before re-parsing to avoid duplicates
+        Database.update((s) => {
+          s.documents = [];
+        });
+
         // We iterate through documents and re-extract using parseAcademicPDF
-        for (const doc of state.documents) {
+        for (const doc of existingDocs) {
           if (doc.filePath && fsExistsSync(doc.filePath)) {
             try {
               await parseAcademicPDF(doc.filePath, doc.name, doc.filePath);
