@@ -10,3 +10,7 @@ coverage/
 # Uploaded student documents (excluded from commits)
 uploads/*
 !uploads/.gitkeep
+
+# Database and backups
+database.json
+database.json.bak
